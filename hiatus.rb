@@ -10,20 +10,32 @@ $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
 require 'glossary/converter'
 require 'glossary/glossary'
+require 'glossary/monolingual'
 require 'reader/reader'
 require 'writer/writer'
 require 'checker/checker'
 
 require 'yaml'
 
-myconfig = YAML.load_file("config.yaml")
+#For Windows XLS read/write, require win32ole
+if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
+  require 'win32ole'
+  
+  class WIN32OLE
+    def fillColumns(array, row)
+      array.each_with_index {|v, i|
+        self.Cells.Item(row, i + 1).value = v
+      }
+     end
+  end
+  
+  def getAbsolutePath(filename)
+    fso = WIN32OLE.new('Scripting.FileSystemObject')
+    return fso.GetAbsolutePathName(filename)
+  end
+end
 
-CHECKTYPE = {
-  :glossary      => false,
-  :inconsistency => false,
-  :missingtag    => false,
-  :skip          => false
-}
+myconfig = YAML.load_file("config.yaml")
 
 #YAML data is like this:
 #{"required"=>
@@ -42,15 +54,36 @@ CHECKTYPE = {
 #   "ignore100"=>false}
 #}
 
-bilingual_path = myconfig["required"]["bilingual"].gsub('\\','/').tosjis
-glossary_path  = myconfig["required"]["glossary"].gsub('\\','/').tosjis
-output_path    = myconfig["required"]["output"].gsub('\\','/').tosjis
-report_format  = myconfig["required"]["report"]
+bilingual_path    = myconfig["required"]["bilingual"].gsub('\\','/').tosjis
+output_path       = myconfig["required"]["output"].gsub('\\','/').tosjis
+report_format     = myconfig["required"]["report"]
+source_lang       = myconfig["required"]["source"]
+target_lang       = myconfig["required"]["target"]
+glossary_path     = myconfig["required"]["glossary"].gsub('\\','/').tosjis
+monolingual_path  = myconfig["required"]["monolingual"].gsub('\\','/').tosjis
 
-CHECKTYPE[:glosssary]     = myconfig["check"]["glossary"]
-CHECKTYPE[:inconsistency] = myconfig["check"]["inconsistency"]
-CHECKTYPE[:missingtag]    = myconfig["check"]["missingtag"]
-CHECKTYPE[:skip]          = myconfig["check"]["skip"]
+
+checks = {
+  :glossary          => false,
+  :inconsistency_s2t => false,
+  :inconsistency_t2s => false,
+  :missingtag        => false,
+  :skip              => false,
+  :monolingual       => false,
+  :numbers           => false,
+  :unsourced         => false,
+  :length            => false
+} 
+
+checks[:glossary]          = myconfig["check"]["glossary"]
+checks[:inconsistency_s2t] = myconfig["check"]["inconsistency_s2t"]
+checks[:inconsistency_t2s] = myconfig["check"]["inconsistency_t2s"]
+checks[:missingtag]        = myconfig["check"]["missingtag"]
+checks[:skip]              = myconfig["check"]["skip"]
+checks[:monolingual]       = myconfig["check"]["monolingual"]
+checks[:numbers]           = myconfig["check"]["numbers"]
+checks[:unsourced]         = myconfig["check"]["unsourced"]
+checks[:length]            = myconfig["check"]["length"]
 
 option = {
   :filter     => myconfig["option"]["filter_by"],
@@ -61,11 +94,6 @@ class MyChecker
   include Checker
 end
 
-mych = MyChecker.new(bilingual_path, glossary_path, option)
-
-mych.glossary_check      if CHECKTYPE[:glosssary]
-mych.inconsistency_check if CHECKTYPE[:inconsistency]
-mych.missingtag_check    if CHECKTYPE[:missingtag]
-mych.skip_check          if CHECKTYPE[:skip]
-
+mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks)
+mych.run_checks
 mych.send("report_#{report_format.upcase}", mych.errors, output_path)

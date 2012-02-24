@@ -1,0 +1,72 @@
+hiatus はローカライズ用の翻訳QAツールです
+
+##以下の QA を実行できます##
+1. 用語集 (正規表現対応)
+2. 原文/訳文どちらか一方からの文字列検出チェック (正規表現対応)
+3. Inconsistency (原文 => 訳文、訳文 => 原文の両方可)
+4. 数値 (原文にない数値をエラー検出)
+5. TTX、XLZ でのタグの追加削除検出
+6. 長さ
+7. 翻訳漏れ、空欄
+8. 原文にない英数文字列の検出 (訳文が非アルファベット言語の時のみ有効)
+
+##対象ファイル (拡張子)##
+1. XLZ (Idiom など)
+2. TTX
+3. TMX
+4. TXT (シンプルなタブ区切り)
+5. CSV (LocStudio を CSVDump で出力したものに対応)
+6. XLS/XLSX (A 列 = 原文、B　列 = 訳文、C 列 = コメントとして読み込みます)
+
+##動作環境##
+Ruby 1.9.2
+Windows XP、Windows 7
+
+##必要なライブラリ##
+gem install nokogiri
+gem install zip
+
+##設定方法##
+config.yaml に必要な情報を記載して、hiatus.rb を実行すると、エラーレポートが生成されます
+
+required:
+  bilingual: チェック対象のバイリンガルファイルがあるパス
+  output: レポートの出力先
+  report: レポートの出力フォーマット (現在 xls のみ)
+  source: 原文言語
+  target: 訳文言語
+  glossary: 用語集ファイルのパス
+  monolingual: 単一言語用のチェックファイルのパス
+
+check:　#実行したいチェックを true にし、実行しないものは false にします
+  glossary: true
+  inconsistency_s2t: true
+  inconsistency_t2s: true
+  missingtag: true
+  skip: true
+  monolingual: true
+  numbers: true
+  unsourced: true
+  length: false
+  
+option:
+  filter_by: フィルタしたい時に文字列を記入します。XLZ の Note でフィルタします。ここに書いた文字列と完全一致したときのみチェックされます
+  ignore100: true/false。TTX で 100% をオフにしたい時は true、そうでないときは false
+
+##用語集ファイルの設定##
+原文	訳文	オプション
+
+*オプションは i (Ignore Case), m (multiline), e (Extended) の組み合わせです
+*オプションを空欄にすると正規表現がオフになります。
+*空欄は可能ですが、必ず「原文	訳文	オプション」の 3 列必要です
+
+##単一言語用チェックファイルの設定##
+s/t	検索する文字列	オプション
+
+*s/t は s または t と入力します。
+*s のときは、Source (=原文) を、t のときは　Target (=訳文) の方をチェックします。
+*オプションは i (Ignore Case), m (multiline), e (Extended) の組み合わせです
+*オプションを空欄にすると正規表現がオフになります。
+*空欄は可能ですが、必ず「原文	訳文	オプション」の 3 列必要です
+
+

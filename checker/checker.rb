@@ -1,8 +1,15 @@
 #coding: utf-8
 
 class String
-  def ignoretags
-    self.gsub(/<.*?>/, "")
+  def ignore_ttx_tags
+    #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
+    self.gsub(/(<\/*df.*?>|<\/*ut.*?>)/, "")
+  end
+  
+  def remove_DF_UT
+    #remove "<df...>", "</df>" and "<ut .... >...  </ut>" tags 
+    #include the text between <ut> & </ut> tags. That is different from ignore_ttx_tags
+    self.gsub(/<\/*?df.*?>/,"").gsub(/<ut.*?<\/ut>/,"")
   end
 end
 
@@ -11,76 +18,373 @@ module Checker
   include Writer
   require 'cgi'
   
-  attr_accessor :bilingual, :glossary, :errors
+  attr_accessor :glossary, :monolingual, :errors, :checks
   
-  FILETYPE = {".ttx" => "TTX",
-              ".txt" => "TXT",
-              ".csv" => "CSV",
-              ".tsv" => "TSV"
+  FILETYPE = {".ttx"  => "TTX",
+              ".txt"  => "TXT",
+              ".csv"  => "CSV",
+              ".tmx"  => "TMX",
+              ".xlz"  => "XLZ",
+              ".xls"  => "XLS",
+              ".xlsx" => "XLS"
   }
   
-  def initialize(bilingual_path, glossary_path, ops)
-    Dir.glob(bilingual_path + "/**/{*.ttx,*.tsv,*.txt,*csv}") {|file|
+  def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks)
+    @checks = checks
+    
+    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx}") {|file|
       filetype = check_extension(file)
       self.send("read#{filetype}", file, ops)
     }
-    @bilingual = @@bilingualArray
+    #@@bilungualArray is generated after readXXX processed.
     
-    Dir.glob(glossary_path + "/**/*.txt") {|file|
-      self.readGloss(file)
-    }
-    @glossary = Glossary.new(@@glossaryArray)
+    if @checks[:glossary]
+      Dir.glob(glossary_path + "/**/*.txt") {|file|
+        self.readGloss(file)
+      }
+      @glossary = Glossary.new(@@glossaryArray) 
+    end
+    
+    if @checks[:monolingual]
+      Dir.glob(monolingual_path + "/**/*.txt") {|file|
+        self.readMonolingual(file)
+      }
+      @monolingual = Monolingual.new(@@monolingualArray)
+    end
     
     @errors = []
   end
   
-  def glossary_check
-    @glossary.each_term{|term|
-      @bilingual.map {|segment|
-        CGI.unescapeHTML(segment[:source].ignoretags).scan(term.regSrc) {|found|
-          next if segment[:target].ignoretags.include?(term.tgt)
-          error = {}
-          error[:message]   = "Glossary"
-          error[:found]     = found
-          error[:glossary]  = term
-          error[:bilingual] = segment
-          @errors << error
-        }
-      }
+  #selected checks are run from this binding method
+  def run_checks
+    @@bilingualArray.map {|segment|
+      glossary_check(segment)    if @checks[:glossary]
+      missingtag_check(segment)  if @checks[:missingtag]
+      skip_check(segment)        if @checks[:skip]
+      monolingual_check(segment) if @checks[:monolingual]
+      check_numbers(segment)     if @checks[:numbers]
+      check_unsourced(segment)   if @checks[:unsourced]
+      check_length(segment)      if @checks[:length]
     }
-    return @errors
+    inconsistency_src2tgt_check  if @checks[:inconsistency_s2t]
+    inconsistency_tgt2src_check  if @checks[:inconsistency_t2s]
   end
   
-  def inconsistency_check
-    #check source-target inconsistency
-    #読み取り時に inconsistency 用の Array も作成して、それをソートして前後比較 each_con
-    return @errors
-  end
+  #------------------------------------
+  #define each check method from here
+  #
   
-  def missingtag_check
-    #check tag consistency
-    @bilingual.map {|segment|
-      segment[:source].ignoretags.scan(/(&lt;(.*?)&gt;.*?&lt;\/\2&gt;)/) {|found|
-        #これだと、ひとつでも入っていればクリアしてしまう。数も確認しないといけない。
-        segment[:target].include?(found[0])
+  def glossary_check(segment)
+    @glossary.each_term {|term|
+      CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(term.regSrc) {|found|
+        next if CGI.unescapeHTML(segment[:target].remove_DF_UT)[term.regTgt]
         error = {}
-        error[:message]   = "MissingTag"
+        error[:message]   = "Glossary"
         error[:found]     = found
+        error[:glossary]  = term
         error[:bilingual] = segment
+        #error[:pos]とerror[:length]を追加して、ヒット部分の文字色を変える？
         @errors << error
       }
     }
-    return @errors
   end
   
-  def skip_check
-    #check source is same as target
-    return @errors
+  def missingtag_check(segment)
+    #check tag consistency
+    src_tags = segment[:source].scan(/(<ut .*?<\/ut>|\{\d+\})/)
+    tgt_tags = segment[:target].scan(/(<ut .*?<\/ut>|\{\d+\})/)
+    deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
+    
+    if deleted_tags != []
+      deleted_tags.each { |tag|
+        error = {}
+        error[:message]   = "Deleted Tag"
+        error[:found]     = remove_UT(tag)
+        error[:bilingual] = segment
+        @errors << error
+      }
+    end
+    
+    if added_tags != []
+      added_tags.each { |tag|
+        error = {}
+        error[:message]   = "Added Tag"
+        error[:found]     = remove_UT(tag)
+        error[:bilingual] = segment
+        @errors << error
+      }
+    end
+  end
+  
+  def inconsistency_src2tgt_check
+    #check source->target inconsistency
+    inconsistency_check(:source, :target)
+  end
+  
+  def inconsistency_tgt2src_check
+    #check target->source inconsistency
+    inconsistency_check(:target, :source)
+  end
+  
+  def skip_check(segment)
+    if segment[:target] == ""
+      error = {}
+      error[:message]   = "Empty!"
+      error[:found]     = "Target is empty"
+      error[:bilingual] = segment
+      @errors << error
+    elsif segment[:source].ignore_ttx_tags == segment[:target].ignore_ttx_tags
+      error = {}
+      error[:message]   = "Skipped?"
+      error[:found]     = "Target is same as the source"
+      error[:bilingual] = segment
+      @errors << error
+    end
+  end
+  
+  def monolingual_check(segment)
+    @monolingual.each_term {|term|
+      if term.s_or_t.downcase == "s"
+        CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(term.regTerm) {|found|
+          next if found == []
+          error = {}
+          error[:message]   = "Found in the Source"
+          error[:found]     = found
+          error[:bilingual] = segment
+          @errors << error
+        }
+      end
+      if term.s_or_t.downcase == "t"
+        CGI.unescapeHTML(segment[:target].remove_DF_UT).scan(term.regTerm) {|found|
+          next if found == []
+          error = {}
+          error[:message]   = "Found in the Target"
+          error[:found]     = found
+          error[:bilingual] = segment
+          @errors << error
+        }
+      end
+    }
+  end
+  
+  def check_length(segment)
+    src_length = CGI.unescapeHTML(segment[:source].remove_DF_UT).length
+    tgt_length = CGI.unescapeHTML(segment[:target].remove_DF_UT).length
+    if tgt_length/src_length.to_f >= 2
+      error = {}
+      error[:message]   = "Too long?"
+      error[:found]     = "Target length is more than 200%"
+      error[:bilingual] = segment
+      @errors << error
+    elsif tgt_length/src_length.to_f <= 0.5 
+      error = {}
+      error[:message]   = "Too short?"
+      error[:found]     = "Target length is less than 50%"
+      error[:bilingual] = segment
+      @errors << error
+    end
+  end
+  
+  def check_unsourced(segment)
+    #check unsourced English terms. Only valid when the target language is non-alphabet one
+    enu_terms = CGI.unescapeHTML(segment[:target].remove_DF_UT).scan(/([@\.a-zA-Z\d][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@\.a-zA-Z\d])/)
+    enu_terms.map {|enu_term|
+      conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
+      next if CGI.unescapeHTML(segment[:source].remove_DF_UT)[conv_enu]
+      error = {}
+      error[:message]   = "Unsourced"
+      error[:found]     = "\"#{enu_term[0]}\" not found in the source"
+      error[:bilingual] = segment
+      #error[:pos]とerror[:length]を追加して、ヒット部分の文字色を変える？
+      @errors << error
+    }
+  end
+  
+  def check_numbers(segment)
+    CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(/(\d+[\d ,\.]*\d|\d)/) {|found|
+      #あとでリファクタリングする！
+      if found[0] == "1"
+        unless segment[:target].remove_DF_UT =~ /[1一]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "2"
+        unless segment[:target].remove_DF_UT =~ /[2二]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "3"
+        unless segment[:target].remove_DF_UT =~ /[3三]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "4"
+        unless segment[:target].remove_DF_UT =~ /[4四]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "5"
+        unless segment[:target].remove_DF_UT =~ /[5五]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "6"
+        unless segment[:target].remove_DF_UT =~ /[6六]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "7"
+        unless segment[:target].remove_DF_UT =~ /[7七]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "8"
+        unless segment[:target].remove_DF_UT =~ /[8八]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "9"
+        unless segment[:target].remove_DF_UT =~ /[9九]/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "0"
+        unless segment[:target].remove_DF_UT =~ /(0|ゼロ|零)/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "10"
+        unless segment[:target].remove_DF_UT =~ /(10|十)/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "100"
+        unless segment[:target].remove_DF_UT =~ /(100|百)/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "1000"
+        unless segment[:target].remove_DF_UT =~ /(1000|千)/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      elsif found[0] == "10000"
+        unless segment[:target].remove_DF_UT =~ /(10000|万)/
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      else
+        num_forms = []
+        num_forms << found[0]
+        num_forms << found[0].gsub(",","")
+        num_forms << found[0].gsub(" ","")
+        unless (segment[:target].remove_DF_UT.scan(/(#{num_forms.join("|")})/) != [])
+          error = {}
+          error[:message]   = "Missing Number?"
+          error[:found]     = "#{found[0]} is not found in the target"
+          error[:bilingual] = segment
+          @errors << error
+        end
+      end
+    }
   end
   
 private
   def check_extension(file)
     ext = File.extname(file).downcase
     FILETYPE[ext]
+  end
+  
+  def comp_tags(src_tags, tgt_tags)
+    src_tags.map{ |catch| remove_UT!(catch)}
+    tgt_tags.map{ |catch| remove_UT!(catch)}
+    
+    src_tags.each_with_index{|e, i|
+      pos = tgt_tags.index(e)
+      next if pos == nil
+      tgt_tags[pos] = nil
+      src_tags[i] = nil
+    }
+    return src_tags.compact, tgt_tags.compact
+  end
+  
+  def remove_UT(catched)
+    CGI.unescapeHTML(catched[0].gsub(/<\/*ut.*?>/,""))
+  end
+  
+  def remove_UT!(catched)
+    str = catched[0].gsub!(/<\/*ut.*?>/,"")
+    CGI.unescapeHTML(str) if str != nil
+  end
+  
+  def inconsistency_check(symbol1, symbol2)
+    incon = {}
+    @@bilingualArray.map{|segment|
+      rawSrc = segment[symbol1].remove_DF_UT
+      rawTgt = segment[symbol2].remove_DF_UT
+      if incon.has_key?(rawSrc)
+        incon[rawSrc][0] << rawTgt
+        incon[rawSrc][1] << segment
+        incon[rawSrc][2] += 1
+      else
+        incon[rawSrc] = []
+        incon[rawSrc] << [rawTgt]
+        incon[rawSrc] << [segment]
+        incon[rawSrc] << 1
+      end
+    }
+    
+    incon.map {|str, value|
+      next if value[2] == 1 || value[0].uniq.length == 1
+      value[1].map{|segment|
+        error = {}
+        error[:message]   = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
+        error[:found]     = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
+        error[:bilingual] = segment
+        @errors << error
+      }
+    }
   end
 end

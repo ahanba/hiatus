@@ -1,17 +1,23 @@
 required:
   bilingual: C:\z_hiatus\!bi
-  glossary: C:\z_hiatus\!g
   output: C:\z_hiatus
   report: xls
-  source: en-us
-  target: ja-jp
+  source: EN
+  target: JA
+  glossary: C:\z_hiatus\!g
+  monolingual: C:\z_hiatus\!m
 
 check:
   glossary: true
-  inconsistency: false
-  missingtag: false
-  skip: false
+  inconsistency_s2t: true
+  inconsistency_t2s: true
+  missingtag: true
+  skip: true
+  monolingual: true
+  numbers: true
+  unsourced: true
+  length: false
   
 option:
-  filter_by: TARGET111220
+  filter_by: 
   ignore100: false
