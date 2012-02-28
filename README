@@ -1,44 +1,51 @@
-hiatus はローカライズ用の翻訳QAツールです
+hiatusはローカライズ用の翻訳QAツールです
 
-##以下の QA を実行できます##
+以下のQAを実行できます
 1. 用語集 (正規表現対応)
 2. 原文/訳文どちらか一方からの文字列検出チェック (正規表現対応)
 3. Inconsistency (原文 => 訳文、訳文 => 原文の両方可)
 4. 数値 (原文にない数値をエラー検出)
-5. TTX、XLZ でのタグの追加削除検出
+5. TTX、XLZでのタグの追加削除検出
 6. 長さ
 7. 翻訳漏れ、空欄
 8. 原文にない英数文字列の検出 (訳文が非アルファベット言語の時のみ有効)
 
-##対象ファイル (拡張子)##
-1. XLZ (Idiom など)
+対象ファイル (拡張子)
+1. XLZ (Idiomなど)
 2. TTX
 3. TMX
 4. TXT (シンプルなタブ区切り)
-5. CSV (LocStudio を CSVDump で出力したものに対応)
-6. XLS/XLSX (A 列 = 原文、B　列 = 訳文、C 列 = コメントとして読み込みます)
+5. CSV (LocStudioをCSVDumpで出力したものに対応)
+6. XLS/XLSX (A列 = 原文、B列 = 訳文、C列 = コメントとして読み込みます)
 
-##動作環境##
+特長
+- 英語の原形を用語集の原文に指定した場合は、デフォルトで活用形まで拡張して検索対象に含めます
+  例: writeであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットします
+- 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます
+
+動作環境
 Ruby 1.9.2
-Windows XP、Windows 7
+Windows XP、Windows 7 Japanese
+ところどころ文字列をWindows用にShift-jisにしているため、デフォルトでは日本語環境でしか動きません (たぶん)。
+すこし調整すれば他の言語のOSでも動くと思います
 
-##必要なライブラリ##
+必要なライブラリ
 gem install nokogiri
 gem install zip
 
-##設定方法##
-config.yaml に必要な情報を記載して、hiatus.rb を実行すると、エラーレポートが生成されます
+設定方法
+config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エラーレポートが生成されます
 
 required:
   bilingual: チェック対象のバイリンガルファイルがあるパス
   output: レポートの出力先
-  report: レポートの出力フォーマット (現在 xls のみ)
+  report: レポートの出力フォーマット (現在xlsのみ)
   source: 原文言語
   target: 訳文言語
   glossary: 用語集ファイルのパス
   monolingual: 単一言語用のチェックファイルのパス
 
-check:　#実行したいチェックを true にし、実行しないものは false にします
+check:　#実行したいチェックをtrueにし、実行しないものはfalseにする
   glossary: true
   inconsistency_s2t: true
   inconsistency_t2s: true
@@ -50,23 +57,35 @@ check:　#実行したいチェックを true にし、実行しないものは 
   length: false
   
 option:
-  filter_by: フィルタしたい時に文字列を記入します。XLZ の Note でフィルタします。ここに書いた文字列と完全一致したときのみチェックされます
-  ignore100: true/false。TTX で 100% をオフにしたい時は true、そうでないときは false
+  filter_by: フィルタしたい時に文字列を記入する。XLZのNoteでフィルタします。ここに書いた文字列と完全一致したときのみチェックされます
+  ignore100: true/false。TTX/XLZで100%をチェック対象外にしたい時はtrue、そうでないときはfalse
+  ignoreICE: true/false。XLZでICE Matchをチェック対象外にしたい時はtrue、そうでないときはfalse
 
-##用語集ファイルの設定##
+用語集ファイルの設定
+テキストファイルで保存します。UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。
+入力形式は以下
+
 原文	訳文	オプション
+*スペースはタブ区切り
 
-*オプションは i (Ignore Case), m (multiline), e (Extended) の組み合わせです
-*オプションを空欄にすると正規表現がオフになります。
-*空欄は可能ですが、必ず「原文	訳文	オプション」の 3 列必要です
+オプションはi (Ignore Case),　m (multiline), e (Extended)の組み合わせです
+http://rubular.com/をで確認できます。
+オプションを空欄にすると正規表現がオフになります。
+必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください
 
-##単一言語用チェックファイルの設定##
+
+単一言語用チェックファイルの設定
+テキストファイルで保存します。UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。
+入力形式は以下
+
 s/t	検索する文字列	オプション
+*スペースはタブ区切り
 
-*s/t は s または t と入力します。
-*s のときは、Source (=原文) を、t のときは　Target (=訳文) の方をチェックします。
-*オプションは i (Ignore Case), m (multiline), e (Extended) の組み合わせです
-*オプションを空欄にすると正規表現がオフになります。
-*空欄は可能ですが、必ず「原文	訳文	オプション」の 3 列必要です
+s/tはsまたはtと入力します。
+sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。
+オプションはi (Ignore Case), m (multiline), e (Extended)の組み合わせです。
+http://rubular.com/をで確認できます。
+オプションを空欄にすると正規表現がオフになります。
+必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください
 
 
