@@ -62,6 +62,10 @@ target_lang       = myconfig["required"]["target"]
 glossary_path     = myconfig["required"]["glossary"].gsub('\\','/').tosjis
 monolingual_path  = myconfig["required"]["monolingual"].gsub('\\','/').tosjis
 
+langs = {
+  :sourceL => source_lang,
+  :targetL => target_lang
+}
 
 checks = {
   :glossary          => false,
@@ -72,6 +76,7 @@ checks = {
   :monolingual       => false,
   :numbers           => false,
   :unsourced         => false,
+  :unsourced_rev     => false,
   :length            => false
 } 
 
@@ -83,17 +88,22 @@ checks[:skip]              = myconfig["check"]["skip"]
 checks[:monolingual]       = myconfig["check"]["monolingual"]
 checks[:numbers]           = myconfig["check"]["numbers"]
 checks[:unsourced]         = myconfig["check"]["unsourced"]
+checks[:unsourced_rev]     = myconfig["check"]["unsourced_rev"]
 checks[:length]            = myconfig["check"]["length"]
 
 option = {
   :filter     => myconfig["option"]["filter_by"],
-  :ignore_100 => myconfig["option"]["ignore100"]
+  :ignore_100 => myconfig["option"]["ignore100"],
+  :ignoreICE  => myconfig["option"]["ignoreICE"]
 }
 
 class MyChecker
   include Checker
 end
 
-mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks)
+puts "reading files..."
+mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks, langs)
+puts "running checks..."
 mych.run_checks
+puts "generating report..."
 mych.send("report_#{report_format.upcase}", mych.errors, output_path)

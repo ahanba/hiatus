@@ -22,7 +22,7 @@
   <xsl:call-template name="t1"/>
 </xsl:template>
 <xsl:template name="t1">
-  <xsl:value-of select="'&quot;File&quot;&#9;&quot;ID&quot;&#9;&quot;Source&quot;&#9;&quot;Target&quot;&#9;&quot;Note&quot;&#9;&quot;SID&quot;&#10;'"/>
+  <xsl:value-of select="'&quot;File&quot;&#9;&quot;ID&quot;&#9;&quot;Source&quot;&#9;&quot;Target&quot;&#9;&quot;Note&quot;&#9;&quot;SID&quot;&#9;&quot;tm_score&quot;&#9;&quot;match-quality&quot;&#10;'"/>
   <xsl:for-each select="//x:file">
     <xsl:for-each select="x:body/x:trans-unit">
       <xsl:value-of select="'&quot;'"/>
@@ -37,6 +37,10 @@
       <xsl:value-of select="str:replace(x:note, '&quot;', '&quot;&quot;')"/>
       <xsl:value-of select="'&quot;&#9;&quot;'"/>
       <xsl:value-of select="str:replace(iws:segment-metadata/@sid, '&quot;', '&quot;&quot;')"/>
+      <xsl:value-of select="'&quot;&#9;&quot;'"/>
+      <xsl:value-of select="str:replace(iws:segment-metadata/@tm_score, '&quot;', '&quot;&quot;')"/>
+      <xsl:value-of select="'&quot;&#9;&quot;'"/>
+      <xsl:value-of select="str:replace(iws:segment-metadata/iws:status/@match-quality, '&quot;', '&quot;&quot;')"/>
       <xsl:value-of select="'&quot;'"/>
       <xsl:value-of select="'&#10;'"/>
     </xsl:for-each>

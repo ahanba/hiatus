@@ -97,15 +97,23 @@ module Reader
     ops = {:col_sep => "\t", :quote_char => '"', :headers => true}
     myCSV = CSV.new(str_xslted, ops)
     myCSV.each {|row|
+      #p row["tm_score"]
+      #p row["match-quality"]
       if option[:filter] != nil
         next if row["Note"] != option[:filter]
+      end
+      if option[:ignore100] == true
+        next if row["tm_score"] =~ /100\.?0*/
+      end
+      if option[:ignoreICE] == true
+        next if row["match-quality"] == "guaranteed"
       end
       entry = {}
       entry[:filename] = file.to_s
       entry[:source]   = row["Source"]
       entry[:target]   = row["Target"]
       entry[:id]       = row["SID"]
-      entry[:note]     = row["Note"]
+      entry[:note]     = row["tm_score"]
       entry[:file]     = row["File"]
       @@bilingualArray.push(entry)
     }
@@ -177,16 +185,19 @@ module Reader
   #For Trados TTX file
   def readTTX(file, option)
     file_str = read_rawfile(file)
-    scannedttx = file_str.scan(/<tu .*?MatchPercent="(\d+)".*?<tuv.*?>(.*?)<\/tuv><tuv.*?>(.*?)<\/tuv><\/tu>/i)
+    scannedttx = file_str.scan(/<tu(.*?)MatchPercent="(\d+)".*?<tuv.*?>(.*?)<\/tuv><tuv.*?>(.*?)<\/tuv><\/tu>/i)
     scannedttx.map {|tu|
+      if option[:ignoreICE] == true
+        next if tu[0].include?('Origin="xtranslate"')
+      end
       if option[:ignore_100] == true
-        next if tu[0] == "100"
+        next if tu[1] == "100"
       end
       entry = {}
       entry[:filename] = file.to_s
-      entry[:source]   = tu[1]
-      entry[:target]   = tu[2]
-      entry[:note]     = tu[0] #this represents match percent
+      entry[:source]   = tu[2]
+      entry[:target]   = tu[3]
+      entry[:note]     = tu[1] #this represents match percent
       @@bilingualArray.push(entry)
     }
   end

@@ -29,7 +29,7 @@ module Checker
               ".xlsx" => "XLS"
   }
   
-  def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks)
+  def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks, langs)
     @checks = checks
     
     Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx}") {|file|
@@ -42,14 +42,14 @@ module Checker
       Dir.glob(glossary_path + "/**/*.txt") {|file|
         self.readGloss(file)
       }
-      @glossary = Glossary.new(@@glossaryArray) 
+      @glossary = Glossary.new(@@glossaryArray, langs) 
     end
     
     if @checks[:monolingual]
       Dir.glob(monolingual_path + "/**/*.txt") {|file|
         self.readMonolingual(file)
       }
-      @monolingual = Monolingual.new(@@monolingualArray)
+      @monolingual = Monolingual.new(@@monolingualArray, langs)
     end
     
     @errors = []
@@ -58,13 +58,14 @@ module Checker
   #selected checks are run from this binding method
   def run_checks
     @@bilingualArray.map {|segment|
-      glossary_check(segment)    if @checks[:glossary]
-      missingtag_check(segment)  if @checks[:missingtag]
-      skip_check(segment)        if @checks[:skip]
-      monolingual_check(segment) if @checks[:monolingual]
-      check_numbers(segment)     if @checks[:numbers]
-      check_unsourced(segment)   if @checks[:unsourced]
-      check_length(segment)      if @checks[:length]
+      glossary_check(segment)      if @checks[:glossary]
+      missingtag_check(segment)    if @checks[:missingtag]
+      skip_check(segment)          if @checks[:skip]
+      monolingual_check(segment)   if @checks[:monolingual]
+      check_numbers(segment)       if @checks[:numbers]
+      check_unsourced(segment)     if @checks[:unsourced]
+      check_unsourced_rev(segment) if @checks[:unsourced_rev]
+      check_length(segment)        if @checks[:length]
     }
     inconsistency_src2tgt_check  if @checks[:inconsistency_s2t]
     inconsistency_tgt2src_check  if @checks[:inconsistency_t2s]
@@ -97,9 +98,10 @@ module Checker
     
     if deleted_tags != []
       deleted_tags.each { |tag|
+        next if tag[0] == ""
         error = {}
         error[:message]   = "Deleted Tag"
-        error[:found]     = remove_UT(tag)
+        error[:found]     = CGI.unescapeHTML(tag[0])
         error[:bilingual] = segment
         @errors << error
       }
@@ -107,9 +109,10 @@ module Checker
     
     if added_tags != []
       added_tags.each { |tag|
+        next if tag[0] == ""
         error = {}
         error[:message]   = "Added Tag"
-        error[:found]     = remove_UT(tag)
+        error[:found]     = CGI.unescapeHTML(tag[0])
         error[:bilingual] = segment
         @errors << error
       }
@@ -187,17 +190,12 @@ module Checker
   
   def check_unsourced(segment)
     #check unsourced English terms. Only valid when the target language is non-alphabet one
-    enu_terms = CGI.unescapeHTML(segment[:target].remove_DF_UT).scan(/([@\.a-zA-Z\d][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@\.a-zA-Z\d])/)
-    enu_terms.map {|enu_term|
-      conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
-      next if CGI.unescapeHTML(segment[:source].remove_DF_UT)[conv_enu]
-      error = {}
-      error[:message]   = "Unsourced"
-      error[:found]     = "\"#{enu_term[0]}\" not found in the source"
-      error[:bilingual] = segment
-      #error[:pos]とerror[:length]を追加して、ヒット部分の文字色を変える？
-      @errors << error
-    }
+    unsourced_template(segment, :target, :source)
+  end
+  
+  def check_unsourced_rev(segment)
+    #check unsourced English terms. Only valid when the source language is non-alphabet one
+    unsourced_template(segment, :source, :target)
   end
   
   def check_numbers(segment)
@@ -337,6 +335,8 @@ private
     FILETYPE[ext]
   end
   
+  #this method is hard to read...
+  #Need refactoring
   def comp_tags(src_tags, tgt_tags)
     src_tags.map{ |catch| remove_UT!(catch)}
     tgt_tags.map{ |catch| remove_UT!(catch)}
@@ -347,6 +347,35 @@ private
       tgt_tags[pos] = nil
       src_tags[i] = nil
     }
+    src_tags = src_tags.compact
+    tgt_tags = tgt_tags.compact
+    
+    #p src_tags
+    #p tgt_tags
+    
+    #以下、こういう例に対する対応
+    #["&amp;lt;strong&amp;gt;","&amp;lt;/strong&amp;gt;&amp;amp;nbsp;","&amp;amp;nbsp;"]
+    #["&amp;lt;strong&amp;gt;","&amp;lt;/strong&amp;gt;"]
+    #不細工なのでリファクタリングする
+    
+    tgt_tags.each_with_index {|tgt_tag, i|
+      src_tags.each_with_index {|src_tag, j|
+        next if tgt_tag[0] == nil || src_tag[0] == nil
+        if src_tag[0].include?(tgt_tag[0])
+          src_tags[j][0].sub!(tgt_tag[0], "")
+          tgt_tags[i] = nil
+          next
+        end
+        if tgt_tag[0].include?(src_tag[0])
+          tgt_tags[i][0].sub!(src_tag[0], "")
+          src_tags[j] = nil
+          next
+        end
+      }
+    }
+    
+    #p src_tags.compact
+    #p tgt_tags.compact
     return src_tags.compact, tgt_tags.compact
   end
   
@@ -385,6 +414,20 @@ private
         error[:bilingual] = segment
         @errors << error
       }
+    }
+  end
+  
+  def unsourced_template(segment, symbol1, symbol2)
+    enu_terms = CGI.unescapeHTML(segment[symbol1].remove_DF_UT).scan(/([@\.a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@\.a-zA-Z])/)
+    enu_terms.map {|enu_term|
+      conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
+      next if CGI.unescapeHTML(segment[symbol2].remove_DF_UT)[conv_enu]
+      error = {}
+      error[:message]   = "Unsourced"
+      error[:found]     = "\"#{enu_term[0]}\" not found in the #{symbol2.to_s}"
+      error[:bilingual] = segment
+      #error[:pos]とerror[:length]を追加して、ヒット部分の文字色を変える？
+      @errors << error
     }
   end
 end

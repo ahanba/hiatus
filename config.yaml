@@ -1,23 +1,25 @@
 required:
-  bilingual: C:\z_hiatus\!bi
+  bilingual: C:\z_hiatus\__sample\bar
   output: C:\z_hiatus
   report: xls
   source: EN
   target: JA
   glossary: C:\z_hiatus\!g
-  monolingual: C:\z_hiatus\!m
+  monolingual: B:\!Projects\76_120202_Blackbrd_1201_001_SP8_Help\99_work\!gloss\m
 
 check:
-  glossary: true
-  inconsistency_s2t: true
-  inconsistency_t2s: true
+  glossary: false
+  inconsistency_s2t: false
+  inconsistency_t2s: false
   missingtag: true
-  skip: true
-  monolingual: true
-  numbers: true
-  unsourced: true
+  skip: false
+  monolingual: false
+  numbers: false
+  unsourced: false
+  unsourced_rev: false
   length: false
   
 option:
   filter_by: 
   ignore100: false
+  ignoreICE: false

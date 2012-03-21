@@ -20,7 +20,7 @@ module Writer
       book = excel.Workbooks.Add()
       sheet = book.Sheets("sheet1")
       
-      header = ["File","Path","ErrorType","Source","Target", "Note","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "GlossFile", "Asset", "Fixed?"]
+      header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "GlossFile", "Asset", "Fixed?"]
       sheet.fillColumns(header, 1)
       
       row = 1
