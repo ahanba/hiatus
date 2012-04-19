@@ -1,7 +1,7 @@
 #coding: utf-8
 =begin
 Developed environment
-Ruby 1.9.2
+Ruby 1.9.2 or 1.9.3
 Windows XP SP2 Japanese
 Note that this script does not work with Ruby 1.8.7 or earlier
 =end

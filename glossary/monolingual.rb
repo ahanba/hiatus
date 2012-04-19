@@ -28,12 +28,13 @@ class Monolingual
   
   class Term
     include Converter
-    attr_accessor :s_or_t, :term, :option, :regTerm
+    attr_accessor :s_or_t, :term, :option, :regTerm, :message
     
     def initialize(entry, langs)
       @s_or_t  = entry[:s_or_t]
       @term    = entry[:term]
       @option  = entry[:option]
+      @message = entry[:message] if entry[:message]
       makeRegexp(@term, @option, langs)
     end
   

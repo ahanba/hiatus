@@ -152,7 +152,13 @@ module Checker
           next if found == []
           error = {}
           error[:message]   = "Found in the Source"
-          error[:found]     = found
+          if term.message
+            error[:found]   = found[0] + " => " + term.message if found.class == Array
+            error[:found]   = found + " => " + term.message if found.class == String
+          else
+            error[:found]   = found[0] if found.class == Array
+            error[:found]   = found[0] if found.class == String
+          end
           error[:bilingual] = segment
           @errors << error
         }
@@ -162,7 +168,13 @@ module Checker
           next if found == []
           error = {}
           error[:message]   = "Found in the Target"
-          error[:found]     = found
+          if term.message
+            error[:found]   = found[0] + " => " + term.message if found.class == Array
+            error[:found]   = found + " => " + term.message if found.class == String
+          else
+            error[:found]   = found[0] if found.class == Array
+            error[:found]   = found[0] if found.class == String
+          end
           error[:bilingual] = segment
           @errors << error
         }
@@ -335,8 +347,7 @@ private
     FILETYPE[ext]
   end
   
-  #this method is hard to read...
-  #Need refactoring
+  #Hard to read... Need refactoring
   def comp_tags(src_tags, tgt_tags)
     src_tags.map{ |catch| remove_UT!(catch)}
     tgt_tags.map{ |catch| remove_UT!(catch)}
@@ -406,12 +417,17 @@ private
     }
     
     incon.map {|str, value|
-      next if value[2] == 1 || value[0].uniq.length == 1
+      forms = value[0].uniq
+      next if value[2] == 1 || forms.length == 1
+      
+      colorIndex = [9,1,5,10,7]
+      
       value[1].map{|segment|
         error = {}
         error[:message]   = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:found]     = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:bilingual] = segment
+        error[:color] = colorIndex[colorIndex.length % (forms.index(segment[:"#{symbol2}"].remove_DF_UT) + 1)]
         @errors << error
       }
     }

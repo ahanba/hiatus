@@ -1,19 +1,19 @@
 required:
-  bilingual: C:\z_hiatus\__sample\bar
-  output: C:\z_hiatus
+  bilingual: A:\!Projects\_Sales&Marketing\120326_ADAPL_1203_025\07_Delivery\120411_final\Unclean
+  output: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz
   report: xls
   source: EN
   target: JA
   glossary: C:\z_hiatus\!g
-  monolingual: B:\!Projects\76_120202_Blackbrd_1201_001_SP8_Help\99_work\!gloss\m
+  monolingual: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz\!work\test
 
 check:
   glossary: false
-  inconsistency_s2t: false
-  inconsistency_t2s: false
-  missingtag: true
+  inconsistency_s2t: true
+  inconsistency_t2s: true
+  missingtag: false
   skip: false
-  monolingual: false
+  monolingual: true
   numbers: false
   unsourced: false
   unsourced_rev: false

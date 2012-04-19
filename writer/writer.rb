@@ -35,6 +35,10 @@ module Writer
         sheet.Cells(row, col + 2).value  = error[:message]
         sheet.Cells(row, col + 3).value  = CGI.unescapeHTML(error[:bilingual][:source].ignore_ttx_tags)
         sheet.Cells(row, col + 4).value  = CGI.unescapeHTML(error[:bilingual][:target].ignore_ttx_tags)
+        if error[:color]
+          sheet.Cells(row, col + 3).Interior.ThemeColor = error[:color]
+          sheet.Cells(row, col + 4).Interior.ThemeColor = error[:color]
+        end
         sheet.Cells(row, col + 5).value  = error[:bilingual][:note] if error[:bilingual][:note]
         sheet.Cells(row, col + 6).value  = error[:bilingual][:id]   if error[:bilingual][:id]
         sheet.Cells(row, col + 7).value  = error[:found]
@@ -62,19 +66,19 @@ module Writer
     excel.Selection.Columns.AutoFit
     
     sheet.Columns("A:C").Select
-    excel.Selection.ColumnWidth = "20"
+    excel.Selection.ColumnWidth = "10"
     
     sheet.Columns("D:E").Select
     excel.Selection.ColumnWidth = "50"
     excel.Selection.WrapText = "True"
     
-    sheet.Columns("F").Select
-    excel.Selection.ColumnWidth = "10"
+    sheet.Columns("F:G").Select
+    excel.Selection.ColumnWidth = "7"
     
     sheet.Columns("K:L").Select
     excel.Selection.ColumnWidth = "10"
     
-    sheet.Columns("G:H").Select
+    sheet.Columns("H").Select
     excel.Selection.ColumnWidth = "25"
     
     #Border
