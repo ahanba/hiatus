@@ -39,6 +39,9 @@ module Reader
           split_line = line.split("\t")
           entry = {}
           entry[:s_or_t]  = split_line[0].chomp
+          if entry[:s_or_t] != "s" && entry[:s_or_t] != "t"
+            puts "##Error##\nInvalid entry found while reading Monolingual file.\nCheck Line #{i} on #{File.basename(file)}. 1st coulm should be \"s\" or \"t\""
+          end
           entry[:term]    = split_line[1].chomp
           entry[:option]  = split_line[2].chomp
           entry[:message] = split_line[3].chomp if split_line[3]

@@ -57,16 +57,16 @@ class Monolingual
         begin
           @regTerm = Regexp.compile(term, OPS[option.sub("#","")])
         rescue
-          raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it with http://www.rubular.com"
+          raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it on http://www.rubular.com"
         end
       elsif option != ""
         begin
           @regTerm = Regexp.compile(convertedTerm, OPS[option])
         rescue RegexpError
-          raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it with http://www.rubular.com"
+          raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it on http://www.rubular.com"
         end
       else
-        @regTerm = Regexp.escape(term)
+        @regTerm = Regexp.new(Regexp.escape(term))
       end
       
     end

@@ -1,0 +1,100 @@
+#Revision History
+
+2012/02/21
+1st リリース公開
+
+2012/02/22
+以下のチェックを追加
+- Inconsistency を Source->Target、Target->Source に分けてそれぞれ実装
+- Unsourced チェックを追加
+- Glossary チェックの用語集ファイル名をリストに記載するように変更
+- 数値チェックの 0 に対して「零」を追加
+
+2012/02/23
+以下のチェックを追加/変更
+- XLZ の直接読み込み対応
+  これに伴い、zip ライブラリが必要となりました。
+  コマンドラインを起動して、gem install zip を実行してください
+  
+- また、これに伴い拡張子 TXT が空いたので、シンプルなタブ区切りファイルの読み込みを readTSV => readTXT に変更
+  Excel からのコピペをチェックしたいときなどは、単純に TXT 形式で保存してください
+  
+- 拡張子 CSV で LocStudio の CSVDump で生成されたファイルを読み込めるように実装
+  CSVDump で出力した CSV をそのままバイリンガルとして読み込めます
+  CSVDump の出力構成として Source Term、Translation、Resource ID、TermNote 列が必要です
+  
+2012/02/24
+以下のチェックを追加
+- xls/xlsx の読み込み対応
+  Source/Target の読み込みロジックは以下になります
+  1. ActiveSheet (Sheet1 など、ファイルを開いたときアクティブになっているシート)
+  2. A 列を Source と認識
+  3. B 列を Target と認識
+  4. C 列をコメントと認識 (オプション。空欄でも問題なし)
+  5. 1 行目から、A 列の最終データが入っている行数まで読み込み
+
+2012/03/09
+以下のチェック/機能を追加
+- unsourced_rev
+  unsourced の逆バージョン。日本語などの原文を英語に翻訳するときに、原文にない英数文字列をキャッチします
+  日 => 英翻訳など、非アルファベット言語がソースのときに使うオプションです
+  
+- 正規表現コンバージョンオプションに # を追加
+  i、m、e などと指定するオプションの冒頭に # を付けて #i、#m、#e などとすると、活用形変化の自動コンバージョンは行いません。
+  自分で正規表現を書いたときは # 付きのオプションにしてください。
+  # のみにすると、i/m/e などオプションなしの正規表現にもできます。
+
+2012/03/16
+以下のチェック/機能を追加
+1.	タグ整合性チェックの精度向上
+<ut>.*</ut> のみでなく、中のテキストベースでも比較するようにしました。
+
+#イメージしづらいので例示#
+たとえば、xBench だと
+<ut>&lt;strong&gt;</ut>Content Items<ut>&lt;/strong&gt;&lt;/dt&gt;</ut> <ut>&lt;dd style="padding-bottom: 12px; padding-top: 12px;"&gt;</ut>Use items to present a variety of course material, such as your course description, objectives, and schedule of topics.
+<ut>&lt;strong&gt;</ut>コンテンツ項目<ut>&lt;/strong&gt;&lt;/dt&gt;&lt;dd style="padding-bottom: 12px; padding-top: 12px;"&gt;</ut>コースの説明、目的、トピックのスケジュールなどのさまざまなコース資料を提示するには、項目を使用します。
+こういうエラーが出てきます。
+英語だと <ut> (TagEditor での Internal タグのことです) が 3 つですが、日本語だと <ut> が合体して 2 つになっています。
+ただ、<ut> の中身のテキストは同じです。
+こういったものはクリーンアップしたファイルでは意味するところは同じなので、エラーではありません。
+
+なので、こういうものはエラーにしないようにしました
+In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you can provide&amp;nbsp;your participants with an easy-to-navigate and familiar environment by adding folders to organize information for the participants.
+［&lt;strong&gt;セッションの教材&lt;/strong&gt;］コンテンツエリアでは、参加者用の情報を整理するためのフォルダを追加して、操作しやすく慣れやすい環境を参加者に提供できます。
+この場合の &amp;nbsp; 2 つのようなほんとに欠けているものはレポートされます。
+
+2.	TTX でも Ignore ICE オプションが機能するようにしました。
+実装し忘れていたので実装しました。
+
+2012/04/06
+- reader モジュールを切り分けて可読性/メンテナンスを用意にした
+
+2012/04/10
+- テキストファイルの読み取りを Kconv から NKF に変更
+  Kconv だと、半角カナが自動的に全角カナに変換されてしまうため
+- TTX の読み取り正規表現ロジックに問題があったので、修正
+  Orign="xtranslate" も MatchPecent="xx" もない時にキャッチされていなかった
+- monolingual の入力/出力を変更し、4 列目にコメントを記載できるようにした
+
+2012/04/11
+- Glossary/Monolingual の読み込みにエラー処理を追加
+  たとえば、誤った正規表現などがあって読み込みエラーになったとき、どのファイルのどの行なのかコンソールに表示するようにした
+
+2012/04/12
+- Inconsistency のエラーを色分け
+  Inconsistency エラーに関連するセグメントが多数あるとき、どのセグメントが違うのかわかりにくい問題があったので、色分け機能を実装
+  
+2012/04/12
+- Ruby 1.9.3 での動作を確認
+
+2012/05/01
+- rtf/doc/docx の読み込みに対応
+  
+
+
+TO DO:
+- 出力レポートでマッチした箇所に色をつける
+- unsourced で訳文に数値があって、原文に one とかのテキストがある時のエラー除外対応
+- tbx を用語集として指定可能にする
+- Doc/RTF の読み込み対応
+- 日本語の動詞/形容詞/形容動詞の活用変化対応

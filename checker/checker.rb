@@ -26,13 +26,16 @@ module Checker
               ".tmx"  => "TMX",
               ".xlz"  => "XLZ",
               ".xls"  => "XLS",
-              ".xlsx" => "XLS"
+              ".xlsx" => "XLS",
+              ".doc"  => "DOC",
+              ".docx" => "DOC",
+              ".rtf"  => "DOC"
   }
   
   def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks, langs)
     @checks = checks
     
-    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx}") {|file|
+    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf}") {|file|
       filetype = check_extension(file)
       self.send("read#{filetype}", file, ops)
     }

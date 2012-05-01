@@ -59,20 +59,19 @@ class Glossary
           @regSrc = Regexp.compile(src, OPS[option.sub("#","")])
           @regTgt = Regexp.compile(tgt, OPS[option.sub("#","")])
         rescue
-          raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it with http://www.rubular.com"
+          raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it on http://www.rubular.com"
         end
       elsif option != ""
         begin
           @regSrc = Regexp.compile(convertedSrc, OPS[option])
           @regTgt = Regexp.compile(tgt, OPS[option])
         rescue RegexpError
-          raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it with http://www.rubular.com"
+          raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it on http://www.rubular.com"
         end
       else
-        @regSrc = Regexp.escape(src)
-        @regTgt = Regexp.escape(tgt)
+        @regSrc = Regexp.new(Regexp.escape(src))
+        @regTgt = Regexp.new(Regexp.escape(tgt))
       end
-      #For testing
       #p @regSrc
       #p @regTgt
     end
