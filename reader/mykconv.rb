@@ -31,9 +31,6 @@
     end
     module_function :toutf16
     
-    #def kconv(str,out_code, in_code)
-    #  ::NKF::nkf('-jxm0 -exm0 -sxm0 -wxm0 -w16xm0', str)
-    #end
     module_function :kconv
   end
   

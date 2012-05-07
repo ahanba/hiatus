@@ -8,7 +8,7 @@ required:
   monolingual: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz\!work\test
 
 check:
-  glossary: false
+  glossary: true
   inconsistency_s2t: true
   inconsistency_t2s: true
   missingtag: false

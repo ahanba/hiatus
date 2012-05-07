@@ -52,8 +52,6 @@ class Glossary
     
     def makeRegexp(src, tgt, option, langs)
       #Can be updated to cover different language conversion model
-      convertedSrc = self.send("convertEN", src)
-      
       if option =~ /^#/
         begin
           @regSrc = Regexp.compile(src, OPS[option.sub("#","")])
@@ -61,8 +59,12 @@ class Glossary
         rescue
           raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it on http://www.rubular.com"
         end
+      elsif option == "z"
+        @regSrc = Regexp.new(Regexp.escape(src), Regexp::IGNORECASE)
+        @regTgt = Regexp.new(Regexp.escape(tgt), Regexp::IGNORECASE)
       elsif option != ""
         begin
+          convertedSrc = self.send("convertEN", src)
           @regSrc = Regexp.compile(convertedSrc, OPS[option])
           @regTgt = Regexp.compile(tgt, OPS[option])
         rescue RegexpError

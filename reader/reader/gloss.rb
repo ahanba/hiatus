@@ -9,19 +9,38 @@ module Reader
     #Methods to read bilingual & monolingual glossaries
     
     def readGloss(file)
-      file_str = read_rawfile(file)
       begin
-        i = 0
-        file_str.each_line {|line|
-          i += 1
-          split_line = line.split("\t")
-          entry = {}
-          entry[:source] = split_line[0].chomp
-          entry[:target] = split_line[1].chomp
-          entry[:option] = split_line[2].chomp
-          entry[:file]   = File.basename(file)
-          @@glossaryArray << entry
-        }
+        case File.extname(file).downcase
+        when ".txt"
+          i = 0
+          file_str = read_rawfile(file)
+          file_str.each_line {|line|
+            i += 1
+            split_line = line.split("\t")
+            entry = {}
+            entry[:source] = split_line[0].chomp
+            entry[:target] = split_line[1].chomp
+            entry[:option] = split_line[2].chomp
+            entry[:file]   = File.basename(file)
+            @@glossaryArray << entry
+          }
+        when ".tbx"
+          @doc = Nokogiri::XML(File.open(file))
+          @doc.xpath("////termEntry").each {|termEntry|
+            i = 0
+            entry = {}
+            entry[:option] = "z"
+            entry[:file]   = File.basename(file)
+            
+            termEntry.css('langSet tig term').map {|term|
+              entry[:source] = term.inner_text if i == 0
+              entry[:target] = term.inner_text if i == 1
+              i += 1
+            }
+            #p entry
+            @@glossaryArray << entry
+          }
+        end
       rescue NoMethodError
         puts "##Error##\nInvalid entry found while reading Glossary file.\nCheck Line #{i} on #{File.basename(file)}."
       rescue IOError

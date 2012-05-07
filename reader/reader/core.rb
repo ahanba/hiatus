@@ -41,7 +41,7 @@ module Reader
       fl = File.open(file, "rb")
       file_str = fl.read; fl.close
       #file_str = Kconv.kconv(file_str, Kconv::UTF8, guess_encode(file_str))
-      file_str = NKF.nkf('-wx', file_str)
+      file_str = NKF.nkf('-wxm0', file_str)
       #file_str = file_str.delete("\xEF\xBB\xBF")
     end
     
@@ -69,7 +69,7 @@ module Reader
     
     def read_rawText(str)
       #Kconv.kconv(str, Kconv::UTF8, guess_encode(str))
-      NKF.nkf('-wx', str)
+      NKF.nkf('-wxm0', str)
     end
   end
 end

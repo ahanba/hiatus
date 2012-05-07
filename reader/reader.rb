@@ -2,7 +2,6 @@
 
 module Reader
   require 'kconv'
-  require 'reader/mykconv'
   require 'csv'
   require 'nkf'
   require 'nokogiri'
@@ -18,6 +17,7 @@ module Reader
   require 'reader/reader/tmx'
   require 'reader/reader/xls'
   require 'reader/reader/doc'
+  require 'reader/reader/tbx'
   
   include ReadGloss
   include ReadCSV
@@ -27,4 +27,5 @@ module Reader
   include ReadXLS
   include ReadXLZ
   include ReadDOC
+  include ReadTBX
 end

@@ -29,20 +29,21 @@ module Checker
               ".xlsx" => "XLS",
               ".doc"  => "DOC",
               ".docx" => "DOC",
-              ".rtf"  => "DOC"
+              ".rtf"  => "DOC",
+              ".tbx"  => "TBX"
   }
   
   def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks, langs)
     @checks = checks
     
-    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf}") {|file|
+    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf,*.tbx}") {|file|
       filetype = check_extension(file)
       self.send("read#{filetype}", file, ops)
     }
     #@@bilungualArray is generated after readXXX processed.
     
     if @checks[:glossary]
-      Dir.glob(glossary_path + "/**/*.txt") {|file|
+      Dir.glob(glossary_path + "/**/{*.txt,*.tbx}") {|file|
         self.readGloss(file)
       }
       @glossary = Glossary.new(@@glossaryArray, langs) 

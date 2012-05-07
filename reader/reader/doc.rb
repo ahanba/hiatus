@@ -4,6 +4,7 @@ module Reader
   module ReadDOC
     require 'reader/reader/core'
     include Core
+    require 'tk'
    
     #For Word document
     def readDOC(file, option)
@@ -12,7 +13,6 @@ module Reader
       
       file_path = getAbsolutePath(file)
       doc = word.Documents.Open(file_path)
-      itx = WIN32OLE.new("AutoITX3.Control")
       
       begin
         doc.Activate
@@ -21,7 +21,7 @@ module Reader
         word.Selection.Font.Reset
         word.Selection.Copy
         
-        cont = NKF.nkf('-wx', itx.ClipGet)
+        cont = NKF.nkf('-wxm0', TkClipboard.get)
         segments= cont.scan(/(?<={0>)(.*?)<}(\d+){>(.*?)(?=<0})/i)
         segments.map {|segment|
         if option[:ignore_100] == true && segment[1] != nil
@@ -37,7 +37,7 @@ module Reader
         
       ensure
         doc.Close(:SaveChanges => 0)
-        word.Quit
+        word.Quit(:SaveChanges => 0)
       end
       
     end
