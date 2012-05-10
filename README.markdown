@@ -1,4 +1,5 @@
 #hiatusはローカライズ用の翻訳QAツールです
+For more details, please see (http://www.slideshare.net/ahanba/how-to-use-hiatus)[http://www.slideshare.net/ahanba/how-to-use-hiatus]
 
 ##以下のQAを実行できます
 - 用語集 (正規表現対応)
@@ -7,8 +8,9 @@
 - 数値 (原文にない数値をエラー検出)
 - TTX、XLZでのタグの追加削除検出
 - 長さ
-- 翻訳漏れ、空欄
+- 翻訳抜け、空欄
 - 原文にない英数文字列の検出 (訳文が非アルファベット言語の時のみ有効)
+- 訳文にある英数文字列が原文にない場合の検出 (原文が非アルファベット言語の時のみ有効)
 
 ##対象ファイル (拡張子)
 1. XLZ (Idiomなど)
@@ -17,6 +19,8 @@
 4. TXT (シンプルなタブ区切り)
 5. CSV (LocStudioをCSVDumpで出力したものに対応)
 6. XLS/XLSX (A列 = 原文、B列 = 訳文、C列 = コメントとして読み込みます)
+7. RTF/DOC/DOCX (Trados 形式のバイリンガル)
+8. TBX
 
 ##特長
 - 英語の原形を用語集の原文に指定した場合は、デフォルトで活用形まで拡張して検索対象に含めます
@@ -26,7 +30,7 @@
 ##動作環境
 Ruby 1.9.2 or 1.9.3
 Windows XP、Windows 7 Japanese
-ところどころ文字列をWindows用にShift-jisにしているため、デフォルトでは日本語環境でしか動きません (たぶん)。
+ところどころ文字列をWindows用にShift-JISにしているため、デフォルトでは日本語環境でしか動きません (たぶん)。
 すこし調整すれば他の言語のOSでも動くと思います
 
 ##必要なライブラリ
