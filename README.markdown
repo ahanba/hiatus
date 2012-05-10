@@ -1,5 +1,5 @@
 #hiatusはローカライズ用の翻訳QAツールです
-For more details, please see (http://www.slideshare.net/ahanba/how-to-use-hiatus)[http://www.slideshare.net/ahanba/how-to-use-hiatus]
+For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 
 ##以下のQAを実行できます
 - 用語集 (正規表現対応)
