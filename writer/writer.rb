@@ -33,17 +33,17 @@ module Writer
         sheet.Cells(row, col).value      = "=HYPERLINK(\"#{fullpath}\",\"#{base}\")"
         sheet.Cells(row, col + 1).value  = dir
         sheet.Cells(row, col + 2).value  = error[:message]
-        sheet.Cells(row, col + 3).value  = CGI.unescapeHTML(error[:bilingual][:source].ignore_ttx_tags)
-        sheet.Cells(row, col + 4).value  = CGI.unescapeHTML(error[:bilingual][:target].ignore_ttx_tags)
+        xlsEscape(sheet.Cells(row, col + 3), CGI.unescapeHTML(error[:bilingual][:source].ignore_ttx_tags))
+        xlsEscape(sheet.Cells(row, col + 4), CGI.unescapeHTML(error[:bilingual][:target].ignore_ttx_tags))
         if error[:color]
           sheet.Cells(row, col + 3).Interior.ThemeColor = error[:color]
           sheet.Cells(row, col + 4).Interior.ThemeColor = error[:color]
         end
         sheet.Cells(row, col + 5).value  = error[:bilingual][:note] if error[:bilingual][:note]
         sheet.Cells(row, col + 6).value  = error[:bilingual][:id]   if error[:bilingual][:id]
-        sheet.Cells(row, col + 7).value  = error[:found]
-        sheet.Cells(row, col + 8).value  = error[:glossary].src  if error[:glossary]
-        sheet.Cells(row, col + 9).value  = error[:glossary].tgt  if error[:glossary]
+        xlsEscape(sheet.Cells(row, col + 7), error[:found])
+        xlsEscape(sheet.Cells(row, col + 8), error[:glossary].src) if error[:glossary]
+        xlsEscape(sheet.Cells(row, col + 9), error[:glossary].tgt) if error[:glossary]
         sheet.Cells(row, col + 10).value = error[:glossary].file if error[:glossary]
         sheet.Cells(row, col + 11).value = error[:bilingual][:file] if error[:bilingual][:file]
       }
@@ -95,4 +95,13 @@ module Writer
     end
   end
   
+private
+  def xlsEscape(cell, str)
+    if str =~ /(^[\/\\\d$]+$|^=)/
+      cell.NumberFormatLocal = "@"
+      cell.value = str
+    else
+      cell.value = str
+    end
+  end
 end

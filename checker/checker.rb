@@ -424,14 +424,14 @@ private
       forms = value[0].uniq
       next if value[2] == 1 || forms.length == 1
       
-      colorIndex = [9,1,5,10,7]
+      colorIndex = [9,1,7,5,10,8,6]
       
       value[1].map{|segment|
         error = {}
         error[:message]   = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:found]     = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:bilingual] = segment
-        error[:color] = colorIndex[colorIndex.length % (forms.index(segment[:"#{symbol2}"].remove_DF_UT) + 1)]
+        error[:color] = colorIndex[(forms.index(segment[:"#{symbol2}"].remove_DF_UT)) % colorIndex.length]
         @errors << error
       }
     }

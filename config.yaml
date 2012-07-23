@@ -1,5 +1,5 @@
 required:
-  bilingual: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz\!work\target
+  bilingual: A:\!Projects\_SST\120430_ADAPL_1204_035\06_FromQA\120510_hayakawa\unclean
   output: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz
   report: xls
   source: EN
@@ -8,14 +8,14 @@ required:
   monolingual: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz\!work\test
 
 check:
-  glossary: true
+  glossary: false
   inconsistency_s2t: true
   inconsistency_t2s: true
-  missingtag: false
-  skip: false
+  missingtag: true
+  skip: true
   monolingual: true
-  numbers: false
-  unsourced: false
+  numbers: true
+  unsourced: true
   unsourced_rev: false
   length: false
   
