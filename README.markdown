@@ -97,10 +97,10 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 + z (正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき)
 + 空欄 (コンバージョンなし。大文字小文字の区別あり。書いたまま)
 
-      First Server	 ファースト サーバー	i
-      node	ノード
-　　　　  delegate	委譲する	i
-      install	インストール	i
+	First Server	 ファースト サーバー	i
+	node	ノード
+	delegate	委譲する	i
+	install	インストール	i
 
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。オプションを空欄にすると正規表現がオフになります。  
@@ -124,7 +124,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 
 s/tはsまたはtと入力します。  
 sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。  
-オプションはi (Ignore Case), m (multiline), e (Extended)の組み合わせです。  
+オプションは用語集ファイルのものと同じです。  
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。オプションを空欄にすると正規表現がオフになります。  
 *必ず「s/t	検索する文字列	オプション」の3列必要です。*  
