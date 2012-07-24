@@ -1,6 +1,6 @@
 hiatus
 ===========================
-hiatus is a QA (Quality Assurance) tool for localization.  
+*hiatus* is a QA (Quality Assurance) tool for localization.  
 For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 
 検出可能なチェック項目
@@ -29,8 +29,8 @@ For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 特長
 --------
 + 英語の原形を用語集の原文に指定した場合は、活用形まで拡張して検索対象に含めます。  
-  オプションで機能のオン/オフを設定可能。
-  例: writeであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットします
+  オプションで機能のオン/オフを設定可能。  
+  例: writeであれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます
 
 動作環境
@@ -43,9 +43,9 @@ Windows での文字化け回避のため、内部でShift-JISにしているの
 
 必要なライブラリ
 ---------
-tk (Ruby インストール時に tk もインストールすること)  
-gem install nokogiri  
-gem install zip  
+**tk** (Ruby インストール時に tk もインストールすること)  
+gem install **nokogiri**  
+gem install **zip**  
 
 設定方法
 ---------
