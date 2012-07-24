@@ -30,7 +30,7 @@ For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 --------
 + 英語の原形を用語集の原文に指定した場合は、活用形まで拡張して検索対象に含めます。  
   オプションで機能のオン/オフを設定可能。  
-  例: writeであれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
+  例: **write**であれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます
 
 動作環境
@@ -105,7 +105,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 *必ず「原文	訳文	オプション」の3列必要です。*  
 *空欄にするときも、3列は作成して、値を空としてください*
 
-オートコンバージョンとは、例えばwriteであれば、*write|writes|writing|wrote|written*の活用形すべてにヒットするようにツール側でコンバージョンをすることです。
+オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。
 
 単一言語用チェックファイルの設定
 --------
