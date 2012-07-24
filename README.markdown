@@ -54,30 +54,30 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
 
 ###入力項目の詳細は以下###
 
-required:  
-  bilingual: チェック対象のバイリンガルファイルがあるパス  
-  output: レポートの出力先  
-  report: レポートの出力フォーマット (現在xlsのみ)  
-  source: 原文言語  
-  target: 訳文言語  
-  glossary: 用語集ファイルのパス  
-  monolingual: 単一言語用のチェックファイルのパス  
+     *required:*  
+       *bilingual:* チェック対象のバイリンガルファイルがあるパス  
+       *output:* レポートの出力先  
+       *report:* レポートの出力フォーマット (現在xlsのみ)  
+       *source:* 原文言語  
+       *target:* 訳文言語  
+       *glossary:* 用語集ファイルのパス  
+       *monolingual:* 単一言語用のチェックファイルのパス  
 
-check:　#実行したいチェックをtrueにし、実行しないものはfalseにする  
-  glossary: true  
-  inconsistency_s2t: true  
-  inconsistency_t2s: true  
-  missingtag: true  
-  skip: true  
-  monolingual: true  
-  numbers: true  
-  unsourced: true  
-  length: false  
+    *check:*　>実行したいチェックをtrueにし、実行しないものはfalseにする  
+       *glossary:* true  
+       *inconsistency_s2t:* true  
+       *inconsistency_t2s:* true  
+       *missingtag:* true  
+       *skip:* true  
+       *monolingual:* true  
+       *numbers:* true  
+       *unsourced:* true  
+       *length:* false  
   
-option:  
-  filter_by: フィルタしたい時に文字列を記入する。XLZのNoteでフィルタします。ここに書いた文字列と完全一致したときのみチェックされます  
-  ignore100: true/false。TTX/XLZで100%をチェック対象外にしたい時はtrue、そうでないときはfalse  
-  ignoreICE: true/false。XLZでICE Matchをチェック対象外にしたい時はtrue、そうでないときはfalse  
+     *option:  
+       *filter_by:* フィルタしたい時に文字列を記入する。XLZのNoteでフィルタします。ここに書いた文字列と完全一致したときのみチェックされます  
+       *ignore100:* true/false。TTX/XLZで100%をチェック対象外にしたい時はtrue、そうでないときはfalse  
+       *ignoreICE:* true/false。XLZでICE Matchをチェック対象外にしたい時はtrue、そうでないときはfalse  
 
 用語集ファイルの設定
 ------------
@@ -85,8 +85,8 @@ option:
 UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-原文	訳文	オプション  
-*スペースはタブ区切り
+**原文&#09;訳文&#09;オプション**  
+スペースはタブ。「原文[tab]訳文[tab]オプション」  
 
 オプションは
 + i (Ignore Case)
@@ -105,8 +105,8 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-s/t	検索する文字列	オプション  
-*スペースはタブ区切り
+**s/t&#09;検索する文字列&#09;オプション**  
+スペースはタブ。「s/t[tab]検索する文字列[tab]オプション」  
 
 s/tはsまたはtと入力します。  
 sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。  
