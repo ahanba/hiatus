@@ -1,9 +1,9 @@
 hiatus
 ===========================
-hiatus is a QA (Quality Assurance) tool for localization. 
+hiatus is a QA (Quality Assurance) tool for localization.  
 For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 
-##検出可能なチェック項目
+検出可能なチェック項目
 ------
 + 用語集 (正規表現対応)
 + 原文/訳文どちらか一方からの文字列検出チェック (正規表現対応)
@@ -15,7 +15,7 @@ For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 + 原文にない英数文字列の検出 (訳文が非アルファベット言語の時のみ有効)
 + 訳文にある英数文字列が原文にない場合の検出 (原文が非アルファベット言語の時のみ有効)
 
-##対象ファイル (拡張子)
+対象ファイル (拡張子)
 ------
 1. XLZ (Idiomなど)
 2. TTX
@@ -26,27 +26,28 @@ For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 7. RTF/DOC/DOCX (Trados 形式のバイリンガル)
 8. TBX
 
-##特長
+特長
 --------
-+ 英語の原形を用語集の原文に指定した場合は、活用形まで拡張して検索対象に含めます。  オプションで機能のオン/オフを設定可能。
++ 英語の原形を用語集の原文に指定した場合は、活用形まで拡張して検索対象に含めます。  
+  オプションで機能のオン/オフを設定可能。
   例: writeであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットします
 
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます
 
-##動作環境
+動作環境
 --------
-Ruby 1.9.2 or 1.9.3
-Windows XP、Windows 7 Japanese
-ところどころ文字列をWindows用にShift-JISにしているため、デフォルトでは日本語環境でしか動きません (たぶん)。
-すこし調整すれば他の言語のOSでも動くと思います
+Ruby 1.9.2 or 1.9.3  
+Windows XP、Windows 7 Japanese  
+ところどころ文字列をWindows用にShift-JISにしているため、デフォルトでは日本語環境でしか動きません (たぶん)。  
+すこし調整すれば他の言語のOSでも動くと思います  
 
-##必要なライブラリ
+必要なライブラリ
 ---------
-tk (Ruby インストール時に tk もインストールすること)
-gem install nokogiri
-gem install zip
+tk (Ruby インストール時に tk もインストールすること)  
+gem install nokogiri  
+gem install zip  
 
-##設定方法
+設定方法
 ---------
 config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エラーレポートが生成されます
 
@@ -75,12 +76,13 @@ option:
   ignore100: true/false。TTX/XLZで100%をチェック対象外にしたい時はtrue、そうでないときはfalse  
   ignoreICE: true/false。XLZでICE Matchをチェック対象外にしたい時はtrue、そうでないときはfalse  
 
-##用語集ファイルの設定
+用語集ファイルの設定
 ------------
-テキストファイルで保存します。  UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。
+テキストファイルで保存します。  
+UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-原文	訳文	オプション
+原文	訳文	オプション  
 *スペースはタブ区切り
 
 オプションは
@@ -91,22 +93,29 @@ option:
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。
 オプションを空欄にすると正規表現がオフになります。  
-#必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください
+###必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください
 
 
-##単一言語用チェックファイルの設定
+単一言語用チェックファイルの設定
 --------
-テキストファイルで保存します。  UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。
+テキストファイルで保存します。  
+UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-s/t	検索する文字列	オプション
+s/t	検索する文字列	オプション  
 *スペースはタブ区切り
 
 s/tはsまたはtと入力します。  
 sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。  
 オプションはi (Ignore Case), m (multiline), e (Extended)の組み合わせです。  
+
 http://rubular.com/ で確認できます。  
 オプションを空欄にすると正規表現がオフになります。  
-#必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください  
+###必ず「原文	訳文	オプション」の3列必要です。空欄にするときも、3列は作成して、値を空としてください  
 
+ライセンス
+----------
+Copyright &copy; 2012 Ayumu Hanba  
+Distributed under the [MIT License][mit].
 
+[MIT]: http://www.opensource.org/licenses/mit-license.php
