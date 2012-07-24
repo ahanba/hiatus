@@ -62,7 +62,7 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
        glossary: 用語集ファイルのパス  
        monolingual: 単一言語用のチェックファイルのパス  
 
-    check:　>実行したいチェックをtrueにし、実行しないものはfalseにする  
+    check:　実行したいチェックをtrueにし、実行しないものはfalseにする  
        glossary: true  
        inconsistency_s2t: true  
        inconsistency_t2s: true  
@@ -93,9 +93,9 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
      install	インストール	i 
 
 オプションは
-+ i (Ignore Case)
-+ m (multiline)
-+ e (Extended)  
++ i (Ignore Case + オートコンバージョンを行う)
++ m (multiline + オートコンバージョンを行う)
++ e (Extended + オートコンバージョンを行う)  
 の組み合わせまたは以下です。  
 + # (自分で正規表現を書くとき。ツール側でのオートコンバージョンは行わない。)
 + z (正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき)
@@ -105,6 +105,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 *必ず「原文	訳文	オプション」の3列必要です。*  
 *空欄にするときも、3列は作成して、値を空としてください*
 
+オートコンバージョンとは、例えばwriteであれば、*write|writes|writing|wrote|written*の活用形すべてにヒットするようにツール側でコンバージョンをすることです。
 
 単一言語用チェックファイルの設定
 --------
