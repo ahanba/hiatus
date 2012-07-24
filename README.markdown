@@ -1,6 +1,6 @@
 hiatus
 ===========================
-*hiatus* is a QA (Quality Assurance) tool for localization.  
+**hiatus** is a QA (Quality Assurance) tool for localization.  
 For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 
 検出可能なチェック項目
@@ -112,7 +112,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-**s/t	検索する文字列	オプション	表示メッセージ**  
+**sまたはt	検索する文字列	オプション	表示メッセージ**  
 スペースはタブ。「s/t[tab]検索する文字列[tab]オプション[tab]表示メッセージ」  
 
     t	；	#	全角セミコロン；を使用しない
@@ -120,12 +120,11 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
     t	[０１２３４５６７８９]+	#	全角数字を禁止
     s	not	z	否定文？
 
-s/tはsまたはtと入力します。  
 sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。  
 オプションは用語集ファイルのものと同じです。  
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。オプションを空欄にすると正規表現がオフになります。  
-*必ず「s/t	検索する文字列	オプション」の3列必要です。*  
+*必ず「sまたはt	検索する文字列	オプション」の3列必要です。*  
 *4列目は任意ですが、空欄にするときも、3列は作成して、値を空としてください*
 
 ライセンス
