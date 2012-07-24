@@ -97,8 +97,9 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 + z (正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき)
 
     First Server	 ファースト サーバー	i
-    node	ノード	
+    node	ノード
 　　　　delegate	委譲する	i
+    install	インストール	i
 
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。オプションを空欄にすると正規表現がオフになります。  
