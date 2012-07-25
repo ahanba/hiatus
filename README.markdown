@@ -89,7 +89,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 **原文	訳文	オプション**  
 スペースはタブ。「原文[tab]訳文[tab]オプション」 
 
-     First Server	 ファースト サーバー	i
+     Server	 サーバー	i
      node	ノード
      delegate	委譲する	i
      install	インストール	i 
