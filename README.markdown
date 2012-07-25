@@ -86,7 +86,7 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
 UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-**原文	訳文	オプション**  
+**原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション**  
 スペースはタブ。「原文[tab]訳文[tab]オプション」 
 
      Server	 サーバー	i
@@ -95,16 +95,16 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
      install	インストール	i 
 
 オプションは
-+ **i**       *Ignore Case + オートコンバージョンを行う*
-+ **m**       *multiline + オートコンバージョンを行う*
-+ **e**       *Extended + オートコンバージョンを行う*  
-+ **#**       *必ず冒頭に書く。自分で正規表現を書くとき。オートコンバージョンをオフにする。)*  
++ **i**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Ignore Case + オートコンバージョンを行う*
++ **m**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*multiline + オートコンバージョンを行う*
++ **e**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Extended + オートコンバージョンを行う*  
++ **#**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*必ず冒頭に書く。自分で正規表現を書くとき。オートコンバージョンをオフにする。)*  
 の組み合わせまたは以下です。  
-+ **z**       *正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき*
-+ **空欄**    *コンバージョンなし。大文字小文字の区別あり。書いたまま*  
++ **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき*
++ **空欄**&nbsp;&nbsp;&nbsp;&nbsp;*コンバージョンなし。大文字小文字の区別あり。書いたまま*  
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。  
-*必ず「原文    訳文    オプション」の3列必要です。*  
+*必ず「原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列必要です。*  
 *空欄にするときも、3列は作成して、値を空としてください*
 
 オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。
@@ -115,7 +115,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
 入力形式は以下
 
-**sまたはt    検索する文字列    オプション    表示メッセージ**  
+**sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション&nbsp;&nbsp;&nbsp;&nbsp;表示メッセージ**  
 スペースはタブ。「sまたはt[tab]検索する文字列[tab]オプション[tab]表示メッセージ」  
 
     t	；	#	全角セミコロン；を使用しない
@@ -129,7 +129,7 @@ sのときは、Source (=原文)を、tのときは　Target (=訳文)の方を�
 オプションは用語集ファイルのものと同じです。  
 
 正規表現については、[rubular](http://rubular.com/) で確認できます。  
-*必ず「sまたはt	検索する文字列	オプション」の3列必要です。*  
+*必ず「sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列は必要です。*  
 *4列目は任意ですが、空欄にするときも、3列は作成して、値を空としてください*
 
 ライセンス
