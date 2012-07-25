@@ -134,6 +134,6 @@ sのときは、Source (=原文)を、tのときはTarget (=訳文)の方をチ�
 ライセンス
 ----------
 Copyright &copy; 2012 Ayumu Hanba  
-Distributed under the [MIT License][mit].
+Distributed under the [GPL License][GPL].
 
-[MIT]: http://www.opensource.org/licenses/mit-license.php
+[GPL]: http://www.gnu.org/licenses/gpl.html
