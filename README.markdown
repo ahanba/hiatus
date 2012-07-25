@@ -98,7 +98,7 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 + **i**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Ignore Case + オートコンバージョンを行う*
 + **m**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*multiline + オートコンバージョンを行う*
 + **e**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Extended + オートコンバージョンを行う*  
-+ **#**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*必ず冒頭に書く。自分で正規表現を書くとき。オートコンバージョンをオフにする。)*  
++ **#**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*必ず冒頭に書く。自分で正規表現を書くとき。オートコンバージョンをオフにする。*  
 の組み合わせまたは以下です。  
 + **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき*
 + **空欄**&nbsp;&nbsp;&nbsp;&nbsp;*コンバージョンなし。大文字小文字の区別あり。書いたまま*  
@@ -122,8 +122,9 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
     t	[［］]	#	全角角括弧 ［］ を使用しない
     t	[０１２３４５６７８９]+	#	全角数字を禁止
 　　　　t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
-    t	Shared Documents	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
-    s	not	z	否定文？
+　　　　t	Shared Documents	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
+　　　　s	not	z	否定文？
+
 
 sのときは、Source (=原文)を、tのときは　Target (=訳文)の方をチェックします。  
 オプションは用語集ファイルのものと同じです。  
