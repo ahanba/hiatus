@@ -51,7 +51,6 @@ class Monolingual
     
     def makeRegexp(term, option, langs)
       #Can be updated to cover different language conversion model
-      convertedTerm = self.send("convertEN", term)
       
       if option =~ /^#/
         begin
@@ -59,8 +58,11 @@ class Monolingual
         rescue
           raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it on http://www.rubular.com"
         end
+      elsif option == "z"
+        @regTerm = Regexp.new(Regexp.escape(term), Regexp::IGNORECASE)
       elsif option != ""
         begin
+          convertedTerm = self.send("convertEN", term)
           @regTerm = Regexp.compile(convertedTerm, OPS[option])
         rescue RegexpError
           raise RegexpError,"Can't convert \"#{term}\" to RegExp format. Check it on http://www.rubular.com"

@@ -1,0 +1,7 @@
+static	静的	i
+unexpect	予期しない	i
+Text Mining	テキスト マイニング	
+(install|installation) kit	インストール キット	#i
+come back	戻る	i
+give up	あきらめる	i
+
