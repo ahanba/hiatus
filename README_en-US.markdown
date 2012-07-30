@@ -7,7 +7,7 @@ What you can check?
 ------
 + **Glossary** (support RegExp)
 + **Monolingual from Source or Target segment** (this is for StyleGuide. Support RegExp)
-+ **Inconsistency** (both Source => Target aand Target => Source)
++ **Inconsistency** (both Source => Target and Target => Source)
 + **Numbers** (detect the numbers not exist in Source text)
 + **TTX, XLZ tag check** (both Missing and Added one)
 + **Length** (the length of Source and Target is different more/less than +- 50%)
@@ -21,7 +21,7 @@ Which files can be checked?
 + TTX
 + TMX
 + TXT (tab-separated file)
-+ CSV (LocStudio dump by CSVDump addin)
++ CSV (LocStudio dump by CSVDump add-in)
 + XLS/XLSX (read as column A = Souorce, column B = Target, column C = Comment)
 + RTF/DOC/DOCX (Trados format bilingual)
 + TBX
@@ -83,7 +83,7 @@ Then error report will be generated.
 
 How to create Glossary file?
 ------------
-Simple text file.  
+Tab Separated Text file (TSV file).  
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.  
 Use following tab-separated format  
 
@@ -112,7 +112,7 @@ Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option"
 
 How to create Monolingual file?
 --------
-Simple text file.  
+Tab Separated Text file (TSV file).  
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
 Use following tab-separated format  
 
