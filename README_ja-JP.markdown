@@ -3,30 +3,30 @@ hiatus
 **hiatus** is a QA (Quality Assurance) tool for localization.  
 For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
 
-What you can check?
+検出可能なチェック項目
 ------
-+ **Glossary** (support RegExp)
-+ **Monolingual from Source or Target segment** (this is for StyleGuide. Support RegExp)
-+ **Inconsistency** (both Source => Target and Target => Source)
-+ **Numbers** (detect the numbers not exist in Source text)
-+ **TTX, XLZ tag check** (both Missing and Added one)
-+ **Length** (the length of Source and Target is different more/less than +- 50%)
-+ **Skipped Translation, Blank**
-+ **Alphabet or Numeric figures in the Target not exist in the Source** (only when Target is non-Alphabet language)
-+ **Alphabet or Numeric figures in the Source not exist in the Target** (only when Source is non-Alphabet language)
++ **用語集** (正規表現対応)
++ **原文/訳文どちらか一方からの文字列検出チェック** (正規表現対応。スタイルガイドなどを想定)
++ **Inconsistency** (原文 => 訳文、訳文 => 原文の両方可)
++ **数値** (原文にない数値をエラー検出)
++ **TTX、XLZでのタグの追加削除検出**
++ **長さ** (原文と訳文の長さが一定割合以上異る)
++ **翻訳抜け、空欄**
++ **原文にない英数文字列の検出** (訳文が非アルファベット言語の時のみ有効)
++ **訳文にある英数文字列が原文にない場合の検出** (原文が非アルファベット言語の時のみ有効)
 
-Which files can be checked?
+対象ファイル (拡張子)
 ------
-+ XLZ (for example, Idiom)
++ XLZ (Idiomなど)
 + TTX
 + TMX
-+ TXT (tab-separated file)
-+ CSV (LocStudio dump by CSVDump add-in)
-+ XLS/XLSX (read as column A = Souorce, column B = Target, column C = Comment)
-+ RTF/DOC/DOCX (Trados format bilingual)
++ TXT (シンプルなタブ区切り)
++ CSV (LocStudioをCSVDumpで出力したものに対応)
++ XLS/XLSX (A列 = 原文、B列 = 訳文、C列 = コメントとして読み込みます)
++ RTF/DOC/DOCX (Trados 形式のバイリンガル)
 + TBX
 
-Features
+特長
 --------
 + 英語の原形を用語集の原文に指定した場合は、活用形まで拡張して検索対象に含めます。  
   オプションで機能のオン/オフを設定可能。  
@@ -35,7 +35,7 @@ Features
 + 主観ではありますが、実際仕事現場で使う人間が作成しているので、出力レポートの見やすさ/使いやすさは高いと思います。
 + コードを公開してるので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。
 
-Environment
+動作環境
 --------
 Ruby 1.9.2 or 1.9.3  
 Windows XP、Windows 7 Japanese  
@@ -43,18 +43,17 @@ Windows XP、Windows 7 Japanese
 Windows での文字化け回避のため、内部でShift-JISにしているので、デフォルトでは日本語OS環境でしか動きません (たぶん)。  
 すこし調整すれば他の言語のOSでも動くと思います  
 
-Ruby Libraries required
+必要なライブラリ
 ---------
-**tk** (install tk when install [Ruby](http://rubyinstaller.org/))  
+**tk** ([Ruby](http://rubyinstaller.org/)インストール時に tk もインストールすること)  
 gem install **nokogiri**  
 gem install **zip**  
 
-How to use hiatus?
+設定方法
 ---------
-Fill in necessary items on **config.yaml**, and run **hiatus.rb**.  
-Then error report will be generated.
+config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エラーレポートが生成されます
 
-###About config.yaml###
+###入力項目の詳細は以下###
 
      required:  
        bilingual: チェック対象のバイリンガルファイルがあるパス  
@@ -81,14 +80,14 @@ Then error report will be generated.
        ignore100: true/false。TTX/XLZで100%をチェック対象外にしたい時はtrue、そうでないときはfalse  
        ignoreICE: true/false。XLZでICE Matchをチェック対象外にしたい時はtrue、そうでないときはfalse  
 
-How to create Glossary file?
+用語集ファイルの設定
 ------------
-Tab Separated Text file (TSV file).  
-UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.  
-Use following tab-separated format  
+タブ区切りのテキストファイルを使用します (TSV ファイル)。  
+UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
+入力形式は以下
 
-**SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option**  
-Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option" 
+**原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション**  
+スペースはタブ。「原文[tab]訳文[tab]オプション」 
 
      Server	 サーバー	i
      node	ノード
@@ -110,14 +109,14 @@ Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option"
 
 オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。
 
-How to create Monolingual file?
+単一言語用チェックファイルの設定
 --------
-Tab Separated Text file (TSV file).  
-UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
-Use following tab-separated format  
+タブ区切りのテキストファイルを使用します (TSV ファイル)。  
+UTF-8 without BOMがおすすめですが、エンコードは自動判定されるので、ほかのエンコードでも動くと思います。  
+入力形式は以下
 
-**s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;Message to display**  
-Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display"  
+**sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション&nbsp;&nbsp;&nbsp;&nbsp;表示メッセージ**  
+スペースはタブ。「sまたはt[tab]検索する文字列[tab]オプション[tab]表示メッセージ」  
 
 	t	；	#	全角セミコロン；を使用しない
 	t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
@@ -132,7 +131,7 @@ sのときは、Source (=原文)を、tのときはTarget (=訳文)の方をチ�
 *必ず「sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列は必要です。*  
 *4列目は任意ですが、空欄にするときも、3列は作成して、値を空としてください*
 
-License
+ライセンス
 ----------
 Copyright &copy; 2012 Ayumu Hanba  
 Distributed under the [GPL License][GPL].

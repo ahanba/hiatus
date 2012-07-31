@@ -29,6 +29,8 @@ module Reader
         #p row["match-quality"]
         if option[:filter] != nil
           next if row["Note"] != option[:filter]
+          # ---  Use following if you filter with "include?" method. ---
+          #next if row["Note"].to_s.include?(option[:filter])
         end
         if option[:ignore100] == true
           next if row["tm_score"] =~ /100\.?0*/
