@@ -126,7 +126,7 @@ Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display
 	s	not	z	否定文？
 	t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
 
-When S, Source text is checked, and when t, Target text is checked.  
+If you choose s, Source text is searched, and if t, Target text is searched.  
 Available options are same as Glossary. 
 
 You can check Ruby RegExp on [rubular](http://rubular.com/).  

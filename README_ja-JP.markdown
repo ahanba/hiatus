@@ -56,13 +56,13 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
 ###入力項目の詳細は以下###
 
      required:  
-       bilingual: チェック対象のバイリンガルファイルがあるパス  
-       output: レポートの出力先  
+       bilingual: チェック対象のバイリンガルファイルがあるフォルダパス (サブフォルダ含む)  
+       output: レポートの出力先フォルダパス  
        report: レポートの出力フォーマット (現在xlsのみ)  
        source: 原文言語  
        target: 訳文言語  
-       glossary: 用語集ファイルのパス  
-       monolingual: 単一言語用のチェックファイルのパス  
+       glossary: 用語集ファイルのフォルダパス (サブフォルダ含む)  
+       monolingual: 単一言語用のチェックファイルのフォルダパス (サブフォルダ含む)  
 
     check:　実行したいチェックをtrueにし、実行しないものはfalseにする  
        glossary: true  
