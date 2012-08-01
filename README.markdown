@@ -16,7 +16,7 @@ What you can check?
 + **Skipped Translation, Blank**
 + **Alphabet or Numeric figures in the Target not exist in the Source** (only when Target is non-Alphabet language)
 + **Alphabet or Numeric figures in the Source not exist in the Target** (only when Source is non-Alphabet language)
-ch
+
 Which files can be checked?
 ------
 + XLZ (for example, Idiom)
