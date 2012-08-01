@@ -78,6 +78,7 @@ module Converter
               :think      => '\b(?:think|thinks|thought|thinking)\b',
               :throw      => '\b(?:throw|throws|threw|thrown|throwing)\b',
               :understand => '\b(?:understand|understands|understood|understanding)\b',
+              :wake       => '\b(?:wake|wakes|woke|woken|waking)\b',
               :wear       => '\b(?:wear|wears|wore|worn|wearing)\b',
               :win        => '\b(?:win|wins|won|winning)\b',
               :withdraw   => '\b(?:withdraw|withdraws|withdrew|withdrawn|wthdrawing)\b',

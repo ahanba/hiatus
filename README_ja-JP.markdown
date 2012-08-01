@@ -1,7 +1,9 @@
 hiatus
 ===========================
-**hiatus** is a QA (Quality Assurance) tool for localization.  
-For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
+**hiatus**はローカライズのQA (Quality Assurance) ツールです。  
+詳細については、以下をご覧ください。 
+スライド (英語): [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
+デモ: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 
 検出可能なチェック項目
 ------

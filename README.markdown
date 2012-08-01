@@ -1,20 +1,22 @@
 hiatus
 ===========================
 **hiatus** is a QA (Quality Assurance) tool for localization.  
-For more details, please see http://www.slideshare.net/ahanba/how-to-use-hiatus
+For more details, please see  
+Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
+Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 
 What you can check?
 ------
 + **Glossary** (support RegExp)
-+ **Monolingual from Source or Target segment** (this is for StyleGuide. Support RegExp)
++ **Monolingual of Source or Target segment** (this is for StyleGuide. Support RegExp)
 + **Inconsistency** (both Source => Target and Target => Source)
-+ **Numbers** (detect the numbers not exist in Source text)
++ **Numbers** (detect the numbers not exist in Source text, but exist in Target text)
 + **TTX, XLZ tag check** (both Missing and Added one)
-+ **Length** (the length of Source and Target is different more/less than +- 50%)
++ **Length** (the length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
 + **Alphabet or Numeric figures in the Target not exist in the Source** (only when Target is non-Alphabet language)
 + **Alphabet or Numeric figures in the Source not exist in the Target** (only when Source is non-Alphabet language)
-
+ch
 Which files can be checked?
 ------
 + XLZ (for example, Idiom)
@@ -22,7 +24,7 @@ Which files can be checked?
 + TMX
 + TXT (tab-separated file)
 + CSV (LocStudio dump by CSVDump add-in)
-+ XLS/XLSX (read as column A = Souorce, column B = Target, column C = Comment)
++ XLS/XLSX (read as column A = Source, column B = Target, column C = Comment)
 + RTF/DOC/DOCX (Trados format bilingual)
 + TBX
 
@@ -31,7 +33,7 @@ Features
 + For English, Dictionary form is converted to possible active forms (Optional, you can check on/off this conversion option).    
   Example: **write** is converted to **write|writes|writing|wrote|written**, and all of these terms are detected.
 + If the encode of target file is unicode (UTF-8|UTF-16), no garbage happens for multiple languages, such as Japanese, Chinese, Korean, Thai, etc.
-+ Output report (XLS) is easy to read, filter. You can use it for the next QA process without additional work.
++ Output report (XLS) is easy to use (read/filter). You can use it for the next QA process without additional work.
 + Source code is published here, so you can understand the tool comprehensively - what is checked, what is NOT checked. Also you can fix it when you find the error.
 
 Environment
@@ -40,7 +42,7 @@ Ruby 1.9.2 or 1.9.3
 Windows XP, Windows 7 Japanese  
 
 By default, this tool is designed for Japanese Windows OS, that means default OS encode is set to Shift-JIS. So this won't work on other language environment.  
-If you want to use this in other language, you have to modify a bit or contact me.  
+If you want to use this in other language, you have to modify a bit or contact me. It is not difficult work  
 
 Ruby Libraries required
 ---------
