@@ -14,8 +14,8 @@ What you can check?
 + **TTX, XLZ tag check** (both Missing and Added one)
 + **Length** (the length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphabet or Numeric figures in the Target not exist in the Source** (only when Target is non-Alphabet language)
-+ **Alphabet or Numeric figures in the Source not exist in the Target** (only when Source is non-Alphabet language)
++ **Alphanumeric strings in the Target, but not exist in the Source** (only when Target is non-Alphabet language)
++ **Alphanumeric strings in the Source, but not exist in the Target** (only when Source is non-Alphabet language)
 
 Which files can be checked?
 ------
