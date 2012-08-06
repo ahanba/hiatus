@@ -44,6 +44,7 @@ module Converter
               :know       => '\b(?:know|knows|knew|known|knowing)\b',
               :lay        => '\b(?:lay|laies|laid|laying)\b',
               :lead       => '\b(?:lead|leads|led|leading)\b',
+              :learn      => '\b(?:learn|learns|learned|learnt|learning)\b',
               :leave      => '\b(?:leave|leaves|left|leaving)\b',
               :lend       => '\b(?:lend|lends|lent|lending)\b',
               :lie        => '\b(?:lie|lay|lies|lying|lain)\b',
