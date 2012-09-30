@@ -76,6 +76,7 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
        monolingual: true  
        numbers: true  
        unsourced: true  
+       unsourced_rev: true   
        length: false  
   
      option:  

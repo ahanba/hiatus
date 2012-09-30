@@ -76,6 +76,7 @@ Then error report will be generated.
        monolingual: true  
        numbers: true  
        unsourced: true  
+       unsourced_rev: true   
        length: false  
   
      option:  
