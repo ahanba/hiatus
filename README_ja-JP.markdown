@@ -35,8 +35,8 @@ hiatus
   オプションで機能のオン/オフを設定可能。  
   例: **write**であれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます。
-+ 主観ではありますが、実際仕事現場で使う人間が作成しているので、出力レポートの見やすさ/使いやすさは高いと思います。
-+ コードを公開してるので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。
++ 主観ではありますが、出力レポートの見やすさ/使いやすさは高いと思います。
++ コードを公開してるので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。QAでは大事な観点です。
 
 動作環境
 --------
@@ -106,11 +106,13 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 + **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき*
 + **空欄**&nbsp;&nbsp;&nbsp;&nbsp;*コンバージョンなし。大文字小文字の区別あり。書いたまま*  
 
-正規表現については、[rubular](http://rubular.com/) で確認できます。  
 *必ず「原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列必要です。*  
-*空欄にするときも、3列は作成して、値を空としてください*
+*空欄にするときも、3列は作成して、値を空としてください*  
 
-オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。
+オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。  
+
+正規表現については、[rubular](http://rubular.com/) で確認できます。  
+Rubyの正規表現は[oniguruma](http://www.geocities.jp/kosako3/oniguruma/)がベースになっています。 [こちら](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt)で使用可能な正規表現のAPIを確認できます。     
 
 単一言語用チェックファイルの設定
 --------
@@ -129,10 +131,11 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 
 sのときは、Source (=原文)を、tのときはTarget (=訳文)の方をチェックします。  
 オプションは用語集ファイルのものと同じです。  
-
-正規表現については、[rubular](http://rubular.com/) で確認できます。  
 *必ず「sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列は必要です。*  
 *4列目は任意ですが、空欄にするときも、3列は作成して、値を空としてください*
+
+正規表現については、[rubular](http://rubular.com/) で確認できます。  
+Rubyの正規表現は[oniguruma](http://www.geocities.jp/kosako3/oniguruma/)がベースになっています。 [こちら](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt)で使用可能な正規表現のAPIを確認できます。
 
 ライセンス
 ----------
