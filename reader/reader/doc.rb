@@ -24,7 +24,7 @@ module Reader
         cont = NKF.nkf('-wxm0', TkClipboard.get)
         segments= cont.scan(/(?<={0>)(.*?)<}(\d+){>(.*?)(?=<0})/i)
         segments.map {|segment|
-        if option[:ignore_100] == true && segment[1] != nil
+        if option[:ignore100] == true && segment[1] != nil
           next if segment[1] == "100"
         end
         entry = {}

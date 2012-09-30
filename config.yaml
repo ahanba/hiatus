@@ -1,22 +1,22 @@
 required:
-  bilingual: A:\!Projects\_SST\120430_ADAPL_1204_035\06_FromQA\120510_hayakawa\unclean
-  output: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz
+  bilingual: Z:\Developer\Ruby\hiatus\!Sample_files\bilingual
+  output: Z:\Developer\Ruby\hiatus
   report: xls
   source: EN
   target: JA
-  glossary: C:\z_hiatus\!g
-  monolingual: C:\Documents and Settings\ayumu.hanba\デスクトップ\lab\zzzzz\!work\test
+  glossary: Z:\Developer\Ruby\hiatus\!Sample_files\glossary
+  monolingual: Z:\Developer\Ruby\hiatus\!Sample_files\monolingual
 
 check:
-  glossary: false
+  glossary: true
   inconsistency_s2t: true
   inconsistency_t2s: true
   missingtag: true
   skip: true
-  monolingual: true
+  monolingual: false
   numbers: true
-  unsourced: true
-  unsourced_rev: false
+  unsourced: false
+  unsourced_rev: true
   length: false
   
 option:

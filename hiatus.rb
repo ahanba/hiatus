@@ -93,7 +93,7 @@ checks[:length]            = myconfig["check"]["length"]
 
 option = {
   :filter     => myconfig["option"]["filter_by"],
-  :ignore_100 => myconfig["option"]["ignore100"],
+  :ignore100 => myconfig["option"]["ignore100"],
   :ignoreICE  => myconfig["option"]["ignoreICE"]
 }
 

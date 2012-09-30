@@ -13,7 +13,7 @@ module Reader
         if option[:ignoreICE] == true && tu[0] != nil
           next if tu[0].include?('Origin="xtranslate"')
         end
-        if option[:ignore_100] == true && tu[1] != nil
+        if option[:ignore100] == true && tu[1] != nil
           next if tu[1] == "100"
         end
         entry = {}

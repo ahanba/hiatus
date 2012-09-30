@@ -18,6 +18,7 @@ module Reader
   require 'reader/reader/xls'
   require 'reader/reader/doc'
   require 'reader/reader/tbx'
+  require 'reader/reader/sdlxliff'
   
   include ReadGloss
   include ReadCSV
@@ -28,4 +29,5 @@ module Reader
   include ReadXLZ
   include ReadDOC
   include ReadTBX
+  include ReadSDLXLIFF
 end

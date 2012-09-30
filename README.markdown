@@ -1,25 +1,25 @@
 hiatus
 ===========================
-**hiatus** is a QA (Quality Assurance) tool for localization.  
+**hiatus** is a localization QA tool, reads various bilingual files, runs checks and reports the errors found.  
 For more details, please see  
 Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 
-What you can check?
+Check Items
 ------
-+ **Glossary** (support RegExp)
-+ **Monolingual of Source or Target segment** (this is for StyleGuide. Support RegExp)
-+ **Inconsistency** (both Source => Target and Target => Source)
-+ **Numbers** (detect the numbers not exist in Source text, but exist in Target text)
-+ **TTX, XLZ tag check** (both Missing and Added one)
++ **Glossary** (RegExp supported)
++ **Source or Target Segment (simple Term, Style check)** (RegExp supported)
++ **Inconsistency** (both Source <=> Target)
++ **Numbers** (detect the numbers not in Source but in Target)
++ **TTX, XLZ, SDLXLIFF Tag Check** (both Missing and Added one)
 + **Length** (the length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphanumeric strings in the Target, but not exist in the Source** (only when Target is non-Alphabet language)
-+ **Alphanumeric strings in the Source, but not exist in the Target** (only when Source is non-Alphabet language)
++ **Alphanumeric strings in Target but not in Source** (valid only when Target is non-Alphabet language)
++ **Alphanumeric strings in Source but not in Target** (valid only when Source is non-Alphabet language)
 
-Which files can be checked?
+Supported Bilingual File Formats
 ------
-+ XLZ (for example, Idiom)
++ XLZ (Idiom)
 + TTX
 + TMX
 + TXT (tab-separated file)
@@ -27,24 +27,25 @@ Which files can be checked?
 + XLS/XLSX (read as column A = Source, column B = Target, column C = Comment)
 + RTF/DOC/DOCX (Trados format bilingual)
 + TBX
++ SDLXLIFF
 
 Features
 --------
-+ For English, Dictionary form is converted to possible active forms (Optional, you can check on/off this conversion option).    
-  Example: **write** is converted to **write|writes|writing|wrote|written**, and all of these terms are detected.
-+ If the encode of target file is unicode (UTF-8|UTF-16), no garbage happens for multiple languages, such as Japanese, Chinese, Korean, Thai, etc.
-+ Output report (XLS) is easy to use (read/filter). You can use it for the next QA process without additional work.
-+ Source code is published here, so you can understand the tool comprehensively - what is checked, what is NOT checked. Also you can fix it when you find the error.
++ For English, hiatus converts dictionary form into possible active forms (Optional).    
+  Example: hiatus converts **write** into **write|writes|writing|wrote|written**, and all of these terms are detected.
++ As long as the encode of bilingual file is UTF-8/UTF-16, no garbage occurs in multiple languages, such as Japanese, Chinese, Korean, Thai, etc.
++ Simple output report (XLS). Easy to filter.
++ Source code is published - you can see what can be checked, what can NOT be checked.
 
 Environment
 --------
 Ruby 1.9.2 or 1.9.3  
 Windows XP, Windows 7 Japanese  
 
-By default, this tool is designed for Japanese Windows OS, that means default OS encode is set to Shift-JIS. So this won't work on other language environment.  
-If you want to use this in other language, you have to modify a bit or contact me. It is not difficult work  
+By default, hiatus is designed for Japanese version of Windows OS, that means default OS encode is Shift-JIS. So hiatus won't work on other languages' environment.  
+If you want to use hiatus in other languages' environment, you have to modify some lines of the code or contact me. It is not difficult if you can read Ruby.
 
-Ruby Libraries required
+Ruby Libraries Required
 ---------
 **tk** (install tk when install [Ruby](http://rubyinstaller.org/))  
 gem install **nokogiri**  
@@ -58,13 +59,13 @@ Then error report will be generated.
 ###About config.yaml###
 
      required:  
-       bilingual: Folder path to the bilingual files to check (subfolder included)  
-       output: Folder path of the output report generated  
+       bilingual: Folder path of the target bilingual files (including subfolders)  
+       output: Folder path of the output report  
        report: Format of the output report (Currently, only xls)  
        source: Source Language  
        target: Target Language  
-       glossary:   Folder path to the Glossary files (subfolder included)
-       monolingual: Folder path to the Moolingual files (subfolder included) 
+       glossary:   Folder path of the Glossary files (including subfolders)
+       monolingual: Folder path of the Monolingual files (including subfolders) 
 
     check:　Choose true or false for each check.
        glossary: true  
@@ -78,15 +79,15 @@ Then error report will be generated.
        length: false  
   
      option:  
-       filter_by: For XLZ, only when the "Note" value is same as this value, the entry is checked. Other entries are skipped.   
-       ignore100: true/false. For TTX & XLZ, when this is true, 100% match is skipped.  
-       ignoreICE: true/false. For XLZ, when this is true, ICE match is skipped.  
+       filter_by: For XLZ - Only when the "Note" value is same as this value, the entry will be checked. Other entries will be skipped.   
+       ignore100: true/false. For TTX/XLZ/SDLXLIFF, when true, 100% match will be skipped.  
+       ignoreICE: true/false. For XLZ/SDLXLIFF, when true, ICE match will be skipped.  
 
 How to create Glossary file?
 ------------
-Tab Separated Text file (TSV file).  
-UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.  
-Use following tab-separated format  
+The format is Tab Separated Text file (TSV file).  
+UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
+See below and the sample files in !Sample_files folder.   
 
 **SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option**  
 Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option" 
@@ -100,24 +101,23 @@ Available options are the combinations of followings
 + **i**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Ignore Case + Auto Conversion*
 + **m**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*multiline + Auto Conversion*
 + **e**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Extended + Auto Conversion*  
-+ **#**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Turn Auto Conversion OFF. When you write RegExp by yourself, add # at the beginning*  
++ **#**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Auto Conversion OFF. When you write RegExp by yourself, add # at the beginning of option field*  
 Or  
-+ **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No Conversion. No RegExp. Only Case-Insensitive*
-+ **Blank**&nbsp;&nbsp;&nbsp;&nbsp;*No Conversion. No RegExp. Case-Sensitive. In short, as is*  
++ **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*No Conversion + No RegExp. Only Case-Insensitive*
++ **Blank**&nbsp;&nbsp;&nbsp;&nbsp;*No Conversion + No RegExp + Case-Sensitive => As Is*  
 
-You can check Ruby RegExp on [rubular](http://rubular.com/).  
-*Always three columns necessary - "SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
-*When you use Blank option, create 3rd column and leave there blank*
-*Otherwise, an error will be happened and doesn't work*
+You can try Ruby RegExp on [rubular](http://rubular.com/).  
+*Third column is always required - "SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
+*Even when you use Blank option, create 3rd column and leave there blank*
 
-Auto Conversion is a function to convert dictionary form to active possible forms.  
-For example, write is converted to write|writes|writing|wrote|written, and all of these are detected.  
+Auto Conversion is a function to convert dictionary form into active possible forms.  
+For example, **write** is converted into **write|writes|writing|wrote|written**, and all of these are detected.  
 
 How to create Monolingual file?
 --------
 Tab Separated Text file (TSV file).  
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
-Use following tab-separated format  
+See below and the sample files in !Sample_files folder.   
 
 **s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;Message to display**  
 Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display"  
@@ -128,13 +128,13 @@ Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display
 	s	not	z	否定文？
 	t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
 
-If you choose s, Source text is searched, and if t, Target text is searched.  
-Available options are same as Glossary. 
+If you specify **s** on the first column, Source text will be searched, and if **t**, Target text will be searched.  
+Available options are same as Glossary.
 
-You can check Ruby RegExp on [rubular](http://rubular.com/).  
-*Always three columns necessary - "s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
-*When you use Blank option, create 3rd column and leave there blank. 4th column is an option. It is optional*
-*Otherwise, an error will be happened and doesn't work*
+You can try Ruby RegExp on [rubular](http://rubular.com/).  
+*Third column is always required - "s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
+*Even when you use Blank option, create 3rd column and leave there blank.*
+*4th column is optional. you can omit.*
 
 License
 ----------

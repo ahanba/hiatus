@@ -1,7 +1,8 @@
 hiatus
 ===========================
-**hiatus**はローカライズのQA (Quality Assurance) ツールです。  
-詳細については、以下をご覧ください。  
+**hiatus**はローカライズのQAツールです。
+各種バイリンガルファイルに対して、チェックを行い、エラーを検出します。  
+詳細については、以下を参照してください。  
 スライド (英語):   [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 デモ: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 

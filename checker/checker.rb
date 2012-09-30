@@ -1,5 +1,9 @@
 #coding: utf-8
 
+# To DO:
+# Need to separate/create each tag processing method for each file type (ttx, xlz, sdlxliff)
+# 
+
 class String
   def ignore_ttx_tags
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
@@ -30,13 +34,14 @@ module Checker
               ".doc"  => "DOC",
               ".docx" => "DOC",
               ".rtf"  => "DOC",
+              ".sdlxliff"  => "SDLXLIFF",
               ".tbx"  => "TBX"
   }
   
   def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks, langs)
     @checks = checks
     
-    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf,*.tbx}") {|file|
+    Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf,*.tbx,*.sdlxliff}") {|file|
       filetype = check_extension(file)
       self.send("read#{filetype}", file, ops)
     }
@@ -59,7 +64,7 @@ module Checker
     @errors = []
   end
   
-  #selected checks are run from this binding method
+  #Run selected checks
   def run_checks
     @@bilingualArray.map {|segment|
       glossary_check(segment)      if @checks[:glossary]
@@ -96,8 +101,13 @@ module Checker
   
   def missingtag_check(segment)
     #check tag consistency
-    src_tags = segment[:source].scan(/(<ut .*?<\/ut>|\{\d+\})/)
-    tgt_tags = segment[:target].scan(/(<ut .*?<\/ut>|\{\d+\})/)
+    #Tag definitions
+    #TTX:      <ut .*?<\/ut>
+    #XLZ:      \{\d+\}
+    #sdlxliff: <x +id\="[\S\d]+"\/>
+    
+    src_tags = segment[:source].scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
+    tgt_tags = segment[:target].scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
     deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
     
     if deleted_tags != []
@@ -218,7 +228,7 @@ module Checker
     CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(/(\d+[\d ,\.]*\d|\d)/) {|found|
       #あとでリファクタリングする！
       if found[0] == "1"
-        unless segment[:target].remove_DF_UT =~ /[1一]/
+        unless segment[:target].remove_DF_UT =~ /(1|一|one)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -226,7 +236,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "2"
-        unless segment[:target].remove_DF_UT =~ /[2二]/
+        unless segment[:target].remove_DF_UT =~ /(2|二|two)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -234,7 +244,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "3"
-        unless segment[:target].remove_DF_UT =~ /[3三]/
+        unless segment[:target].remove_DF_UT =~ /(3|三|three)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -242,7 +252,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "4"
-        unless segment[:target].remove_DF_UT =~ /[4四]/
+        unless segment[:target].remove_DF_UT =~ /(4|四|four)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -250,7 +260,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "5"
-        unless segment[:target].remove_DF_UT =~ /[5五]/
+        unless segment[:target].remove_DF_UT =~ /(5|五|five)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -258,7 +268,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "6"
-        unless segment[:target].remove_DF_UT =~ /[6六]/
+        unless segment[:target].remove_DF_UT =~ /(6|六|six)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -266,7 +276,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "7"
-        unless segment[:target].remove_DF_UT =~ /[7七]/
+        unless segment[:target].remove_DF_UT =~ /(7|七|seven)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -274,7 +284,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "8"
-        unless segment[:target].remove_DF_UT =~ /[8八]/
+        unless segment[:target].remove_DF_UT =~ /(8|八|eight)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -282,7 +292,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "9"
-        unless segment[:target].remove_DF_UT =~ /[9九]/
+        unless segment[:target].remove_DF_UT =~ /(9|九|nine)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -290,7 +300,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "0"
-        unless segment[:target].remove_DF_UT =~ /(0|ゼロ|零)/
+        unless segment[:target].remove_DF_UT =~ /(0|ゼロ|零|zero)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -298,7 +308,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "10"
-        unless segment[:target].remove_DF_UT =~ /(10|十)/
+        unless segment[:target].remove_DF_UT =~ /(10|十|ten)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -306,7 +316,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "100"
-        unless segment[:target].remove_DF_UT =~ /(100|百)/
+        unless segment[:target].remove_DF_UT =~ /(100|百|hundred)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -314,7 +324,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "1000"
-        unless segment[:target].remove_DF_UT =~ /(1000|千)/
+        unless segment[:target].remove_DF_UT =~ /(1000|千|thousand)/
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
