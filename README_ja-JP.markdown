@@ -37,7 +37,7 @@ hiatus
   例: **write**であれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます。
 + 主観ではありますが、出力レポートの見やすさ/使いやすさは高いと思います。
-+ コードを公開してるので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。QAでは大事な観点です。
++ コードを公開しているので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。QAでは大事な観点です。
 
 動作環境
 --------
@@ -141,7 +141,7 @@ Rubyの正規表現は[oniguruma](http://www.geocities.jp/kosako3/oniguruma/)が
 
 ライセンス
 ----------
-Copyright &copy; 2012 Ayumu Hanba  
+Copyright &copy; 2012 Ayumu Hanba (ayumuhamba19 at_mark gmail.com)  
 Distributed under the [GPL License][GPL].
 
 [GPL]: http://www.gnu.org/licenses/gpl.html

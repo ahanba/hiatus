@@ -145,7 +145,7 @@ Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguru
 
 License
 ----------
-Copyright &copy; 2012 Ayumu Hanba  
+Copyright &copy; 2012 Ayumu Hanba (ayumuhamba19 at_mark gmail.com)  
 Distributed under the [GPL License][GPL].
 
 [GPL]: http://www.gnu.org/licenses/gpl.html
