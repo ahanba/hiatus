@@ -110,6 +110,12 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - inconsistency の色付け修正
   inconsistency の色付けロジックに問題があったので、修正しました。
   
+2012/09/30
+- sdlxliffの読み込みにひとまず対応。チェックそのものは実行可能だが、読み込んだ時のセグメント単位が異なる。
+  ただし、読み込み方がseg-sourceのレベルになっているので、Tradosで開いたテーブルとマッチしていない。
+  mrkタグで読み込み、id属性でtargetとseg-defsとマッチさせるように変更しなしといけない。
+- ignore100オプションのハッシュのキーがreader側で誤っていた問題を修正。
+
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
 - unsourced で訳文に数値があって、原文に one とかのテキストがある時のエラー除外対応

@@ -87,7 +87,9 @@ How to create Glossary file?
 ------------
 The format is Tab Separated Text file (TSV file).  
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
-See below and the sample files in !Sample_files folder.   
+See below and the sample files in !Sample_files folder.  
+
+**Glossary File Format** 
 
 **SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option**  
 Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option" 
@@ -107,6 +109,7 @@ Or
 + **Blank**&nbsp;&nbsp;&nbsp;&nbsp;*No Conversion + No RegExp + Case-Sensitive => As Is*  
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
+Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
 *Third column is always required - "SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
 *Even when you use Blank option, create 3rd column and leave there blank*
 
@@ -118,6 +121,8 @@ How to create Monolingual file?
 Tab Separated Text file (TSV file).  
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by NKF library.   
 See below and the sample files in !Sample_files folder.   
+
+**Monolingual File Format** 
 
 **s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;Message to display**  
 Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display"  
@@ -132,6 +137,7 @@ If you specify **s** on the first column, Source text will be searched, and if *
 Available options are same as Glossary.
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
+Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
 *Third column is always required - "s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
 *Even when you use Blank option, create 3rd column and leave there blank.*
 *4th column is optional. you can omit.*
