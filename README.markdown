@@ -10,12 +10,12 @@ Check Items
 + **Glossary** (RegExp supported)
 + **Source or Target Segment (simple Term, Style check)** (RegExp supported)
 + **Inconsistency** (both Source <=> Target)
-+ **Numbers** (detect the numbers not in Source but in Target)
++ **Numbers** (detect the numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (both Missing and Added one)
 + **Length** (the length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphanumeric strings in Target but not in Source** (valid only when Target is non-Alphabet language: unsourced)
-+ **Alphanumeric strings in Source but not in Target** (valid only when Source is non-Alphabet language: unsourced_rev)
++ **Alphanumeric strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: unsourced)
++ **Alphanumeric strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: unsourced_rev)
 
 Supported Bilingual File Formats
 ------

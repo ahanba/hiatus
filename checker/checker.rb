@@ -324,7 +324,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "1000"
-        unless segment[:target].remove_DF_UT =~ /(1000|千|thousand)/
+        unless segment[:target].remove_DF_UT =~ /(1000|千|thousand)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -332,7 +332,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "10000"
-        unless segment[:target].remove_DF_UT =~ /(10000|万)/
+        unless segment[:target].remove_DF_UT =~ /(10000|万)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
