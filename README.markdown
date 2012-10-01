@@ -8,7 +8,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary** (RegExp supported)
-+ **Source or Target Segment (simple Term, Style check)** (RegExp supported)
++ **Source or Target Segment (simple Term & Style check)** (RegExp supported)
 + **Inconsistency** (both Source <=> Target)
 + **Numbers** (detect the numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (both Missing and Added one)
