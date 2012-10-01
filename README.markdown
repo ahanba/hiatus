@@ -14,8 +14,8 @@ Check Items
 + **TTX, XLZ, SDLXLIFF Tag Check** (two way, both Missing and Added one)
 + **Length** (the length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphanumeric strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: unsourced)
-+ **Alphanumeric strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: unsourced_rev)
++ **Alphanumeric Strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: unsourced)
++ **Alphanumeric Strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: unsourced_rev)
 
 Supported Bilingual File Formats
 ------
