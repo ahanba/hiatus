@@ -116,8 +116,15 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
   mrkタグで読み込み、id属性でtargetとseg-defsとマッチさせるように変更しなしといけない。
 - ignore100オプションのハッシュのキーがreader側で誤っていた問題を修正。
 
+2012/10/16
+- numberのパターン追加(100000に対して100,000が入っている場合はエラーなしとする)
+- unsourcedの正規表現微修正(ピリオド開始はなくした)
+
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
 - unsourced で訳文に数値があって、原文に one とかのテキストがある時のエラー除外対応
 - 日本語の動詞/形容詞/形容動詞の活用変化対応
 - スペイン語の活用変化対応
+- ピリオドチェック
+- 文末スペース
+- dupスペース

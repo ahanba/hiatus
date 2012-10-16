@@ -324,7 +324,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "1000"
-        unless segment[:target].remove_DF_UT =~ /(1000|千|thousand)/i
+        unless segment[:target].remove_DF_UT =~ /(1,000|1 000|1000|千|thousand)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -332,7 +332,7 @@ module Checker
           @errors << error
         end
       elsif found[0] == "10000"
-        unless segment[:target].remove_DF_UT =~ /(10000|万)/i
+        unless segment[:target].remove_DF_UT =~ /(10,000|10 000|10000|万)/i
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -344,7 +344,9 @@ module Checker
         num_forms << found[0]
         num_forms << found[0].gsub(",","")
         num_forms << found[0].gsub(" ","")
-        unless (segment[:target].remove_DF_UT.scan(/(#{num_forms.join("|")})/) != [])
+        num_forms << found[0].reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
+        num_forms << found[0].reverse.gsub(/(\d{3})(?=\d)/, '\1 ').reverse
+        unless (segment[:target].remove_DF_UT.scan(/(#{num_forms.unq.join("|")})/) != [])
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
@@ -448,7 +450,7 @@ private
   end
   
   def unsourced_template(segment, symbol1, symbol2)
-    enu_terms = CGI.unescapeHTML(segment[symbol1].remove_DF_UT).scan(/([@\.a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@\.a-zA-Z])/)
+    enu_terms = CGI.unescapeHTML(segment[symbol1].remove_DF_UT).scan(/([@a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@a-zA-Z])/)
     enu_terms.map {|enu_term|
       conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
       next if CGI.unescapeHTML(segment[symbol2].remove_DF_UT)[conv_enu]
