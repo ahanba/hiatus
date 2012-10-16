@@ -346,7 +346,7 @@ module Checker
         num_forms << found[0].gsub(" ","")
         num_forms << found[0].reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
         num_forms << found[0].reverse.gsub(/(\d{3})(?=\d)/, '\1 ').reverse
-        unless (segment[:target].remove_DF_UT.scan(/(#{num_forms.unq.join("|")})/) != [])
+        unless (segment[:target].remove_DF_UT.scan(/(#{num_forms.uniq.join("|")})/) != [])
           error = {}
           error[:message]   = "Missing Number?"
           error[:found]     = "#{found[0]} is not found in the target"
