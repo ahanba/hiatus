@@ -121,7 +121,7 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - unsourcedの正規表現微修正(ピリオド開始はなくした)
 
 2012/11/05
-- segment[:target]がnilのときStringクラスでないためにmethod_missingで止まってしまうを問題を修正。
+- segment[:target]がnilのときStringクラスでないためにmethod_missingで止まってしまう問題を修正。
   nilにもto_sメソッドはあるので、Stringクラスの拡張ではなく、Objectクラスの拡張にしてNilClassにもStringにも同一のメソッドが使用できるようにした。	
 
 TO DO:
