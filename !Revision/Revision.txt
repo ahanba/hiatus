@@ -122,9 +122,11 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
-- unsourced で訳文に数値があって、原文に one とかのテキストがある時のエラー除外対応
+- unsourcedで訳文に数値があって、原文にoneとかのテキストがある時のエラー除外対応
+- TTXに対してDOMとしてのバリデーション
 - 日本語の動詞/形容詞/形容動詞の活用変化対応
 - スペイン語の活用変化対応
+- segment[:target] = nilのとき処理が止まることへの対応
 - ピリオドチェック
 - 文末スペース
 - dupスペース

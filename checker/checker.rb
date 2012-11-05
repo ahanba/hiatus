@@ -4,16 +4,16 @@
 # Need to separate/create each tag processing method for each file type (ttx, xlz, sdlxliff)
 # 
 
-class String
+class Object
   def ignore_ttx_tags
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
-    self.gsub(/(<\/*df.*?>|<\/*ut.*?>)/, "")
+    self.to_s.gsub(/(<\/*df.*?>|<\/*ut.*?>)/, "")
   end
   
   def remove_DF_UT
     #remove "<df...>", "</df>" and "<ut .... >...  </ut>" tags 
     #include the text between <ut> & </ut> tags. That is different from ignore_ttx_tags
-    self.gsub(/<\/*?df.*?>/,"").gsub(/<ut.*?<\/ut>/,"")
+    self.to_s.gsub(/<\/*?df.*?>/,"").gsub(/<ut.*?<\/ut>/,"")
   end
 end
 
