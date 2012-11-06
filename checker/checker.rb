@@ -106,8 +106,8 @@ module Checker
     #XLZ:      \{\d+\}
     #sdlxliff: <x +id\="[\S\d]+"\/>
     
-    src_tags = segment[:source].scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
-    tgt_tags = segment[:target].scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
+    src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
+    tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
     deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
     
     if deleted_tags != []
