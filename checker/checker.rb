@@ -24,18 +24,18 @@ module Checker
   
   attr_accessor :glossary, :monolingual, :errors, :checks
   
-  FILETYPE = {".ttx"  => "TTX",
-              ".txt"  => "TXT",
-              ".csv"  => "CSV",
-              ".tmx"  => "TMX",
-              ".xlz"  => "XLZ",
-              ".xls"  => "XLS",
-              ".xlsx" => "XLS",
-              ".doc"  => "DOC",
-              ".docx" => "DOC",
-              ".rtf"  => "DOC",
+  FILETYPE = {".ttx"       => "TTX",
+              ".txt"       => "TXT",
+              ".csv"       => "CSV",
+              ".tmx"       => "TMX",
+              ".xlz"       => "XLZ",
+              ".xls"       => "XLS",
+              ".xlsx"      => "XLS",
+              ".doc"       => "DOC",
+              ".docx"      => "DOC",
+              ".rtf"       => "DOC",
               ".sdlxliff"  => "SDLXLIFF",
-              ".tbx"  => "TBX"
+              ".tbx"       => "TBX"
   }
   
   def initialize(bilingual_path, glossary_path, monolingual_path, ops, checks, langs)
