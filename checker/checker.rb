@@ -1,7 +1,7 @@
 #coding: utf-8
 
 # To DO:
-# Need to separate/create each tag processing method for each file type (ttx, xlz, sdlxliff)
+# Need to separate/create unique tag processing method for each file type (ttx, xlz, sdlxliff)
 # 
 
 class Object
