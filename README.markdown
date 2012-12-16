@@ -40,8 +40,8 @@ Features
 Environment
 --------
 Ruby 1.9.2 or 1.9.3  
-Windows XP, Windows 7
-*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically.
+Windows XP, Windows 7   
+*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically.   
 
 Ruby Libraries Required
 ---------
