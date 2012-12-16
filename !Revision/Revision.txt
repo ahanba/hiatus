@@ -124,10 +124,15 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - segment[:target]がnilのときStringクラスでないためにmethod_missingで止まってしまう問題を修正。
   nilにもto_sメソッドはあるので、Stringクラスの拡張ではなく、Objectクラスの拡張にしてNilClassにもStringにも同一のメソッドが使用できるようにした。	
 
+2012/12/15
+- 実行OSのエンコーディングをShift-JISのハードコードから、iconvで動的に値を取得する形に変更。なので日本語OSでなくても動くと思われる。
+- 各種設定パスに設定した値が存在しないときはエラーとして処理をやめるように実装
+- sdlxliffの読み取り方法をxml.exeを使用しない形に変更
+- glossaryにも4行目にコメントを設定できるように変更
+
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
 - unsourcedで訳文に数値があって、原文にoneとかのテキストがある時のエラー除外対応
 - TTXに対してDOMとしてのバリデーション
 - 日本語の動詞/形容詞/形容動詞の活用変化対応
 - スペイン語の活用変化対応
-- dupスペース

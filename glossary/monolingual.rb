@@ -23,11 +23,13 @@ class Monolingual
   #
   #Term.s_or_t    = Specify whether Source or Target
   #Term.term      = Target
+  #Term.message   = Message
   #Term.option    = RegExp option
   #Term.regTerm   = RegExp compiled Source
   
   class Term
     include Converter
+    
     attr_accessor :s_or_t, :term, :option, :regTerm, :message
     
     def initialize(entry, langs)

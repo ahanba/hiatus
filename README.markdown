@@ -40,10 +40,8 @@ Features
 Environment
 --------
 Ruby 1.9.2 or 1.9.3  
-Windows XP, Windows 7 Japanese  
-
-By default, hiatus is designed for Japanese version of Windows OS, that means default OS encode is Shift-JIS. So hiatus won't work on other languages' environment.  
-If you want to use hiatus in other languages' environment, you have to modify some lines of the code or contact me. It is not difficult if you can read Ruby.
+Windows XP, Windows 7
+*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically.
 
 Ruby Libraries Required
 ---------

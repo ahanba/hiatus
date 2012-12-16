@@ -14,11 +14,8 @@ module Reader
         ch_line = line.chomp.split("\t")
         entry[:source]   = ch_line[0]
         entry[:target]   = ch_line[1]
-        if ch_line[2] != (nil && "")
-          entry[:id]       = ch_line[2]
-        else
-          entry[:id]       = "Line: #{i + 1}"
-        end
+        entry[:id]       = ch_line[2] if ch_line[2] != (nil && "")
+        entry[:note]       = "Line: #{i + 1}"
         @@bilingualArray.push(entry)
       }
     end

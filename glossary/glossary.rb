@@ -21,22 +21,25 @@ class Glossary
   #This class has each entry of source, target and each regexp version
   #Glossary class has an array of Term class object
   #
-  #Term.src    = Source
-  #Term.tgt    = Target
-  #Term.option = RegExp option
-  #Term.regSrc = RegExp compiled Source
-  #Term.regTgt = RegExp compiled Target
-  #Term.file   = Glossary file name
+  #Term.src        = Source
+  #Term.tgt        = Target
+  #Term.message    = Message
+  #Term.option     = RegExp option
+  #Term.regSrc     = RegExp compiled Source
+  #Term.regTgt     = RegExp compiled Target
+   
   
   class Term
     include Converter
-    attr_accessor :src, :tgt, :option, :regSrc, :regTgt, :file
+    
+    attr_accessor :src, :tgt, :option, :message, :regSrc, :regTgt, :file
     
     def initialize(entry, langs)
-      @src    = entry[:source]
-      @tgt    = entry[:target]
-      @option = entry[:option]
-      @file   = entry[:file]
+      @src     = entry[:source]
+      @tgt     = entry[:target]
+      @option  = entry[:option]
+      @message = entry[:message] if entry[:message]
+      @file    = entry[:file]
       makeRegexp(@src, @tgt, @option, langs)
     end
   
@@ -45,9 +48,17 @@ class Glossary
             "m"   => Regexp::MULTILINE,
             "e"   => Regexp::EXTENDED,
             "im"  => Regexp::IGNORECASE | Regexp::MULTILINE,
+            "mi"  => Regexp::IGNORECASE | Regexp::MULTILINE,
             "em"  => Regexp::EXTENDED | Regexp::MULTILINE,
+            "me"  => Regexp::EXTENDED | Regexp::MULTILINE,
             "ie"  => Regexp::IGNORECASE | Regexp::EXTENDED,
-            "ime" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED 
+            "ei"  => Regexp::IGNORECASE | Regexp::EXTENDED,
+            "ime" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "iem" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "eim" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "emi" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "mie" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "mei" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED
     }
     
     def makeRegexp(src, tgt, option, langs)
@@ -64,9 +75,11 @@ class Glossary
         @regTgt = Regexp.new(Regexp.escape(tgt), Regexp::IGNORECASE)
       elsif option != ""
         begin
+          #現状ソースが英語前提になっているので、言語に応じたコンバージョンを早く実装する
           convertedSrc = self.send("convertEN", src)
+          convertedTgt = self.send("convertEN", tgt)
           @regSrc = Regexp.compile(convertedSrc, OPS[option])
-          @regTgt = Regexp.compile(tgt, OPS[option])
+          @regTgt = Regexp.compile(convertedTgt, OPS[option])
         rescue RegexpError
           raise RegexpError,"Can't convert \"#{src}\" to RegExp format. Check it on http://www.rubular.com"
         end

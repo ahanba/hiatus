@@ -8,14 +8,27 @@ Note that this script does not work with Ruby 1.8.7 or earlier
 
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
-require 'glossary/converter'
+require 'glossary/converter/converter'
 require 'glossary/glossary'
 require 'glossary/monolingual'
 require 'reader/reader'
 require 'writer/writer'
 require 'checker/checker'
+require 'iconv'
 
 require 'yaml'
+include Reader::Core
+
+
+CODE = Encoding.locale_charmap
+
+def to_native_charset(str)
+  Iconv.conv(CODE, "UTF-8", str)
+end
+
+def from_native_charset(str)
+  Iconv.conv("UTF-8", CODE, str)
+end
 
 #For Windows XLS read/write, require win32ole
 if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
@@ -35,7 +48,7 @@ if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
   end
 end
 
-myconfig = YAML.load_file("config.yaml")
+myconfig = YAML.load(read_rawfile("config.yaml"))
 
 #YAML data is like this:
 #{"required"=>
@@ -54,13 +67,21 @@ myconfig = YAML.load_file("config.yaml")
 #   "ignore100"=>false}
 #}
 
-bilingual_path    = myconfig["required"]["bilingual"].gsub('\\','/').tosjis
-output_path       = myconfig["required"]["output"].gsub('\\','/').tosjis
+bilingual_path    = to_native_charset(myconfig["required"]["bilingual"].gsub('\\','/'))
+output_path       = to_native_charset(myconfig["required"]["output"].gsub('\\','/'))
 report_format     = myconfig["required"]["report"]
 source_lang       = myconfig["required"]["source"]
 target_lang       = myconfig["required"]["target"]
-glossary_path     = myconfig["required"]["glossary"].gsub('\\','/').tosjis
-monolingual_path  = myconfig["required"]["monolingual"].gsub('\\','/').tosjis
+glossary_path     = to_native_charset(myconfig["required"]["glossary"].gsub('\\','/'))
+monolingual_path  = to_native_charset(myconfig["required"]["monolingual"].gsub('\\','/'))
+
+puts "checking directories..."
+[bilingual_path, output_path, glossary_path, monolingual_path].each { |myDir|
+  unless FileTest.directory?(myDir)
+    puts "'#{myDir}' does not exist. Should be existing directory, please fix and try again."
+    exit
+  end
+}
 
 langs = {
   :sourceL => source_lang,
@@ -92,9 +113,9 @@ checks[:unsourced_rev]     = myconfig["check"]["unsourced_rev"]
 checks[:length]            = myconfig["check"]["length"]
 
 option = {
-  :filter     => myconfig["option"]["filter_by"],
+  :filter    => myconfig["option"]["filter_by"],
   :ignore100 => myconfig["option"]["ignore100"],
-  :ignoreICE  => myconfig["option"]["ignoreICE"]
+  :ignoreICE => myconfig["option"]["ignoreICE"]
 }
 
 class MyChecker

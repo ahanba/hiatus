@@ -1,22 +1,21 @@
 hiatus
 ===========================
-**hiatus**はローカライズのQAツールです。
-各種バイリンガルファイルに対して、チェックを行い、エラーを検出します。  
-詳細については、以下を参照してください。  
+**hiatus**はローカライズのQA (Quality Assurance) ツールです。  
+詳細については、以下をご覧ください。  
 スライド (英語):   [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 デモ: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 
 検出可能なチェック項目
 ------
 + **用語集** (正規表現対応)
-+ **原文/訳文どちらか一方からの文字列検出チェック** (正規表現対応。スタイルガイドなどバイリンガルのペアではない単一言語に対するチェック項目)
++ **原文/訳文どちらか一方からの文字列検出チェック** (正規表現対応。スタイルガイドなどを想定)
 + **Inconsistency** (原文 => 訳文、訳文 => 原文の両方可)
-+ **数値** (原文に入っている数値が訳文に入っていない)
++ **数値** (原文にない数値をエラー検出)
 + **TTX、XLZでのタグの追加削除検出**
 + **長さ** (原文と訳文の長さが一定割合以上異る)
 + **翻訳抜け、空欄**
-+ **原文にない英数文字列の検出** (訳文が非アルファベット言語の時のみ有効: unsourced)
-+ **訳文にある英数文字列が原文にない場合の検出** (原文が非アルファベット言語の時のみ有効: unsourced_rev)
++ **原文にない英数文字列の検出** (訳文が非アルファベット言語の時のみ有効)
++ **訳文にある英数文字列が原文にない場合の検出** (原文が非アルファベット言語の時のみ有効)
 
 対象ファイル (拡張子)
 ------
@@ -28,7 +27,6 @@ hiatus
 + XLS/XLSX (A列 = 原文、B列 = 訳文、C列 = コメントとして読み込みます)
 + RTF/DOC/DOCX (Trados 形式のバイリンガル)
 + TBX
-+ SDLXLIFF
 
 特長
 --------
@@ -36,16 +34,14 @@ hiatus
   オプションで機能のオン/オフを設定可能。  
   例: **write**であれば、**write|writes|writing|wrote|written**の活用形すべてにヒットします
 + 入力ファイルがユニコード系(UTF-8|UTF-16)であれば、多言語でも文字化けせずに表示できます。
-+ 主観ではありますが、出力レポートの見やすさ/使いやすさは高いと思います。
-+ コードを公開しているので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。QAでは大事な観点です。
++ 主観ではありますが、実際仕事現場で使う人間が作成しているので、出力レポートの見やすさ/使いやすさは高いと思います。
++ コードを公開してるので、なにがチェックされる (逆にされない) のか、読めば確認できます。そういう点ではリスクも含め全体を把握できます。
 
 動作環境
 --------
 Ruby 1.9.2 or 1.9.3  
-Windows XP、Windows 7 Japanese  
-
-Windows での文字化け回避のため、内部でShift-JISにしているので、デフォルトでは日本語OS環境でしか動きません (たぶん)。  
-すこし調整すれば他の言語のOSでも動くと思います  
+Windows XP、Windows 7 
+*テストしていませんが、どの言語でも動くのではないかと思います。OSのデフォルトEncodingは動的に取得しています。
 
 必要なライブラリ
 ---------
@@ -77,7 +73,6 @@ config.yamlに必要な情報を記載して、hiatus.rbを実行すると、エ
        monolingual: true  
        numbers: true  
        unsourced: true  
-       unsourced_rev: true   
        length: false  
   
      option:  
@@ -108,13 +103,11 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 + **z**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*正規表現は使用しないが、大文字小文字の区別のみ無効にしたいとき*
 + **空欄**&nbsp;&nbsp;&nbsp;&nbsp;*コンバージョンなし。大文字小文字の区別あり。書いたまま*  
 
-*必ず「原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列必要です。*  
-*空欄にするときも、3列は作成して、値を空としてください*  
-
-オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。  
-
 正規表現については、[rubular](http://rubular.com/) で確認できます。  
-Rubyの正規表現は[oniguruma](http://www.geocities.jp/kosako3/oniguruma/)がベースになっています。 [こちら](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt)で使用可能な正規表現のAPIを確認できます。     
+*必ず「原文&nbsp;&nbsp;&nbsp;&nbsp;訳文&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列必要です。*  
+*空欄にするときも、3列は作成して、値を空としてください*
+
+オートコンバージョンとは、例えばwriteであれば、write|writes|writing|wrote|writtenの活用形すべてにヒットするようにツール側でコンバージョンをすることです。
 
 単一言語用チェックファイルの設定
 --------
@@ -133,15 +126,14 @@ UTF-8 without BOMがおすすめですが、エンコードは自動判定され
 
 sのときは、Source (=原文)を、tのときはTarget (=訳文)の方をチェックします。  
 オプションは用語集ファイルのものと同じです。  
+
+正規表現については、[rubular](http://rubular.com/) で確認できます。  
 *必ず「sまたはt&nbsp;&nbsp;&nbsp;&nbsp;検索する文字列&nbsp;&nbsp;&nbsp;&nbsp;オプション」の3列は必要です。*  
 *4列目は任意ですが、空欄にするときも、3列は作成して、値を空としてください*
 
-正規表現については、[rubular](http://rubular.com/) で確認できます。  
-Rubyの正規表現は[oniguruma](http://www.geocities.jp/kosako3/oniguruma/)がベースになっています。 [こちら](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt)で使用可能な正規表現のAPIを確認できます。
-
 ライセンス
 ----------
-Copyright &copy; 2012 Ayumu Hanba (ayumuhamba19 at_mark gmail.com)  
+Copyright &copy; 2012 Ayumu Hanba  
 Distributed under the [GPL License][GPL].
 
 [GPL]: http://www.gnu.org/licenses/gpl.html

@@ -7,13 +7,37 @@
 class Object
   def ignore_ttx_tags
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
-    self.to_s.gsub(/(<\/*df.*?>|<\/*ut.*?>)/, "")
+    self.to_s.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")
   end
   
   def remove_DF_UT
     #remove "<df...>", "</df>" and "<ut .... >...  </ut>" tags 
     #include the text between <ut> & </ut> tags. That is different from ignore_ttx_tags
-    self.to_s.gsub(/<\/*?df.*?>/,"").gsub(/<ut.*?<\/ut>/,"")
+    self.to_s.gsub(/<\/?df.*?>/i,"").gsub(/<ut.*?<\/ut>/i,"")
+  end
+  
+  #see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html for XLIFF specifications
+  #delete mrk
+  #placeholder inline tags are <x/>, <g>,<bx/>, <ex/> 
+  #native inline tags are <bpt>, <ept>, <it>, <Ph>
+  def convXLIFFtags
+    self.to_s.gsub(/<mrk.*?<\/mrk>/i,"").gsub(/(?:<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>)/i).each_with_index{|match, i|
+     "{#{i}}"
+    }
+  end
+  
+  def convEntity
+    self.gsub(/&(apos|amp|quot|gt|lt);/) do
+      match = $1.dup
+      case match
+        when 'apos' then "'"
+        when 'amp'  then '&'
+        when 'quot' then '"'
+        when 'gt'   then '>'
+        when 'lt'   then '<'
+        when 'ndash'   then '-'
+      end
+    end
   end
 end
 
@@ -86,11 +110,15 @@ module Checker
   
   def glossary_check(segment)
     @glossary.each_term {|term|
-      CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(term.regSrc) {|found|
-        next if CGI.unescapeHTML(segment[:target].remove_DF_UT)[term.regTgt]
+      CGI.unescapeHTML(segment[:source].remove_DF_UT).convEntity.scan(term.regSrc) {|found|
+        next if CGI.unescapeHTML(segment[:target].remove_DF_UT).convEntity[term.regTgt]
         error = {}
         error[:message]   = "Glossary"
-        error[:found]     = found
+        if term.message
+          error[:found]   = found + " => " + term.message
+        else
+          error[:found]   = found if found.class == String
+        end
         error[:glossary]  = term
         error[:bilingual] = segment
         #error[:pos]とerror[:length]を追加して、ヒット部分の文字色を変える？
@@ -106,8 +134,8 @@ module Checker
     #XLZ:      \{\d+\}
     #sdlxliff: <x +id\="[\S\d]+"\/>
     
-    src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
-    tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|<x +id\="[\S\d]+"\/>)/)
+    src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|\([A-Z]\)|<x +id\="[\S\d]+"\/>)/)
+    tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|\{\d+\}|\([A-Z]\)|<x +id\="[\S\d]+"\/>)/)
     deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
     
     if deleted_tags != []
@@ -162,7 +190,7 @@ module Checker
   def monolingual_check(segment)
     @monolingual.each_term {|term|
       if term.s_or_t.downcase == "s"
-        CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(term.regTerm) {|found|
+        CGI.unescapeHTML(segment[:source].remove_DF_UT).convEntity.scan(term.regTerm) {|found|
           next if found == []
           error = {}
           error[:message]   = "Found in the Source"
@@ -178,16 +206,17 @@ module Checker
         }
       end
       if term.s_or_t.downcase == "t"
-        CGI.unescapeHTML(segment[:target].remove_DF_UT).scan(term.regTerm) {|found|
+        CGI.unescapeHTML(segment[:target].remove_DF_UT).convEntity.scan(term.regTerm) {|found|
           next if found == []
           error = {}
           error[:message]   = "Found in the Target"
+          #Use (?: ) fo regExp
           if term.message
             error[:found]   = found[0] + " => " + term.message if found.class == Array
             error[:found]   = found + " => " + term.message if found.class == String
           else
             error[:found]   = found[0] if found.class == Array
-            error[:found]   = found[0] if found.class == String
+            error[:found]   = found if found.class == String
           end
           error[:bilingual] = segment
           @errors << error
@@ -225,7 +254,7 @@ module Checker
   end
   
   def check_numbers(segment)
-    CGI.unescapeHTML(segment[:source].remove_DF_UT).scan(/(\d+[\d ,\.]*\d|\d)/) {|found|
+    CGI.unescapeHTML(segment[:source].remove_DF_UT).convEntity.scan(/(\d+[\d ,\.]*\d|\d)/) {|found|
       #あとでリファクタリングする！
       if found[0] == "1"
         unless segment[:target].remove_DF_UT =~ /(1|一|one)/i
@@ -418,8 +447,11 @@ private
   def inconsistency_check(symbol1, symbol2)
     incon = {}
     @@bilingualArray.map{|segment|
-      rawSrc = segment[symbol1].remove_DF_UT
-      rawTgt = segment[symbol2].remove_DF_UT
+      #rstripつけると末尾の空白無視したうえで比較できる
+      rawSrc = segment[symbol1].remove_DF_UT.rstrip
+      rawTgt = segment[symbol2].remove_DF_UT.rstrip
+      #rawSrc = segment[symbol1].remove_DF_UT
+      #rawTgt = segment[symbol2].remove_DF_UT
       if incon.has_key?(rawSrc)
         incon[rawSrc][0] << rawTgt
         incon[rawSrc][1] << segment
@@ -443,14 +475,16 @@ private
         error[:message]   = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:found]     = "Inconsistent \(#{symbol1.to_s}->#{symbol2.to_s}\)"
         error[:bilingual] = segment
-        error[:color] = colorIndex[(forms.index(segment[:"#{symbol2}"].remove_DF_UT)) % colorIndex.length]
+        #rstripつけたとき
+        error[:color] = colorIndex[(forms.index(segment[:"#{symbol2}"].remove_DF_UT.rstrip)) % colorIndex.length]
+        #error[:color] = colorIndex[(forms.index(segment[:"#{symbol2}"].remove_DF_UT)) % colorIndex.length]
         @errors << error
       }
     }
   end
   
   def unsourced_template(segment, symbol1, symbol2)
-    enu_terms = CGI.unescapeHTML(segment[symbol1].remove_DF_UT).scan(/([@a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@a-zA-Z])/)
+    enu_terms = CGI.unescapeHTML(segment[symbol1].remove_DF_UT).convEntity.scan(/([@a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@a-zA-Z])/)
     enu_terms.map {|enu_term|
       conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
       next if CGI.unescapeHTML(segment[symbol2].remove_DF_UT)[conv_enu]

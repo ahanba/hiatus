@@ -18,10 +18,11 @@ module Reader
             i += 1
             split_line = line.split("\t")
             entry = {}
-            entry[:source] = split_line[0].chomp
-            entry[:target] = split_line[1].chomp
-            entry[:option] = split_line[2].chomp
-            entry[:file]   = File.basename(file)
+            entry[:source]  = split_line[0].chomp
+            entry[:target]  = split_line[1].chomp
+            entry[:option]  = split_line[2].chomp
+            entry[:message] = split_line[3].chomp if split_line[3]
+            entry[:file]    = File.basename(file)
             @@glossaryArray << entry
           }
         when ".tbx"

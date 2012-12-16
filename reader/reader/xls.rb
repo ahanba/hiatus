@@ -21,9 +21,9 @@ module Reader
           i += 1
           entry = {}
           entry[:filename] = file.to_s
-          sheet.Cells(i, 1).value != nil ? entry[:source] = read_rawText(sheet.Cells(i, 1).value) : entry[:source] = ""
-          sheet.Cells(i, 2).value != nil ? entry[:target] = read_rawText(sheet.Cells(i, 2).value) : entry[:target] = ""
-          entry[:note]     = read_rawText(sheet.Cells(i, 3).value) if sheet.Cells(i, 3).value != nil
+          sheet.Cells(i, 1).value != nil ? entry[:source] = from_native_charset(sheet.Cells(i, 1).value.to_s) : entry[:source] = ""
+          sheet.Cells(i, 2).value != nil ? entry[:target] = from_native_charset(sheet.Cells(i, 2).value.to_s) : entry[:target] = ""
+          entry[:note]     = from_native_charset(sheet.Cells(i, 3).value) if sheet.Cells(i, 3).value != nil
           entry[:id]       = "Row #{i}"
           @@bilingualArray.push(entry)
         end
