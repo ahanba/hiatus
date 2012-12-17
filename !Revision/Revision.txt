@@ -127,9 +127,9 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 2012/12/15
 - 実行OSのエンコーディングをShift-JISのハードコードから、iconvで動的に値を取得する形に変更。なので日本語OSでなくても動くと思われる。
 - 各種設定パスに設定した値が存在しないときはエラーとして処理をやめるように実装
-- sdlxliffの読み取り方法をxml.exeを使用しない形に変更
+- sdlxliffの読み取り方法をxml.exeを使用しない形に変更。また、Oasisの仕様に即して読み込み精度を上げた。
 - glossaryにも4行目にコメントを設定できるように変更
-- config.yamlの読み取りを変更。UTF-8でなくてもエラー無しに読み込めるようにした。
+- config.yamlの読み取りを変更。UTF-8でなくてもエラー無しに読み込めるようにした。	
 
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
