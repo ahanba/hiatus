@@ -30,12 +30,12 @@ class Object
     self.gsub(/&(apos|amp|quot|gt|lt);/) do
       match = $1.dup
       case match
-        when 'apos' then "'"
-        when 'amp'  then '&'
-        when 'quot' then '"'
-        when 'gt'   then '>'
-        when 'lt'   then '<'
-        when 'ndash'   then '-'
+        when 'apos'  then "'"
+        when 'amp'   then '&'
+        when 'quot'  then '"'
+        when 'gt'    then '>'
+        when 'lt'    then '<'
+        when 'ndash' then '-'
       end
     end
   end

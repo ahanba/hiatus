@@ -8,14 +8,14 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary** (RegExp supported)
-+ **Source or Target Segment (simple Term & Style check)** (RegExp supported)
-+ **Inconsistency** (two way - both Source <=> Target)
-+ **Numbers** (detect the numbers in Source but NOT in Target)
-+ **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added one)
-+ **Length** (the length of Source and Target is different more/less than +/- 50%)
++ **Source or Target Segment (simple Text Search & Style check)** (RegExp supported)
++ **Inconsistency** (two way - both Source <-> Target)
++ **Numbers** (detect numbers in Source but NOT in Target)
++ **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added tags)
++ **Length** (length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphanumeric Strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: unsourced)
-+ **Alphanumeric Strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: unsourced_rev)
++ **Alphanumeric Strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: defined as "unsourced")
++ **Alphanumeric Strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: defined as "unsourced_rev")
 
 Supported Bilingual File Formats
 ------
@@ -33,7 +33,7 @@ Features
 --------
 + For English, hiatus converts dictionary form into possible active forms (Optional).    
   Example: hiatus converts **write** into **write|writes|writing|wrote|written**, and all of these terms are detected.
-+ As long as the encode of bilingual file is UTF-8/UTF-16, no garbage occurs in multiple languages, such as Japanese, Chinese, Korean, Thai, etc.
++ As long as the encode of bilingual file is UTF-8/UTF-16, no garbage occurs in handling multiple languages, such as Japanese, Chinese, Korean, Thai, etc.
 + Simple output report (XLS). Easy to filter.
 + Source code is published - you can see what can be checked, what can NOT be checked.
 
@@ -41,7 +41,7 @@ Environment
 --------
 Ruby 1.9.2 or 1.9.3  
 Windows XP, Windows 7   
-*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically.   
+*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically when generating Excel output file.   
 
 Ruby Libraries Required
 ---------

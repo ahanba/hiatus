@@ -2,8 +2,8 @@
 =begin
 Developed environment
 Ruby 1.9.2 or 1.9.3
-Windows XP SP2 Japanese
-Note that this script does not work with Ruby 1.8.7 or earlier
+Windows XP SP2, Windows 7
+Note that this script does not work on Ruby 1.8.7 or earlier
 =end
 
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
