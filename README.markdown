@@ -1,6 +1,6 @@
 hiatus
 ===========================
-**hiatus** is a localization QA tool, reads various bilingual files, runs checks and reports the errors found.  
+**hiatus** is a localization QA tool, reads various bilingual files, runs checks and reports the errors detected.  
 For more details, please see  
 Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
@@ -9,7 +9,7 @@ Check Items
 ------
 + **Glossary** (RegExp supported)
 + **Source or Target Segment (simple Text Search & Style check)** (RegExp supported)
-+ **Inconsistency** (two way - both Source <-> Target)
++ **Inconsistency** (two way - both Source -> Target and Target -> Source)
 + **Numbers** (detect numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added tags)
 + **Length** (length of Source and Target is different more/less than +/- 50%)
