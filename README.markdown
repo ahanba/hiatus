@@ -9,10 +9,10 @@ Check Items
 ------
 + **Glossary** (RegExp supported)
 + **Search Source or Target Text (For Style check)** (RegExp supported)
-+ **Inconsistency** (Two way - both Source -> Target and Target -> Source)
++ **Inconsistency** (Two way - Source > Target & Target > Source)
 + **Numbers** (Detect numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added tags)
-+ **Length** (Length of Source and Target is different more/less than +/- 50%)
++ **Length** (Length of Source and Target are different more/less than +/- 50%)
 + **Skipped Translation, Blank**
 + **Alphanumeric Strings in Target but NOT in Source** (Valid only when Target is non-Alphabet language: defined as "unsourced")
 + **Alphanumeric Strings in Source but NOT in Target** (Valid only when Source is non-Alphabet language: defined as "unsourced_rev")
