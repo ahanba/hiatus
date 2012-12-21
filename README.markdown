@@ -8,14 +8,14 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary** (RegExp supported)
-+ **Source or Target Segment (simple Text Search & Style check)** (RegExp supported)
-+ **Inconsistency** (two way - both Source -> Target and Target -> Source)
-+ **Numbers** (detect numbers in Source but NOT in Target)
++ **Source or Target Segment (Simple Text Search & Style check)** (RegExp supported)
++ **Inconsistency** (Two way - both Source -> Target and Target -> Source)
++ **Numbers** (Detect numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added tags)
-+ **Length** (length of Source and Target is different more/less than +/- 50%)
++ **Length** (Length of Source and Target is different more/less than +/- 50%)
 + **Skipped Translation, Blank**
-+ **Alphanumeric Strings in Target but NOT in Source** (valid only when Target is non-Alphabet language: defined as "unsourced")
-+ **Alphanumeric Strings in Source but NOT in Target** (valid only when Source is non-Alphabet language: defined as "unsourced_rev")
++ **Alphanumeric Strings in Target but NOT in Source** (Valid only when Target is non-Alphabet language: defined as "unsourced")
++ **Alphanumeric Strings in Source but NOT in Target** (Valid only when Source is non-Alphabet language: defined as "unsourced_rev")
 
 Supported Bilingual File Formats
 ------
