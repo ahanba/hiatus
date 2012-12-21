@@ -9,7 +9,7 @@ Check Items
 ------
 + **Glossary** (RegExp supported)
 + **Search Source or Target Text (For Style check)** (RegExp supported)
-+ **Inconsistency** (Two way - Source > Target & Target > Source)
++ **Inconsistency** (Two way - Source -> Target & Target -> Source)
 + **Numbers** (Detect numbers in Source but NOT in Target)
 + **TTX, XLZ, SDLXLIFF Tag Check** (Missing or Added tags)
 + **Length** (Length of Source and Target are different more/less than +/- 50%)
