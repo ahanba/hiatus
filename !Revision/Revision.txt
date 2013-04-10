@@ -131,6 +131,10 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - glossaryにも4行目にコメントを設定できるように変更
 - config.yamlの読み取りを変更。UTF-8でなくてもエラー無しに読み込めるようにした。	
 
+2013/4/10
+- Partially refactoring done  
+
+
 TO DO:
 - 出力レポートでマッチした箇所に色をつける
 - unsourcedで訳文に数値があって、原文にoneとかのテキストがある時のエラー除外対応

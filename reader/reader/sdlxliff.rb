@@ -4,7 +4,7 @@ module Reader
   
   module ReadSDLXLIFF
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For sdlxliff (Trados Studio) file
     def readSDLXLIFF(file, option)
@@ -31,8 +31,8 @@ module Reader
           end
           entry = {}
           entry[:filename] = file.to_s
-          entry[:source]   = seg[0].inner_html.convXLIFFtags
-          entry[:target]   = seg[1].inner_html.convXLIFFtags
+          entry[:source]   = seg[0].inner_html.remove_mrk_xliff_tags
+          entry[:target]   = seg[1].inner_html.remove_mrk_xliff_tags
           entry[:id]       = seg[2].attribute('id').value if seg[2].has_attribute?('id')
           #this represents match percent
           entry[:note]     = seg[2].attribute('percent').value if seg[2].has_attribute?('percent')

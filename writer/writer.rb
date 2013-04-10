@@ -33,8 +33,8 @@ module Writer
         sheet.Cells(row, col).value      = "=HYPERLINK(\"#{fullpath}\",\"#{base}\")"
         sheet.Cells(row, col + 1).value  = dir
         sheet.Cells(row, col + 2).value  = error[:message]
-        xlsEscape(sheet.Cells(row, col + 3), CGI.unescapeHTML(error[:bilingual][:source].ignore_ttx_tags).convEntity)
-        xlsEscape(sheet.Cells(row, col + 4), CGI.unescapeHTML(error[:bilingual][:target].ignore_ttx_tags).convEntity)
+        xlsEscape(sheet.Cells(row, col + 3), CGI.unescapeHTML(error[:bilingual][:source].remove_ttx_and_xliff_tags).convEntity)
+        xlsEscape(sheet.Cells(row, col + 4), CGI.unescapeHTML(error[:bilingual][:target].remove_ttx_and_xliff_tags).convEntity)
         if error[:color]
           sheet.Cells(row, col + 3).Interior.ThemeColor = error[:color]
           sheet.Cells(row, col + 4).Interior.ThemeColor = error[:color]
@@ -87,7 +87,7 @@ module Writer
       excel.Selection.Borders(i).Linestyle = 1
     }
     
-    myreport = to_native_charset(myreport)
+    myreport = myreport.utf_to_native
     book.SaveAs(getAbsolutePath(myreport))
     ensure
       excel.Workbooks.Close
@@ -97,7 +97,7 @@ module Writer
   
 private
   def xlsEscape(cell, str)
-    if str =~ /(^[\/\\\d$]+$|^=)/
+    if str =~ /^[\d\-+*\/\\$=]/
       cell.NumberFormatLocal = "@"
       cell.value = str
     else

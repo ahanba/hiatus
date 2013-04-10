@@ -3,7 +3,7 @@
 module Reader
   module ReadTXT
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For simple tab separated values. Like copy & pasted from Excel sheet
     def readTXT(file, option)

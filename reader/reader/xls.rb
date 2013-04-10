@@ -3,7 +3,7 @@
 module Reader
   module ReadXLS
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For Excel sheet. Only avaliable on Windows platform
     #target is default active sheet, col A as Source, col B as Target, col C as ID
@@ -21,9 +21,9 @@ module Reader
           i += 1
           entry = {}
           entry[:filename] = file.to_s
-          sheet.Cells(i, 1).value != nil ? entry[:source] = from_native_charset(sheet.Cells(i, 1).value.to_s) : entry[:source] = ""
-          sheet.Cells(i, 2).value != nil ? entry[:target] = from_native_charset(sheet.Cells(i, 2).value.to_s) : entry[:target] = ""
-          entry[:note]     = from_native_charset(sheet.Cells(i, 3).value) if sheet.Cells(i, 3).value != nil
+          sheet.Cells(i, 1).value != nil ? entry[:source] = sheet.Cells(i, 1).value.to_s.native_to_utf : entry[:source] = ""
+          sheet.Cells(i, 2).value != nil ? entry[:target] = sheet.Cells(i, 2).value.to_s.native_to_utf : entry[:target] = ""
+          entry[:note]     = sheet.Cells(i, 3).value.native_to_utf if sheet.Cells(i, 3).value != nil
           entry[:id]       = "Row #{i}"
           @@bilingualArray.push(entry)
         end

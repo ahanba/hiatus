@@ -46,6 +46,7 @@ Windows XP, Windows 7
 Ruby Libraries Required
 ---------
 **tk** (install tk when install [Ruby](http://rubyinstaller.org/))  
+Install GNU aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/))
 gem install **nokogiri**  
 gem install **zip**  
 

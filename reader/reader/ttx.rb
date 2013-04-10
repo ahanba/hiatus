@@ -3,7 +3,7 @@
 module Reader
   module ReadTTX
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For Trados TTX file
     def readTTX(file, option)

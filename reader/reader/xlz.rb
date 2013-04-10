@@ -3,7 +3,7 @@
 module Reader
   module ReadXLZ
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For XLZ (Idiom) file
     def readXLZ(file, option)

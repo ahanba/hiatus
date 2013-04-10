@@ -3,7 +3,7 @@
 module Reader
   module ReadTMX
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #For TMX
     def readTMX(file, option)

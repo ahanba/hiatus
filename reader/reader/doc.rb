@@ -3,7 +3,7 @@
 module Reader
   module ReadDOC
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     require 'tk'
    
     #For Word document

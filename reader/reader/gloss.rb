@@ -3,7 +3,7 @@
 module Reader
   module ReadGloss
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     #-----------------------------------
     #Methods to read bilingual & monolingual glossaries
@@ -16,6 +16,7 @@ module Reader
           file_str = read_rawfile(file)
           file_str.each_line {|line|
             i += 1
+            next if line.start_with?('//') # skip a line starting with //
             split_line = line.split("\t")
             entry = {}
             entry[:source]  = split_line[0].chomp
@@ -43,9 +44,12 @@ module Reader
           }
         end
       rescue NoMethodError
-        puts "##Error##\nInvalid entry found while reading Glossary file.\nCheck Line #{i} on #{File.basename(file)}."
+        puts "Error: Invalid entry found in the Glossry file. Check Line #{i} on #{File.basename(file)}."
+        puts $!
+        puts $!.name
+        puts $!.args
       rescue IOError
-        puts "Cannot open #{File.basename(file)}."
+        puts "Could not open #{File.basename(file)}."
       end
     end
     
@@ -56,11 +60,12 @@ module Reader
         i = 0
         file_str.each_line {|line|
           i += 1
+          next if line.start_with?('//') # skip a line starting with //
           split_line = line.split("\t")
           entry = {}
           entry[:s_or_t]  = split_line[0].chomp
           if entry[:s_or_t] != "s" && entry[:s_or_t] != "t"
-            puts "##Error##\nInvalid entry found while reading Monolingual file.\nCheck Line #{i} on #{File.basename(file)}. 1st coulm should be \"s\" or \"t\""
+            puts "Error: Invalid entry found in the Monolingual file. Check Line #{i} on #{File.basename(file)}. 1st coulm should be \"s\" or \"t\""
           end
           entry[:term]    = split_line[1].chomp
           entry[:option]  = split_line[2].chomp
@@ -69,7 +74,10 @@ module Reader
           @@monolingualArray << entry
         }
       rescue NoMethodError
-        puts "##Error##\nInvalid entry found while reading Monolingual file.\nCheck Line #{i} on #{File.basename(file)}."
+        puts "Error: Invalid entry found in the Monolingual file. Check Line #{i} on #{File.basename(file)}."
+        puts $!
+        puts $!.name
+        puts $!.args
       rescue IOError
         puts "Cannot open #{File.basename(file)}."
       end

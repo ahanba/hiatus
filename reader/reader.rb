@@ -20,14 +20,14 @@ module Reader
   require 'reader/reader/tbx'
   require 'reader/reader/sdlxliff'
   
-  include ReadGloss
-  include ReadCSV
-  include ReadTMX
-  include ReadTTX
-  include ReadTXT
-  include ReadXLS
-  include ReadXLZ
-  include ReadDOC
-  include ReadTBX
-  include ReadSDLXLIFF
+  include Reader::ReadGloss
+  include Reader::ReadCSV
+  include Reader::ReadTMX
+  include Reader::ReadTTX
+  include Reader::ReadTXT
+  include Reader::ReadXLS
+  include Reader::ReadXLZ
+  include Reader::ReadDOC
+  include Reader::ReadTBX
+  include Reader::ReadSDLXLIFF
 end

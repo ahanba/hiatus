@@ -3,7 +3,7 @@
 module Reader
   module ReadTBX
     require 'reader/reader/core'
-    include Core
+    include Reader::Core
     
     def readTBX(file, option)
       @doc = Nokogiri::XML(File.open(file))

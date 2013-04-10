@@ -1,25 +1,28 @@
 required:
-  bilingual: Z:\Developer\Ruby\hiatus\!Sample_files\bilingual
-  output: Z:\Developer\Ruby\hiatus
+  bilingual: Y:\Developer\Ruby\!Sample_files\bilingual
+  output: Y:\Developer\Ruby\!hiatus_dev
   report: xls
-  source: EN
-  target: JA
-  glossary: Z:\Developer\Ruby\hiatus\!Sample_files\glossary
-  monolingual: Z:\Developer\Ruby\hiatus\!Sample_files\monolingual
+  source: JA
+  target: en_US
+  glossary: Y:\Developer\Ruby\!Sample_files\glossary
+  monolingual: Y:\Developer\Ruby\!Sample_files\monolingual
 
 check:
   glossary: true
   inconsistency_s2t: true
   inconsistency_t2s: true
   missingtag: true
-  skip: true
-  monolingual: false
+  skip: false
+  monolingual: true
   numbers: true
   unsourced: false
   unsourced_rev: true
   length: false
+  hotkey: true
+  spell: false
   
 option:
   filter_by: 
   ignore100: false
   ignoreICE: false
+  ignorelist: 

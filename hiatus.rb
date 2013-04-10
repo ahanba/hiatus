@@ -3,32 +3,23 @@
 Developed environment
 Ruby 1.9.2 or 1.9.3
 Windows XP SP2, Windows 7
-Note that this script does not work on Ruby 1.8.7 or earlier
+Note: This script does not work on Ruby 1.8.7 or earlier
 =end
 
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
+require 'common/extend_string'
+require 'common/extend_nilclass'
 require 'glossary/converter/converter'
 require 'glossary/glossary'
 require 'glossary/monolingual'
 require 'reader/reader'
 require 'writer/writer'
 require 'checker/checker'
-require 'iconv'
 
 require 'yaml'
+
 include Reader::Core
-
-
-CODE = Encoding.locale_charmap
-
-def to_native_charset(str)
-  Iconv.conv(CODE, "UTF-8", str)
-end
-
-def from_native_charset(str)
-  Iconv.conv("UTF-8", CODE, str)
-end
 
 #For Windows XLS read/write, require win32ole
 if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
@@ -50,7 +41,7 @@ end
 
 myconfig = YAML.load(read_rawfile("config.yaml"))
 
-#YAML data is like this:
+#YAML data sample:
 #{"required"=>
 #  {"bilingual"=>"/Users/ahanba/Developer/Ruby/yyyyy/sample/bil",
 #   "glossary"=>"/Users/ahanba/Developer/Ruby/yyyyy/sample/gloss",
@@ -67,25 +58,27 @@ myconfig = YAML.load(read_rawfile("config.yaml"))
 #   "ignore100"=>false}
 #}
 
-bilingual_path    = to_native_charset(myconfig["required"]["bilingual"].gsub('\\','/'))
-output_path       = to_native_charset(myconfig["required"]["output"].gsub('\\','/'))
+bilingual_path    = myconfig["required"]["bilingual"].gsub('\\','/').utf_to_native
+output_path       = myconfig["required"]["output"].gsub('\\','/').utf_to_native
 report_format     = myconfig["required"]["report"]
 source_lang       = myconfig["required"]["source"]
 target_lang       = myconfig["required"]["target"]
-glossary_path     = to_native_charset(myconfig["required"]["glossary"].gsub('\\','/'))
-monolingual_path  = to_native_charset(myconfig["required"]["monolingual"].gsub('\\','/'))
+glossary_path     = myconfig["required"]["glossary"].gsub('\\','/').utf_to_native
+monolingual_path  = myconfig["required"]["monolingual"].gsub('\\','/').utf_to_native
+
+ignorelist_path   = (myconfig["option"]["ignorelist"] == nil ? nil : myconfig["option"]["ignorelist"].gsub('\\','/').utf_to_native)
 
 puts "checking directories..."
-[bilingual_path, output_path, glossary_path, monolingual_path].each { |myDir|
-  unless FileTest.directory?(myDir)
+[bilingual_path, output_path, glossary_path, monolingual_path,ignorelist_path].each { |myDir|
+  unless myDir == nil or FileTest.directory?(myDir)
     puts "'#{myDir}' does not exist. Should be existing directory, please fix and try again."
     exit
   end
 }
 
 langs = {
-  :sourceL => source_lang,
-  :targetL => target_lang
+  :source => source_lang,
+  :target => target_lang
 }
 
 checks = {
@@ -98,7 +91,9 @@ checks = {
   :numbers           => false,
   :unsourced         => false,
   :unsourced_rev     => false,
-  :length            => false
+  :length            => false,
+  :hotkey            => false,
+  :spell             => false
 } 
 
 checks[:glossary]          = myconfig["check"]["glossary"]
@@ -111,11 +106,14 @@ checks[:numbers]           = myconfig["check"]["numbers"]
 checks[:unsourced]         = myconfig["check"]["unsourced"]
 checks[:unsourced_rev]     = myconfig["check"]["unsourced_rev"]
 checks[:length]            = myconfig["check"]["length"]
+checks[:hotkey]            = myconfig["check"]["hotkey"]
+checks[:spell]             = myconfig["check"]["spell"]
 
 option = {
-  :filter    => myconfig["option"]["filter_by"],
-  :ignore100 => myconfig["option"]["ignore100"],
-  :ignoreICE => myconfig["option"]["ignoreICE"]
+  :filter     => myconfig["option"]["filter_by"],
+  :ignore100  => myconfig["option"]["ignore100"],
+  :ignoreICE  => myconfig["option"]["ignoreICE"],
+  :ignorelist => ignorelist_path
 }
 
 class MyChecker

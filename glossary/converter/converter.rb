@@ -11,6 +11,8 @@ module Converter
   }
   
   FUKISOKU = {
+              :axis       => '\b(?:axis|axes)\b',
+              :analysis   => '\b(?:analysis|analyses)\b',
               :be         => '\b(?:be|is|are|am|being|was|were)\b',
               :become     => '\b(?:become|becomes|became|becoming)\b',
               :begin      => '\b(?:begin|begins|began|begun|beginning)\b',
@@ -39,6 +41,7 @@ module Converter
               :hear       => '\b(?:hear|hears|heard|heard|hearing)\b',
               :hide       => '\b(?:hide|hides|hid|hidden|hiding)\b',
               :hold       => '\b(?:hold|holds|held|holding)\b',
+              :index      => '\b(?:index|indices)\b',
               :is         => '\b(?:be|is|are|am|being|was|were)\b',
               :keep       => '\b(?:keep|keeps|kept|keeping)\b',
               :know       => '\b(?:know|knows|knew|known|knowing)\b',
@@ -79,6 +82,7 @@ module Converter
               :think      => '\b(?:think|thinks|thought|thinking)\b',
               :throw      => '\b(?:throw|throws|threw|thrown|throwing)\b',
               :understand => '\b(?:understand|understands|understood|understanding)\b',
+              :vertex     => '\b(?:vertex|vertices)\b',
               :wake       => '\b(?:wake|wakes|woke|woken|waking)\b',
               :wear       => '\b(?:wear|wears|wore|worn|wearing)\b',
               :win        => '\b(?:win|wins|won|winning)\b',
@@ -88,7 +92,7 @@ module Converter
               }
   
   def convertEN(str)
-    each_term = str.split(" ")
+    each_term = str.split(/[ \-]/)
     converted_terms = []
     each_term.map {|term|
       if (term =~ /^[\[\(\.\\^]/) != nil
