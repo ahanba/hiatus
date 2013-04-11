@@ -3,7 +3,7 @@
 module Reader
   
   module ReadSDLXLIFF
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     #For sdlxliff (Trados Studio) file

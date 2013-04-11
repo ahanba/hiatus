@@ -2,7 +2,7 @@
 
 module Reader
   module ReadTBX
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     def readTBX(file, option)

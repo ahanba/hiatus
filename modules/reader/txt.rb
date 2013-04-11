@@ -2,7 +2,7 @@
 
 module Reader
   module ReadTXT
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     #For simple tab separated values. Like copy & pasted from Excel sheet

@@ -3,8 +3,11 @@
 module Writer
   #require 'haml'
   #require 'sass'
-  require 'kconv'
+  #require 'kconv'
   require 'cgi'
+  
+  require 'modules/writer/ignore'
+  include Writer::ImportIgnoreList
   
   def report_HTML(errors, output_path)
     

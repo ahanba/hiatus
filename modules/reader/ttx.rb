@@ -2,7 +2,7 @@
 
 module Reader
   module ReadTTX
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     #For Trados TTX file

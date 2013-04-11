@@ -17,7 +17,7 @@ class NilClass
     #delete mrk
     #placeholder inline tags are <x/>, <g>,<bx/>, <ex/> 
     #native inline tags are <bpt>, <ept>, <it>, <Ph>
-    self.gsub(/(?:<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>)/i, '')
+    self.to_s.gsub(/(?:<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>)/i, '')
   end
   
   def remove_mrk_xliff_tags

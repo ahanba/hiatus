@@ -8,14 +8,14 @@ Note: This script does not work on Ruby 1.8.7 or earlier
 
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
-require 'common/extend_string'
-require 'common/extend_nilclass'
-require 'glossary/converter/converter'
-require 'glossary/glossary'
-require 'glossary/monolingual'
-require 'reader/reader'
-require 'writer/writer'
-require 'checker/checker'
+require 'modules/extend_string'
+require 'modules/extend_nilclass'
+require 'modules/glossary/converter'
+require 'modules/glossary'
+require 'modules/monolingual'
+require 'modules/reader'
+require 'modules/writer'
+require 'modules/checker'
 
 require 'yaml'
 

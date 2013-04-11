@@ -1,19 +1,18 @@
 #coding: utf-8
 
-# To DO:
-# Need to re-arrange specific tag processing method for each file type (ttx, xlz, sdlxliff)
-
 module Checker
-  require 'checker/checker/glossary'
-  require 'checker/checker/numbers'
-  require 'checker/checker/missingtag'
-  require 'checker/checker/skip'
-  require 'checker/checker/monolingual'
-  require 'checker/checker/unsourced'
-  require 'checker/checker/length'
-  require 'checker/checker/hotkey'
-  require 'checker/checker/spell'
-  require 'checker/checker/inconsistency'
+  require 'cgi'
+  
+  require 'modules/checker/glossary'
+  require 'modules/checker/numbers'
+  require 'modules/checker/missingtag'
+  require 'modules/checker/skip'
+  require 'modules/checker/monolingual'
+  require 'modules/checker/unsourced'
+  require 'modules/checker/length'
+  require 'modules/checker/hotkey'
+  require 'modules/checker/spell'
+  require 'modules/checker/inconsistency'
 
   include Checker::CheckGloss
   include Checker::CheckNumbers
@@ -28,7 +27,6 @@ module Checker
   
   include Reader
   include Writer
-  require 'cgi'
   
   attr_accessor :glossary, :monolingual, :errors, :checks
   

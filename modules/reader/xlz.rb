@@ -2,7 +2,7 @@
 
 module Reader
   module ReadXLZ
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     #For XLZ (Idiom) file
@@ -17,7 +17,7 @@ module Reader
       tf.print buf
       tf.close
       
-      str_xslted = %x(./reader/reader/xml tr ./reader/reader/xlf2tsv.xsl #{tf.path})
+      str_xslted = %x(./modules/reader/xml tr ./modules/reader/xlf2tsv.xsl #{tf.path})
       tf.close!
       #str_xslted = Kconv.kconv(str_xslted, Kconv::UTF8, guess_encode(str_xslted))
       str_xslted = NKF.nkf('-wx', str_xslted)

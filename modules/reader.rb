@@ -1,7 +1,7 @@
 #coding: utf-8
 
 module Reader
-  require 'kconv'
+  #equire 'kconv'
   require 'csv'
   require 'nkf'
   require 'nokogiri'
@@ -9,16 +9,16 @@ module Reader
   require 'shell'
   require 'tempfile'
   
-  require 'reader/reader/gloss'
-  require 'reader/reader/xlz'
-  require 'reader/reader/txt'
-  require 'reader/reader/csv'
-  require 'reader/reader/ttx'
-  require 'reader/reader/tmx'
-  require 'reader/reader/xls'
-  require 'reader/reader/doc'
-  require 'reader/reader/tbx'
-  require 'reader/reader/sdlxliff'
+  require 'modules/reader/gloss'
+  require 'modules/reader/xlz'
+  require 'modules/reader/txt'
+  require 'modules/reader/csv'
+  require 'modules/reader/ttx'
+  require 'modules/reader/tmx'
+  require 'modules/reader/xls'
+  require 'modules/reader/doc'
+  require 'modules/reader/tbx'
+  require 'modules/reader/sdlxliff'
   
   include Reader::ReadGloss
   include Reader::ReadCSV

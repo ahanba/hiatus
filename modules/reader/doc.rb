@@ -2,7 +2,7 @@
 
 module Reader
   module ReadDOC
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     require 'tk'
    

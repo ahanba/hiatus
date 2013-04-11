@@ -2,7 +2,7 @@
 
 module Reader
   module ReadTMX
-    require 'reader/reader/core'
+    require 'modules/reader/core'
     include Reader::Core
     
     #For TMX
