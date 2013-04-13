@@ -38,10 +38,13 @@ class String
 
   #see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html for XLIFF specifications
   #delete mrk
-  #placeholder inline tags are <x/>, <g>,<bx/>, <ex/> 
+  #placeholder inline tags are <x/>, <g>,<bx/>, <ex/>. 
+  #<g> for Bold, Italic, etc.
+  #<x id="xx"></x> for line feed
+  #<x id="xx" /> for image
   #native inline tags are <bpt>, <ept>, <it>, <Ph>
   def remove_all_xliff_tags
-    self.gsub(/(?:<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>)/i, '')
+    self.gsub(/<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>/i, '{IMG}').gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "\n").gsub(/<\/?g.*?>/i, '')
   end
   
   def remove_mrk_xliff_tags

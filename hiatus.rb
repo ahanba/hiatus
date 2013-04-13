@@ -65,16 +65,22 @@ source_lang       = myconfig["required"]["source"]
 target_lang       = myconfig["required"]["target"]
 glossary_path     = myconfig["required"]["glossary"].gsub('\\','/').utf_to_native
 monolingual_path  = myconfig["required"]["monolingual"].gsub('\\','/').utf_to_native
-
 ignorelist_path   = (myconfig["option"]["ignorelist"] == nil ? nil : myconfig["option"]["ignorelist"].gsub('\\','/').utf_to_native)
 
-puts "checking directories..."
-[bilingual_path, output_path, glossary_path, monolingual_path,ignorelist_path].each { |myDir|
+puts "Checking Directories..."
+[bilingual_path, output_path, glossary_path, monolingual_path].each { |myDir|
   unless myDir == nil or FileTest.directory?(myDir)
     puts "'#{myDir}' does not exist. Should be existing directory, please fix and try again."
     exit
   end
 }
+
+if ignorelist_path
+  unless FileTest.file?(ignorelist_path.to_s) || File.extname(ignorelist_path.to_s) == '.xlsx'
+    puts "Invalid Ignore List: \"#{ignorelist_path}\" does not exist or is not valid file. Supported file format is XLSX." 
+    exit
+  end
+end
 
 langs = {
   :source => source_lang,
@@ -92,7 +98,7 @@ checks = {
   :unsourced         => false,
   :unsourced_rev     => false,
   :length            => false,
-  :hotkey            => false,
+  :software          => false,
   :spell             => false
 } 
 
@@ -106,7 +112,7 @@ checks[:numbers]           = myconfig["check"]["numbers"]
 checks[:unsourced]         = myconfig["check"]["unsourced"]
 checks[:unsourced_rev]     = myconfig["check"]["unsourced_rev"]
 checks[:length]            = myconfig["check"]["length"]
-checks[:hotkey]            = myconfig["check"]["hotkey"]
+checks[:software]          = myconfig["check"]["software"]
 checks[:spell]             = myconfig["check"]["spell"]
 
 option = {
@@ -120,9 +126,9 @@ class MyChecker
   include Checker
 end
 
-puts "reading files..."
+puts "Reading Files..."
 mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks, langs)
-puts "running checks..."
+puts "Running Checks..."
 mych.run_checks
-puts "generating report..."
-mych.send("report_#{report_format.upcase}", mych.errors, output_path)
+puts "Generating Report..."
+mych.send("report_#{report_format.upcase}", mych.errors, output_path, ignorelist_path)

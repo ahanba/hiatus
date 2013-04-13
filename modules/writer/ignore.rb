@@ -1,35 +1,53 @@
 #coding: utf-8
 
 module Writer
-  module ImportIgnoreList
-    
+  module Ignore
     #For Excel sheet. Only avaliable on Windows platform
-    #target is default active sheet, col A as Source, col B as Target, col C as ID
-    def read_XLS_report(file, option)
-      excel = WIN32OLE.new('Excel.Application')
+    #check default active sheet
+    require 'tk'
+    
+    def read_XLS_report(file)
+      excel2 = WIN32OLE.new('Excel.Application')
       file_path = getAbsolutePath(file)
-      book = excel.Workbooks.Open(file_path)
-      sheet = book.ActiveSheet
+      ignore_items = []
       
       begin
+        book = excel2.Workbooks.Open(file_path)
+        sheet = book.ActiveSheet
         rowNum = sheet.Range("A65536").End(:Direction  =>  -4162).Row
         
-        i = 0
-        rowNum.times do
+        i = 1
+        (rowNum - 1).times do
           i += 1
-          entry = {}
-          entry[:filename] = file.to_s
-          sheet.Cells(i, 1).value != nil ? entry[:source] = sheet.Cells(i, 1).value.to_s.native_to_utf : entry[:source] = ""
-          sheet.Cells(i, 2).value != nil ? entry[:target] = sheet.Cells(i, 2).value.to_s.native_to_utf : entry[:target] = ""
-          entry[:note]     = sheet.Cells(i, 3).value.native_to_utf if sheet.Cells(i, 3).value != nil
-          entry[:id]       = "Row #{i}"
-          @@bilingualArray.push(entry)
+          next if sheet.Cells(i, 13).value.to_s.downcase != 'ignore'
+          records_to_compare = [
+            get_value_from_cell(sheet.Cells(i, 4)),
+            get_value_from_cell(sheet.Cells(i, 5)),
+            get_value_from_cell(sheet.Cells(i, 8))
+            ]
+          ignore_items << records_to_compare
         end
       ensure
-        excel.Workbooks.Close
-        excel.Quit
+        excel2.Workbooks.Close
+        excel2.Quit
       end
       
+      return ignore_items.uniq!
+    end
+    
+    def get_value_from_cell(cell)
+      cell.Copy
+      str = NKF.nkf('-wxm0', TkClipboard.get).chomp
+      str.include?("\n") ? str.gsub(/(^"|"$)/i,'') : str
+    end
+    
+    def ignore?(error, ignore_items)
+      records_to_compare = [
+        CGI.unescapeHTML(error[:bilingual][:source].remove_ttx_and_xliff_tags).convEntity,
+        CGI.unescapeHTML(error[:bilingual][:target].remove_ttx_and_xliff_tags).convEntity,
+        error[:found]
+        ]
+      return ignore_items.include?(records_to_compare)
     end
   end
 end

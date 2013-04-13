@@ -10,7 +10,7 @@ module Checker
   require 'modules/checker/monolingual'
   require 'modules/checker/unsourced'
   require 'modules/checker/length'
-  require 'modules/checker/hotkey'
+  require 'modules/checker/software'
   require 'modules/checker/spell'
   require 'modules/checker/inconsistency'
 
@@ -21,7 +21,7 @@ module Checker
   include Checker::CheckMonolingual
   include Checker::CheckUnsourced
   include Checker::CheckLength
-  include Checker::CheckHotkey
+  include Checker::CheckSoftware
   include Checker::CheckSpell
   include Checker::CheckInconsistency
   
@@ -82,7 +82,7 @@ module Checker
       check_unsourced(segment)     if @checks[:unsourced]
       check_unsourced_rev(segment) if @checks[:unsourced_rev]
       check_length(segment)        if @checks[:length]
-      check_hotkey(segment)        if @checks[:hotkey]
+      check_software(segment)      if @checks[:software]
     }
     check_inconsistency_src2tgt(@@bilingualArray)  if @checks[:inconsistency_s2t]
     check_inconsistency_tgt2src(@@bilingualArray)  if @checks[:inconsistency_t2s]

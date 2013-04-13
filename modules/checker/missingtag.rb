@@ -11,8 +11,8 @@ module Checker
       #Not Tag, software suffix ... : (?:\.\.\.)$
       #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}
 
-      src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|\{[%&]?[a-zA-Z\d]+\})/)
-      tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|\{[%&]?[a-zA-Z\d]+\})/)
+      src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
+      tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []

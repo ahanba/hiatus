@@ -15,9 +15,9 @@ class NilClass
   def remove_all_xliff_tags
     #see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html for XLIFF specifications
     #delete mrk
-    #placeholder inline tags are <x/>, <g>,<bx/>, <ex/> 
+    #placeholder inline tags are <x/>, <g>,<bx/>, <ex/>. <g> for Bold, Italic, etc., <x> for line feed
     #native inline tags are <bpt>, <ept>, <it>, <Ph>
-    self.to_s.gsub(/(?:<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>)/i, '')
+    self.to_s.gsub(/<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>/i, '{IMG}').gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "\n").gsub(/<\/?g.*?>/i, '')
   end
   
   def remove_mrk_xliff_tags

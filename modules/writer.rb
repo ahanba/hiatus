@@ -7,17 +7,20 @@ module Writer
   require 'cgi'
   
   require 'modules/writer/ignore'
-  include Writer::ImportIgnoreList
+  include Writer::Ignore
   
-  def report_HTML(errors, output_path)
+  def report_HTML(errors, output_path, ignorelist_path)
     
   end
   
   #For XLS report, only available on Windows with Excel installed
-  def report_XLS(errors, output_path)
+  def report_XLS(errors, output_path, ignorelist_path)
     excel = WIN32OLE.new('Excel.Application')
     t = Time.now.strftime("%y%m%d")
     myreport = output_path + "/#{t}_report.xlsx"
+    
+    ignore_items = read_XLS_report(ignorelist_path) if ignorelist_path
+    #p ignore_items if ignore_items
     
     begin
       book = excel.Workbooks.Add()
@@ -28,6 +31,7 @@ module Writer
       
       row = 1
       errors.map {|error|
+        next if (ignore_items != nil) && ignore?(error, ignore_items)
         row += 1
         col = 1
         fullpath = File.expand_path(error[:bilingual][:filename])
