@@ -17,10 +17,10 @@ Check Items
    Checks inconsistencies in two ways - Source -> Target & Target -> Source  
   
 + **Numbers**  
-   Detect numbers in source but NOT in target.  
+   Detects numbers in source but NOT in target.  
   
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detect missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
+   Detects missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
   
 + **Length**  
    Length of source and target are different more/less than +/- 50%  
