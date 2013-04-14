@@ -113,7 +113,15 @@ Then error report will be generated.
        ignore100: true/false. For TTX/XLZ/SDLXLIFF, when true, 100% match will be skipped.  
        ignoreICE: true/false. For XLZ/SDLXLIFF, when true, ICE match will be skipped.  
        ignorelist: Path to the ignore list (XLSX file)
-
+  
+About Ignore List
+------------
+You can skip known false errors by providing ignore list.  
+Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and specify its full file path in ignoreList field.  
+For example:  
+ignorelist: Y:\Sample_files\130412_report.xlsx  
+Then, marked errors will not be reported next time.  
+  
 How to create Glossary file?
 ------------
 Supported format is Tab Separated Text file (TSV file).  
@@ -122,7 +130,7 @@ See below and the sample files in !Sample_files folder.
 
 **Glossary File Format** 
 
-**SourceTerm**&nbsp;&nbsp;&nbsp;&nbsp;**TargetTerm**&nbsp;&nbsp;&nbsp;&nbsp;**Option**  
+**SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option**  
 Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option" 
 
      Server	 サーバー	i
@@ -155,7 +163,7 @@ See below and the sample files in !Sample_files folder.
 
 **Monolingual File Format** 
 
-**s** or **t**&nbsp;&nbsp;&nbsp;&nbsp;**SearchTerm**&nbsp;&nbsp;&nbsp;&nbsp;**Option**&nbsp;&nbsp;&nbsp;&nbsp;**Message to display**  
+**s** or **t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;Message to display**  
 Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display"  
 
 	t	；	#	全角セミコロン；を使用しない
