@@ -10,7 +10,7 @@ Check Items
 + **Glossary**  
    When a glossary source term detected in source segment, checks if corresponding glossary target term exists in target segment. RegExp supported.  
   
-+ **Search Source or Target Text** (Defined as "**monolingual**")  
++ **Search Source or Target Text** (Defined as **monolingual**)  
    Reads expressions from the list, and report errors if defined expressions found in a segment. You can choose which segment to search (source or target segment). RegExp supported.
   
 + **Inconsistency**  
@@ -28,10 +28,10 @@ Check Items
 + **Skipped Translation, Blank**  
    Reports errors if target segment is blank, or source and target segments are same.  
   
-+ **Alphanumeric Strings in Target but NOT in Source** (Defined as "**unsourced**")  
++ **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
    Valid only when target is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
   
-+ **Alphanumeric Strings in Source but NOT in Target** (Defined as "**unsourced_rev**")  
++ **Alphanumeric Strings in Source but NOT in Target** (Defined as **unsourced_rev**)  
    Valid only when source is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
   
 + **Software**  
