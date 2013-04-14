@@ -68,7 +68,7 @@ Windows XP, Windows 7
 
 Installation
 ---------
-1. Install [Ruby](http://rubyinstaller.org/) 1.9.3 and check on **tk** option on installation  
+1. Install [Ruby](http://rubyinstaller.org/) 1.9.3, and check on **tk** option on installation  
 2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you want.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
 4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dii** as **pspell.dll**.
@@ -117,9 +117,9 @@ Then error report will be generated.
 About Ignore List
 ------------
 You can skip known false errors by providing ignore list.  
-Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and specify its full file path in ignoreList field.  
+Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and specify its full file path in the ignoreList field.  
 For example:  
-ignorelist: Y:\Sample_files\130412_report.xlsx  
+       ignorelist: Y:\Sample_files\130412_report.xlsx  
 Then, marked errors will not be reported next time.  
   
 How to create Glossary file?
