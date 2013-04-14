@@ -75,8 +75,8 @@ Installation
 5. Start command prompt and run following commands  
      gem install **nokogiri**  
      gem install **zip**  
-     gem install **ffi**
-     gem install **ffi-aspell**
+     gem install **ffi**  
+     gem install **ffi-aspell**  
 
 How to use hiatus?
 ---------
@@ -122,7 +122,7 @@ See below and the sample files in !Sample_files folder.
 
 **Glossary File Format** 
 
-**SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option**  
+**SourceTerm**&nbsp;&nbsp;&nbsp;&nbsp;**TargetTerm**&nbsp;&nbsp;&nbsp;&nbsp;**Option**  
 Assume space as a Tab - "SourceTerm[tab]TargetTerm[tab]Option" 
 
      Server	 サーバー	i
@@ -155,7 +155,7 @@ See below and the sample files in !Sample_files folder.
 
 **Monolingual File Format** 
 
-**s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;&nbsp;&nbsp;&nbsp;Message to display**  
+**s** or **t**&nbsp;&nbsp;&nbsp;&nbsp;**SearchTerm**&nbsp;&nbsp;&nbsp;&nbsp;**Option**&nbsp;&nbsp;&nbsp;&nbsp;**Message to display**  
 Assume space as a Tab - "s or t[tab]SearchTerm[tab]Option[tab]Message to display"  
 
 	t	；	#	全角セミコロン；を使用しない
