@@ -8,27 +8,27 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary**  
-++ When a glossary source term detected in the source segments, checks if corresponding glossary target term exists in the target segment. RegExp supported.  
+   When a glossary source term detected in the source segments, checks if corresponding glossary target term exists in the target segment. RegExp supported.  
 + **Search Source or Target Text** (Defined as "monolingual")  
-++ Reads expressions from a list, and report errors if defined expressions found in the segments. You can choose which segment to detect (Source or Target segment). RegExp supported.
-+ **Inconsistency**
-++ Checks inconsistencies in two way - Source -> Target & Target -> Source  
+   Reads expressions from a list, and report errors if defined expressions found in the segments. You can choose which segment to detect (Source or Target segment). RegExp supported.
++ **Inconsistency**  
+   Checks inconsistencies in two way - Source -> Target & Target -> Source  
 + **Numbers**  
-++ Detect numbers in Source but NOT in Target.  
+   Detect numbers in Source but NOT in Target.  
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-++ Detect Missing or Added tags. Cannot detect inline SDLXLIFF tags accurately.    
+   Detect Missing or Added tags. Cannot detect inline SDLXLIFF tags accurately.    
 + **Length**  
-++ Length of Source and Target are different more/less than +/- 50%  
-+ **Skipped Translation, Blank**
-++ Report errors if target segment is blank, or source and target segments are same.  
+   Length of Source and Target are different more/less than +/- 50%  
++ **Skipped Translation, Blank**  
+   Report errors if target segment is blank, or source and target segments are same.  
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as "unsourced")  
-++ Valid only when Target is non-Alphabet language.   
-+ **Alphanumeric Strings in Source but NOT in Target** (Defined as "unsourced_rev")
-++ Valid only when Source is non-Alphabet language. 
-+ **Software**
-++ Report Hotkey mismatches (i.e. &A, _A), missing/added variables (i.e. %s, %d), and ... at suffix.
-+ **Spell**
-++ Spell check based on GNU Aspell library.  
+   Valid only when Target is non-Alphabet language.   
++ **Alphanumeric Strings in Source but NOT in Target** (Defined as "unsourced_rev")  
+   Valid only when Source is non-Alphabet language. 
++ **Software**  
+   Report Hotkey mismatches (i.e. &A, _A), missing/added variables (i.e. %s, %d), and ... at suffix.
++ **Spell**  
+   Spell check based on GNU Aspell library.  
 
 Supported Bilingual File Formats
 ------
@@ -59,10 +59,10 @@ Windows XP, Windows 7
 Installation
 ---------
 1. Install [Ruby](http://rubyinstaller.org/) 1.9.3 and check on **tk** option on installation  
-2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and required dictionaries.  
+2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you want.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
 4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dii** as **pspell.dll**.
-5. Start command prompt and run following commands
+5. Start command prompt and run following commands  
      gem install **nokogiri**  
      gem install **zip**  
      gem install **ffi**
