@@ -119,7 +119,9 @@ About Ignore List
 You can skip known false errors by providing ignore list.  
 Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and specify its full file path in the ignoreList field.  
 For example:  
+  
        ignorelist: Y:\Sample_files\130412_report.xlsx  
+  
 Then, marked errors will not be reported next time.  
   
 How to create Glossary file?
