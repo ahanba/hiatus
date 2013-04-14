@@ -29,10 +29,10 @@ Check Items
    Reports errors if target segment is blank, or source and target segments are same.  
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
-   Valid only when target is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
+   Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
   
 + **Alphanumeric Strings in Source but NOT in Target** (Defined as **unsourced_rev**)  
-   Valid only when source is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
+   Valid only when **source** is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
   
 + **Software**  
    Checks if hotkey (i.e. &A, _A), missing/added variables (i.e. %s, %d), and '...' at suffix (i.e. Save As...) are consistent between source and target.
