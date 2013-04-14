@@ -20,13 +20,13 @@ Check Items
    Detect numbers in source but NOT in target.  
   
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detect missing or added tags. Cannot detect inline SDLXLIFF tags accurately.    
+   Detect missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
   
 + **Length**  
    Length of source and target are different more/less than +/- 50%  
   
 + **Skipped Translation, Blank**  
-   Report errors if target segment is blank, or source and target segments are same.  
+   Reports errors if target segment is blank, or source and target segments are same.  
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as "unsourced")  
    Valid only when target is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
@@ -38,7 +38,7 @@ Check Items
    Checks if hotkey (i.e. &A, _A), missing/added variables (i.e. %s, %d), and '...' at suffix (i.e. Save As...) are consistent between source and target.
   
 + **Spell**  
-   Spell check based on GNU Aspell library.  
+   Spell check based on [GNU Aspell](http://aspell.net/) library.  
 
 Supported Bilingual File Formats
 ------
