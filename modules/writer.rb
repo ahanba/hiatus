@@ -19,8 +19,7 @@ module Writer
     t = Time.now.strftime("%y%m%d")
     myreport = output_path + "/#{t}_report.xlsx"
     
-    ignore_items = read_XLS_report(ignorelist_path) if ignorelist_path
-    #p ignore_items if ignore_items
+    ignore_items =  (ignorelist_path != nil ? read_XLS_report(ignorelist_path): nil)
     
     begin
       book = excel.Workbooks.Add()

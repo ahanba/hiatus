@@ -2,8 +2,8 @@ required:
   bilingual: Y:\Developer\Ruby\!Sample_files\bilingual
   output: Y:\Developer\Ruby\!hiatus_dev
   report: xls
-  source: JA
-  target: en_US
+  source: ja
+  target: en
   glossary: Y:\Developer\Ruby\!Sample_files\glossary
   monolingual: Y:\Developer\Ruby\!Sample_files\monolingual
 
@@ -18,11 +18,11 @@ check:
   unsourced: false
   unsourced_rev: true
   length: false
-  hotkey: true
-  spell: false
+  software: true
+  spell: true
   
 option:
   filter_by: 
   ignore100: false
   ignoreICE: false
-  ignorelist: 
+  ignorelist: Y:\Developer\Ruby\!Sample_files\130412_report.xlsx
