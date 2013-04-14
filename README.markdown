@@ -60,6 +60,12 @@ Features
 + Simple output report (XLS). Easy to filter.
 + Source code is published - you can confirm what can be checked, what can NOT be checked.
 
+Precautions
+--------
++ Do not copy anything while hiatus is running.  
+  hiatus uses clipboard while reading XLSX/DOC files including reading Ignore list.  
+  When you use these functions, leave clipboard. Do not perform any copy operations.  
+  
 Environment
 --------
 Ruby 1.9.2 or 1.9.3  

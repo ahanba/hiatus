@@ -132,7 +132,14 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - config.yamlの読み取りを変更。UTF-8でなくてもエラー無しに読み込めるようにした。	
 
 2013/4/10
-- Partially refactoring done  
+- いくつかわかりにく部分のリファクタリングをした。 
+
+2013/4/13
+- Ignore List機能を実装
+- Spell Check機能を実装。これによりAspellのインストールが必要。Gemもふたつ追加で必要になった。
+- softwareチェック機能を追加。UI翻訳時によくあるホットキーや変数、末尾の…のチェック
+- Ignore listのXLSXの読み込みでOSのデフォルトエンコーディングがCP437だと、XLSX内の日本語が読み取れなかった。全部??になる。回避策として一度クリップボードにコピーして、そこから読み取るようにした。
+  他の言語の組み合わせだと、別の問題が起きるかもしれない。
 
 
 TO DO:
