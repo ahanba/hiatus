@@ -8,25 +8,25 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary**  
-   When a glossary source term detected in the source segments, checks if corresponding glossary target term exists in the target segment. RegExp supported.  
+   When a glossary source term detected in the source segment, checks if corresponding glossary target term exists in the target segment. RegExp supported.  
 + **Search Source or Target Text** (Defined as "monolingual")  
-   Reads expressions from a list, and report errors if defined expressions found in the segments. You can choose which segment to detect (Source or Target segment). RegExp supported.
+   Reads expressions from the list, and report errors if defined expressions found in a segment. You can choose which segment to search (source or target segment). RegExp supported.
 + **Inconsistency**  
-   Checks inconsistencies in two way - Source -> Target & Target -> Source  
+   Checks inconsistencies in two ways - Source -> Target & Target -> Source  
 + **Numbers**  
-   Detect numbers in Source but NOT in Target.  
+   Detect numbers in source but NOT in target.  
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detect Missing or Added tags. Cannot detect inline SDLXLIFF tags accurately.    
+   Detect missing or added tags. Cannot detect inline SDLXLIFF tags accurately.    
 + **Length**  
-   Length of Source and Target are different more/less than +/- 50%  
+   Length of source and target are different more/less than +/- 50%  
 + **Skipped Translation, Blank**  
    Report errors if target segment is blank, or source and target segments are same.  
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as "unsourced")  
-   Valid only when Target is non-Alphabet language.   
+   Valid only when target is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
 + **Alphanumeric Strings in Source but NOT in Target** (Defined as "unsourced_rev")  
-   Valid only when Source is non-Alphabet language. 
+   Valid only when source is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
 + **Software**  
-   Report Hotkey mismatches (i.e. &A, _A), missing/added variables (i.e. %s, %d), and ... at suffix.
+   Checks if hotkey (i.e. &A, _A), missing/added variables (i.e. %s, %d), and '...' at suffix (i.e. Save As...) are consistent between source and target.
 + **Spell**  
    Spell check based on GNU Aspell library.  
 
@@ -81,7 +81,7 @@ Then error report will be generated.
        report: Format of the output report (Currently, only xls)  
        source: Source Language  
        target: Target Language  
-       glossary:   Folder path of the Glossary files (including subfolders)
+       glossary: Folder path of the Glossary files (including subfolders)
        monolingual: Folder path of the Monolingual files (including subfolders) 
 
     check:　Choose true or false for each check.
@@ -132,7 +132,7 @@ Or
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
 Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
 *Third column is mandatory - "SourceTerm&nbsp;&nbsp;&nbsp;&nbsp;TargetTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
-*Even when you use Blank option, create 3rd column and leave it blank*
+*Even when you use Blank option, create third column and leave it blank*
 
 Auto Conversion is a function to convert dictionary form into active possible forms.  
 For example, **write** is converted into **write|writes|writing|wrote|written**, and all of these are detected.  
@@ -160,8 +160,8 @@ Available options are same as Glossary.
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
 Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
 *Third column is mandatory - "s or t&nbsp;&nbsp;&nbsp;&nbsp;SearchTerm&nbsp;&nbsp;&nbsp;&nbsp;Option"*  
-*Even when you use Blank option, create 3rd column and leave it blank.*
-*4th column is optional. you can omit.*
+*Even when you use Blank option, create third column and leave it blank.*
+*Fourth column is optional. you can omit.*
 
 License
 ----------
