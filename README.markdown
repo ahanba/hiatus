@@ -62,7 +62,7 @@ Features
 
 Precautions
 --------
-+ Do not copy anything while hiatus is running.  
++ **Do NOT copy anything while hiatus is running.**  
   hiatus uses clipboard while reading XLSX/DOC files including reading Ignore list.  
   When you use these functions, leave clipboard. Do not perform any copy operations.  
   
