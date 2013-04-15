@@ -36,9 +36,13 @@ module Writer
     end
     
     def get_value_from_cell(cell)
-      cell.Copy
-      str = NKF.nkf('-wxm0', TkClipboard.get).chomp
-      str.include?("\n") ? str.gsub(/(^"|"$)/i,'') : str
+      begin
+        cell.Copy
+        str = NKF.nkf('-wxm0', TkClipboard.get).chomp
+        str.include?("\n") ? str.gsub(/(^"|"$)/i,'') : str
+      rescue
+        cell.value.native_to_utf
+      end
     end
     
     def ignore?(error, ignore_items)
