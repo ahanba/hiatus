@@ -62,9 +62,10 @@ Features
 
 Precautions
 --------
-+ **Do NOT copy anything while hiatus is running.**  
++ Do **NOT** copy anything while hiatus is running.  
   hiatus uses clipboard while reading XLSX/DOC files including reading Ignore list.  
   When you use these functions, leave clipboard. Do not perform any copy operations.  
++ Ignore list does not work correctly in some cases (See "About Ignore List" for details)  
   
 Environment
 --------
@@ -129,6 +130,13 @@ For example:
        ignorelist: Y:\Sample_files\130412_report.xlsx  
   
 Then, marked errors will not be reported next time.  
+
+*Note*:  
+Ignore list does not work correctly in some cases.  
+Some characters (typically some double-byte characters) get garbled while reading XLSX file.  
+In that case, this function does not work as expected.  
+This issue depends on your OS default encoding and source/target texts (languages) in the provided ignore list.  
+Currently trying to find a way to resolve this issue.  
   
 How to create Glossary file?
 ------------
