@@ -26,17 +26,18 @@ module Writer
             get_value_from_cell(sheet.Cells(i, 8))
             ]
           ignore_items << records_to_compare
+          ignore_items.uniq!
         end
       ensure
         excel2.Workbooks.Close
         excel2.Quit
       end
       
-      return ignore_items.uniq!
+      return ignore_items
     end
     
     def get_value_from_cell(cell)
-      begin
+      begin 
         cell.Copy
         str = NKF.nkf('-wxm0', TkClipboard.get).chomp
         str.include?("\n") ? str.gsub(/(^"|"$)/i,'') : str

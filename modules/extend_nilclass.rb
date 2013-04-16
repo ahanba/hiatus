@@ -1,6 +1,14 @@
 #coding: utf-8
 
 class NilClass
+  def utf_to_native
+    self.to_s.encode(CODE, "UTF-8")
+  end
+  
+  def native_to_utf
+    self.to_s.encode("UTF-8", CODE)
+  end
+  
   def remove_ttx_tags
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
     self.to_s.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")
@@ -17,7 +25,7 @@ class NilClass
     #delete mrk
     #placeholder inline tags are <x/>, <g>,<bx/>, <ex/>. <g> for Bold, Italic, etc., <x> for line feed
     #native inline tags are <bpt>, <ept>, <it>, <Ph>
-    self.to_s.gsub(/<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>/i, '{IMG}').gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "\n").gsub(/<\/?g.*?>/i, '')
+    self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{IMG}').gsub(/<(?:x|bx|ex) id="pm.*?\/(?:x|bx|ex)>/i, "{TAG}").gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, "\n").gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "").gsub(/<\/?g.*?>/i, '')
   end
   
   def remove_mrk_xliff_tags
