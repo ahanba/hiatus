@@ -5,6 +5,7 @@ module Writer
     #For Excel sheet. Only avaliable on Windows platform
     #check default active sheet
     require 'tk'
+    require 'csv'
     
     def read_XLS_report(file)
       excel2 = WIN32OLE.new('Excel.Application')
@@ -24,6 +25,9 @@ module Writer
             get_value_from_cell(sheet.Cells(i, 4)),
             get_value_from_cell(sheet.Cells(i, 5)),
             get_value_from_cell(sheet.Cells(i, 8))
+            #sheet.Cells(i, 4).value.native_to_utf,
+            #sheet.Cells(i, 5).value.native_to_utf,
+            #sheet.Cells(i, 8).value.native_to_utf
             ]
           ignore_items << records_to_compare
           ignore_items.uniq!
@@ -34,6 +38,26 @@ module Writer
       end
       
       return ignore_items
+    end
+    
+    def read_CSV_report(file)
+      file_str = read_rawfile(file)
+      ops = {:col_sep => ",", :headers => true, :quote_char => '"'}
+      myCSV = CSV.new(file_str, ops)
+      
+      ignore_items = []
+      
+      myCSV.map {|row|
+        next if row[12].to_s.downcase != 'ignore'
+        records_to_compare = [
+            row[3].convDash,
+            row[4].convDash,
+            row[7].convDash
+          ]
+        ignore_items << records_to_compare
+      }
+      
+      return ignore_items.uniq
     end
     
     def get_value_from_cell(cell)

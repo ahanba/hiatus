@@ -25,6 +25,12 @@ class String
     end
   end
   
+  def convDash
+    # to fix the issue while reading ignore list CSV file
+    # \u2212 \uFF0D \u2013: these characters are imcompatible between SJIS and UTF-8
+    self.gsub("\u2212", "\uFF0D")
+  end
+  
   def remove_ttx_tags
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
     self.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")

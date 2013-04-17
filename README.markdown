@@ -124,19 +124,23 @@ Then error report will be generated.
 About Ignore List
 ------------
 You can skip known false errors by providing ignore list.  
-Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and specify its full file path in the ignoreList field.  
+Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and save it as CSV format.  
+(Optional) Open the CSV file and save it as UTF-8 encoding.  
+Then specify the full path of the CSV file in the ignoreList field.  
 For example:  
   
-       ignorelist: Y:\Sample_files\130412_report.xlsx  
+       ignorelist: Y:\Sample_files\130412_report.csv  
   
-Then, marked errors will not be reported next time.  
+Then, marked errors will not be reported next time. 
+ 
 
 *Note*:  
-Ignore list does not work correctly in some cases.  
+You can specify XLSX directly in ignoreList field, however, it does not work correctly in some cases.  
 Some characters (typically some double-byte characters) get garbled while reading XLSX file.  
 In that case, this function does not work as expected.  
 This issue depends on your OS default encoding and source/target texts (languages) in the provided ignore list.  
-Currently trying to find a way to resolve this issue.  
+Also reading XLSX file takes much longer than reading CSV.  
+So I recommend you to use CSV file.   
   
 How to create Glossary file?
 ------------
