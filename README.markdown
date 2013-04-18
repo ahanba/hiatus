@@ -78,7 +78,7 @@ Installation
 1. Install [Ruby](http://rubyinstaller.org/) 1.9.3, and check on **tk** option on installation  
 2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you want.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
-4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dii** as **pspell.dll**.
+4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dll** as **pspell.dll**.
 5. Start command prompt and run following commands  
      gem install **nokogiri**  
      gem install **zip**  
