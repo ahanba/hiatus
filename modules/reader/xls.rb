@@ -5,6 +5,10 @@ module Reader
     require 'modules/reader/core'
     include Reader::Core
     
+    COL_SRC = 2
+    COL_TGT = 3
+    COL_NOT = 4
+    
     #For Excel sheet. Only avaliable on Windows platform
     #target is default active sheet, col A as Source, col B as Target, col C as ID
     def readXLS(file, option)
@@ -21,9 +25,9 @@ module Reader
           i += 1
           entry = {}
           entry[:filename] = file.to_s
-          sheet.Cells(i, 1).value != nil ? entry[:source] = sheet.Cells(i, 1).value.to_s.native_to_utf : entry[:source] = ""
-          sheet.Cells(i, 2).value != nil ? entry[:target] = sheet.Cells(i, 2).value.to_s.native_to_utf : entry[:target] = ""
-          entry[:note]     = sheet.Cells(i, 3).value.native_to_utf if sheet.Cells(i, 3).value != nil
+          sheet.Cells(i, COL_SRC).value != nil ? entry[:source] = sheet.Cells(i, COL_SRC).value.native_to_utf : entry[:source] = ""
+          sheet.Cells(i, COL_TGT).value != nil ? entry[:target] = sheet.Cells(i, COL_TGT).value.native_to_utf : entry[:target] = ""
+          sheet.Cells(i, COL_NOT).value != nil ? entry[:note] = sheet.Cells(i, COL_NOT).value.native_to_utf : entry[:note] = ""
           entry[:id]       = "Row #{i}"
           @@bilingualArray.push(entry)
         end

@@ -39,7 +39,7 @@ module Checker
         forms = value[0].uniq
         next if value[2] == 1 || forms.length == 1
 
-        colorIndex = [9,1,7,5,10,8,6]
+        colorIndex = [5,1,8,6,3,10,9]
 
         value[1].map{|segment|
           error = {}

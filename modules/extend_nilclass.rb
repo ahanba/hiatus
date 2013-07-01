@@ -13,7 +13,12 @@ class NilClass
     #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
     self.to_s.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")
   end
-
+  
+  def convDash
+    #do nothing for nilclass
+    self
+  end
+  
   def remove_ttx_tags_and_innertext
     #remove "<df...>", "</df>" and "<ut .... >...  </ut>" tags 
     #include the text between <ut> & </ut> tags. That is the difference from remove_ttx_tags method
@@ -25,7 +30,8 @@ class NilClass
     #delete mrk
     #placeholder inline tags are <x/>, <g>,<bx/>, <ex/>. <g> for Bold, Italic, etc., <x> for line feed
     #native inline tags are <bpt>, <ept>, <it>, <Ph>
-    self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{IMG}').gsub(/<(?:x|bx|ex) id="pm.*?\/(?:x|bx|ex)>/i, "{TAG}").gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, "\n").gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "").gsub(/<\/?g.*?>/i, '')
+    #self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{IMG}').gsub(/<(?:x|bx|ex) id="pm.*?\/(?:x|bx|ex)>/i, "{TAG}").gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, "\n").gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "").gsub(/<\/?g.*?>/i, '')
+    self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{TAG}').gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, '{TAG}').gsub(/<\/?g.*?>/i, '{TAG}')
   end
   
   def remove_mrk_xliff_tags

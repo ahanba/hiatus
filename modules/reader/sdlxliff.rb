@@ -16,6 +16,7 @@ module Reader
         mySource = tunit.at('seg-source')
         next if mySource.content == ""
         myTarget = tunit.at('target')
+        next if myTarget == nil
         myDef    = tunit.xpath('sdl:seg-defs', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'})
         
         mySource.css('mrk[mtype="seg"]').zip(myTarget.css('mrk[mtype="seg"]'), myDef.xpath('sdl:seg', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'})).each {|seg|

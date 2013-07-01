@@ -1,6 +1,6 @@
 hiatus
 ===========================
-**hiatus** is a localization QA tool. Reads various bilingual files, runs checks and reports errors detected.  
+**hiatus** is a localization QA tool. Reads various types of bilingual files, runs checks and reports errors detected.  
 For more details, please see  
 Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
@@ -8,13 +8,13 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 Check Items
 ------
 + **Glossary**  
-   When a glossary source term detected in source segment, checks if corresponding glossary target term exists in target segment. RegExp supported.  
+   When a glossary source term detected in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
   
 + **Search Source or Target Text** (Defined as **monolingual**)  
    Reads expressions from the list, and report errors if defined expressions found in a segment. You can choose which segment to search (source or target segment). RegExp supported.
   
 + **Inconsistency**  
-   Checks inconsistencies in two ways - Source -> Target & Target -> Source  
+   Checks inconsistencies in two ways - Source to Target & Target to Source  
   
 + **Numbers**  
    Detects numbers in source but NOT in target.  
@@ -23,10 +23,10 @@ Check Items
    Detects missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
   
 + **Length**  
-   Length of source and target are different more/less than +/- 50%  
+   Length of source and target segments are different more/less than +/- 50%  
   
 + **Skipped Translation, Blank**  
-   Reports errors if target segment is blank, or source and target segments are same.  
+   Reports errors if a target segment is blank, or source and target segments are same.  
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
    Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
@@ -35,10 +35,10 @@ Check Items
    Valid only when **source** is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
   
 + **Software**  
-   Checks if hotkey (i.e. &A, _A), missing/added variables (i.e. %s, %d), and '...' at suffix (i.e. Save As...) are consistent between source and target.
+   Checks if 1) Hotkeys (i.e. &A, _A), 2) Missing/Added variables (i.e. %s, %d), and 3) '...' at the end (i.e. Save As...) are consistent between source and target segments.
   
 + **Spell**  
-   Spell check based on [GNU Aspell](http://aspell.net/) library.  
+   Spell check using [GNU Aspell](http://aspell.net/) library.  
 
 Supported Bilingual File Formats
 ------
@@ -55,15 +55,16 @@ Supported Bilingual File Formats
 Features
 --------
 + For English, hiatus converts dictionary form into possible active forms (Optional).    
-  Example: hiatus converts **write** into **write|writes|writing|wrote|written**, and all of these terms are detected.
-+ As long as the encode of bilingual file is UTF-8/UTF-16, hiatus can handle multiple languages (i.e. Japanese, Chinese, Korean, Thai, etc.) without generating garbage characters.
+  Example: hiatus converts **write** into **write|writes|writing|wrote|written**, and all of these terms can be detected.
++ As long as the encode of input files are UTF-8/UTF-16, hiatus can handle multiple languages (i.e. Japanese, Chinese, Korean, Thai, etc.) without generating garbage characters.
 + Simple output report (XLS). Easy to filter.
++ Suppress known false errors by specifying Ignore List.
 + Source code is published - you can confirm what can be checked, what can NOT be checked.
 
 Precautions
 --------
 + Do **NOT** copy anything while hiatus is running.  
-  hiatus uses clipboard while reading XLSX/DOC files including reading Ignore list.  
+  hiatus uses clipboard while reading XLSX/DOC files (including reading XLS Ignore list).  
   When you use these functions, leave clipboard. Do not perform any copy operations.  
 + Ignore list does not work correctly in some cases (See "About Ignore List" for details)  
   
@@ -71,12 +72,12 @@ Environment
 --------
 Ruby 1.9.2 or 1.9.3  
 Windows XP, Windows 7   
-*Although I have not tested it, I think hiatus works on other language environments. OS default encoding is set dynamically when generating Excel output file.   
+*Although it has not been tested, hiatus may work on other language environments. OS default encoding is set dynamically when generating Excel output file.   
 
 Installation
 ---------
-1. Install [Ruby](http://rubyinstaller.org/) 1.9.3, and check on **tk** option on installation  
-2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you want.  
+1. Install [Ruby](http://rubyinstaller.org/) 1.9.3. Check on **tk** option on installation  
+2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you need.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
 4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dll** as **pspell.dll**.
 5. Start command prompt and run following commands  
@@ -87,7 +88,7 @@ Installation
 
 How to use hiatus?
 ---------
-Fill in necessary items on **config.yaml**, and run **hiatus.rb**.  
+Fill in necessary fields on **config.yaml**, and run **hiatus.rb**.  
 Then error report will be generated.
 
 ###About config.yaml###
@@ -123,24 +124,26 @@ Then error report will be generated.
   
 About Ignore List
 ------------
-You can skip known false errors by providing ignore list.  
-Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and save it as CSV format.  
+You can skip known false errors by specifying ignore list.  
+Open the hiatus report XLSX file and mark **ignore** in "Fixed?" column (column M), and save it as XML spreadsheet 2003 format.  
 (Optional) Open the CSV file and save it as UTF-8 encoding.  
-Then specify the full path of the CSV file in the ignoreList field.  
+Then specify the full path of the XML file in the ignoreList field.  
 For example:  
   
-       ignorelist: Y:\Sample_files\130412_report.csv  
+       ignorelist: Y:\Sample_files\130412_report.xml  
+       ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
   
-Then, marked errors will not be reported next time. 
+*Use semicolon to set multiple lists.
+Then, marked errors will be suppressed next time. 
  
 
 *Note*:  
-You can specify XLSX directly in ignoreList field, however, it does not work correctly in some cases.  
+You can specify XLSX (or CSV file) directly in ignoreList field, however, it does not work correctly in some cases.  
 Some characters (typically some double-byte characters) get garbled while reading XLSX file.  
 In that case, this function does not work as expected.  
 This issue depends on your OS default encoding and source/target texts (languages) in the provided ignore list.  
-Also reading XLSX file takes much longer than reading CSV.  
-So I recommend you to use CSV file.   
+Also reading XLSX file takes much longer than reading XML.  
+So XML file is recommended.   
   
 How to create Glossary file?
 ------------

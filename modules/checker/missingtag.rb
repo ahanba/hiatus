@@ -7,12 +7,12 @@ module Checker
       #Tag definitions
       #TTX:      <ut .*?<\/ut>
       #XLZ:      <(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>
-      #sdlxliff: <x +id\="[\S\d]+"\/>
+      #sdlxliff: {TAG}
       #Not Tag, software suffix ... : (?:\.\.\.)$
       #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}
 
-      src_tags = segment[:source].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
-      tgt_tags = segment[:target].to_s.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|<x +id\="[\S\d]+"\/>|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
+      src_tags = segment[:source].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
+      tgt_tags = segment[:target].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []
@@ -83,7 +83,8 @@ module Checker
     end
 
     def remove_ut_ttx_tags!(catched)
-      str = catched[0].gsub!(/<\/*ut.*?>/,"")
+      # delete &amp; etc. to hide false errors
+      str = catched[0].gsub!(/<\/*ut.*?>|&(?:amp|lt|gt|quot|ndash|apos)/,"")
       CGI.unescapeHTML(str) if str != nil
     end
   end

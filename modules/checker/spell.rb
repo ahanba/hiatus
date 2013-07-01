@@ -20,11 +20,11 @@ module Checker
           end
         }
       }
-      puts "Number of unique words: #{word_list.length}"
+      puts "Number of Unique Words: #{word_list.length}"
       
       word_list.map {|word, segment_indices|
         word = word.gsub('&','') # remove hotkey indicator
-        next if word == word.upcase # ignore if all characters are capitalized (= variables)
+        next if word == word.upcase # ignore if all characters are capitalized (= constant)
         unless speller.correct?(word)
           error_msg = speller.suggestions(word)[0..1].join(', ')
           segment_indices.map {|segment_index|

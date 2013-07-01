@@ -20,11 +20,17 @@ module Writer
     myreport = output_path + "/#{t}_report.xlsx"
     
     if ignorelist_path == nil
-      ignore_items = nil
-    elsif ignorelist_path.end_with?('.xlsx')
-      ignore_items = read_XLS_report(ignorelist_path)
-    elsif ignorelist_path.end_with?('.csv')
-      ignore_items = read_CSV_report(ignorelist_path)
+      @@ignore_items = nil
+    else
+      ignorelist_path.split(';').map {|mypath|
+        if mypath.end_with?('.xlsx')
+          read_XLS_report(mypath)
+        elsif mypath.end_with?('.csv')
+          read_CSV_report(mypath)
+        elsif mypath.end_with?('.xml')
+          read_XML_report(mypath)
+        end
+      }
     end
     
     begin
@@ -36,7 +42,7 @@ module Writer
       
       row = 1
       errors.map {|error|
-        next if (ignore_items != nil) && ignore?(error, ignore_items)
+        next if (@@ignore_items != nil) && ignore?(error, @@ignore_items)
         row += 1
         col = 1
         fullpath = File.expand_path(error[:bilingual][:filename])

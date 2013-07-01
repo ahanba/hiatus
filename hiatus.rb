@@ -76,10 +76,12 @@ puts "Checking Directories..."
 }
 
 if ignorelist_path
-  unless FileTest.file?(ignorelist_path) || File.extname(ignorelist_path) == '.xlsx' || File.extname(ignorelist_path) == '.csv'
-    puts "Invalid Ignore List: \"#{ignorelist_path}\" does not exist or is not a valid file. Supported file formats are XLSX and CSV." 
-    exit
-  end
+  ignorelist_path.split(';').each {|mypath|
+    unless FileTest.file?(mypath) || File.extname(mypath) == '.xlsx' || File.extname(mypath) == '.csv'
+      puts "Invalid Ignore List: \"#{mypath}\" does not exist or is not a valid file. Supported file formats are XLSX and CSV." 
+      exit
+    end
+  }
 end
 
 langs = {
