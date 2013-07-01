@@ -133,7 +133,7 @@ For example:
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
   
-*Use semicolon to set multiple lists.
+*Use semicolon to set multiple lists.  
 Then, marked errors will be suppressed next time. 
  
 
