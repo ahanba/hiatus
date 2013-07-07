@@ -11,7 +11,7 @@ Check Items
    When a glossary source term detected in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
   
 + **Search Source or Target Text** (Defined as **monolingual**)  
-   Reads expressions from the list, and report errors if defined expressions found in a segment. You can choose which segment to search (source or target segment). RegExp supported.
+   Loads expressions from the list, and report errors if the expressions found in a segment. You can choose which segment to search (source or target). RegExp supported.
   
 + **Inconsistency**  
    Checks inconsistencies in two ways - Source to Target & Target to Source  
@@ -133,7 +133,7 @@ For example:
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
   
-*Use semicolon to set multiple lists.  
+*Use semicolon to specify multiple lists.  
 Then, marked errors will be suppressed next time. 
  
 
