@@ -149,10 +149,10 @@ See below and the sample files in !Sample_files folder.
 
 **Glossary File Format**  
 TAB-delimited   
+
 | Column 1|Column 2|Column 3|Column 4|
 |:-------|:-------|:--------|:-------|
 |Source Term (Required)|Target Term (Required)|Option (Required)|Comment (Optional)|   
-Note that Column 3 is always required even when *Blank* option is specified.
 
 Available options are the combinations of followings
 
@@ -167,10 +167,12 @@ Available options are the combinations of followings
 |#|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 Sample:   
-		Server	 サーバー	i
-		node	ノード
-		delegate	委譲する	i
-		install	インストール	i
+'''
+Server	 サーバー	i
+node	ノード
+delegate	委譲する	i
+install	インストール	i
+'''
 
 You can test Ruby RegExp on [rubular](http://rubular.com/).  
 Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
@@ -182,11 +184,11 @@ UTF-8 without BOM is recommended, however, you can use other char code as it is 
 See below and the sample files in !Sample_files folder.   
 
 **Monolingual File Format**  
-TAB-delimited   
+TAB-delimited
+
 |Column 1|Column 2|Column 3|Column 4|
 |:-------|:-------|:--------|:-------|
-|s or t (Required)|Search Expression (Required)|Option (Required)|Comment (Optional)|   
-Note that Column 3 is always required even when *Blank* option is specified.
+|s or t (Required)|Search Expression (Required)|Option (Required)|Comment (Optional)|
 
 Available options are the combinations of followings
 
@@ -201,11 +203,13 @@ Available options are the combinations of followings
 |#|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 Sample:    
-		t	；	#	全角セミコロン；を使用しない
-		t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
-		t	[０１２３４５６７８９]+	#	全角数字を禁止
-		s	not	z	否定文？
-		t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
+'''
+t	；	#	全角セミコロン；を使用しない
+t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
+t	[０１２３４５６７８９]+	#	全角数字を禁止
+s	not	z	否定文？
+t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
+'''
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
 Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
