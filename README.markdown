@@ -163,12 +163,12 @@ Available options are the combinations of followings
 |e|extended + Auto Conversion|
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
-|Prefix #||
-|#|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|||
+|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 Sample:   
 ```
-Server	 サーバー	i
+Server	 サーバー	z
 (?:node|nodes)	ノード	#i	ノードの訳に注意
 import(?:ing)	インポート	#i
 Japan	日本		JapanはCase-sensitive
@@ -199,8 +199,8 @@ Available options are the combinations of followings
 |e|extended + Auto Conversion|
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
-|Prefix #||
-|#|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|||
+|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 Sample:    
 ```
