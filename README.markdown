@@ -1,6 +1,6 @@
 hiatus
 ===========================
-**hiatus** is a localization QA tool. Reads various bilingual-file　formats, runs checks and reports errors detected.  
+**hiatus** is a localization QA tool. Reads various bilingual file formats, runs checks and reports errors detected.  
 For more details, please see  
 Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
@@ -169,9 +169,9 @@ Available options are the combinations of followings
 Sample:   
 ```
 Server	 サーバー	i
-node	ノード
-delegate	委譲する	i
-install	インストール	i
+(?:node|nodes)	ノード	#i	ノードの訳に注意
+import(?:ing)	インポート	#i
+Japan	日本		JapanはCase-sensitive
 ```
 
 You can test Ruby RegExp on [rubular](http://rubular.com/).  
