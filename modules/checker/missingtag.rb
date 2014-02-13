@@ -8,11 +8,11 @@ module Checker
       #TTX:      <ut .*?<\/ut>
       #XLZ:      <(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>
       #sdlxliff: {TAG}
-      #Not Tag, software suffix ... : (?:\.\.\.)$
-      #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}
+      #Not Tag, Software Suffix ... : (?:\.\.\.)$
+      #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}|$0xa$
 
-      src_tags = segment[:source].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
-      tgt_tags = segment[:target].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+)/)
+      src_tags = segment[:source].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+|\$0xa\$|\\n|\\r|\\t|\${[A-Z]+})/)
+      tgt_tags = segment[:target].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+|\$0xa\$|\\n|\\r|\\t|\${[A-Z]+})/)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []

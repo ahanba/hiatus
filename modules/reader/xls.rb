@@ -5,9 +5,9 @@ module Reader
     require 'modules/reader/core'
     include Reader::Core
     
-    COL_SRC = 2
-    COL_TGT = 3
-    COL_NOT = 4
+    COL_SRC = 1
+    COL_TGT = 2
+    COL_NOT = 1
     
     #For Excel sheet. Only avaliable on Windows platform
     #target is default active sheet, col A as Source, col B as Target, col C as ID

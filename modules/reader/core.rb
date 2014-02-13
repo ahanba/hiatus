@@ -36,40 +36,75 @@ module Reader
     #ROWSEP = "\r\n"
     #ROWSEP = ENV["OS"] ? "\r\n" : $/
     
-    #Read file and return it in UTF8 format
+    #Read file and return it in UTF-8 format
     def read_rawfile(file)
       fl = File.open(file, "rb")
-      file_str = fl.read; fl.close
-      #file_str = Kconv.kconv(file_str, Kconv::UTF8, guess_encode(file_str))
-      file_str = NKF.nkf('-wxm0', file_str)
-      #file_str = file_str.delete("\xEF\xBB\xBF")
+      str = fl.read; fl.close
+      
+      #p guess_encode(str)
+      begin
+        case guess_encode(str)
+        when "UTF-8"
+          str = NKF.nkf('-wWxm0', str)
+        when "UTF-16"
+          str = NKF.nkf('-wW16xm0', str)
+        when "ASCII"
+          str = str.encode("UTF-8", Encoding::ASCII)
+        when "SHIFT_JIS"
+          str = NKF.nkf('-wSxm0', str)
+        when "JIS"
+          str = NKF.nkf('-wJxm0', str)
+        when "GB2312"
+          str = str.encode("UTF-8", "GBK")
+        when "BIG5"
+          str = str.encode("UTF-8", "BIG5")
+        when "EUC-JP"
+          str = NKF.nkf('-wExm0', str)
+        when "EUC-KR"
+          str = str.encode("UTF-8", Encoding::EUC_KR)
+        when "EUC-TW"
+          str = str.encode("UTF-8", Encoding::EUC_TW)
+        when "ISO-2022-JP"
+          str = str.encode("UTF-8", Encoding::ISO2022_JP)
+        when "MACCYRILLIC"
+          str = str.encode("UTF-8", Encoding::MacCyrillic)
+        when "IBM855"
+          str = str.encode("UTF-8", Encoding::IBM855)
+        when "IBM866"
+          str = str.encode("UTF-8", Encoding::IBM866)
+        when "ISO-8859-5"
+          str = str.encode("UTF-8", Encoding::ISO_8859_5)
+        when "ISO-8859-2"
+          str = str.encode("UTF-8", Encoding::ISO_8859_2)
+        when "ISO-8859-7"
+          str = str.encode("UTF-8", Encoding::ISO_8859_7)
+        when "ISO-8859-8"
+          str = str.encode("UTF-8", Encoding::ISO_8859_8)
+        when "TIS-620"
+          str = str.encode("UTF-8", Encoding::TIS620)
+        else
+          str = str
+        end
+        return str
+      rescue
+        puts "Failed to read #{File.basename(file)}. Please check the encoding and try again.\nEncoding: #{guess_encode(str)}"
+        p $!
+        exit
+      ensure
+        fl = nil
+      end
     end
     
     #Guess file encode
-    #def guess_encode(str)
-      #encode = NKF.guess(str)
-      
-      #Assume all dummy encodes as UTF16
-      #dummies can be UTF_16, UTF_7 & UTF_32. UTF_7 & UTF_32 are ignored as they are hardly used
-      #UTF16 dummy is UTF16 with BOM
-      
-      #encode = NKF::UTF16 if encode.dummy?
-      #codes = {
-      #       NKF::UTF8    => Kconv::UTF8,
-      #       NKF::UTF16   => Kconv::UTF16,
-      #       NKF::SJIS    => Kconv::SJIS,
-      #       NKF::JIS     => Kconv::JIS,
-      #       NKF::EUC     => Kconv::EUC,
-      #       NKF::ASCII   => Kconv::ASCII,
-      #       NKF::BINARY  => Kconv::BINARY,
-      #       NKF::UNKNOWN => Kconv::UNKNOWN
-      #}
-      #return codes[encode]
-    #end
-    
-    def read_rawText(str)
-      #Kconv.kconv(str, Kconv::UTF8, guess_encode(str))
-      NKF.nkf('-wxm0', str)
+    def guess_encode(str)
+      if NKF.guess(str).dummy?
+        encode = "UTF-16"
+      elsif NKF.guess(str) == NKF::JIS
+        encode = "JIS"
+      else
+        encode = UniversalDetector::chardet(str)["encoding"].upcase
+      end
     end
+    
   end
 end

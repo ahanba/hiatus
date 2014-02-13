@@ -70,7 +70,7 @@ module Reader
           entry[:term]    = split_line[1].chomp
           entry[:option]  = split_line[2].chomp
           entry[:message] = split_line[3].chomp if split_line[3]
-          #entry[:file]   = File.basename(file)
+          entry[:file]    = File.basename(file)
           @@monolingualArray << entry
         }
       rescue NoMethodError

@@ -43,7 +43,7 @@ module Writer
     def get_value_from_cell(cell)
       begin 
         cell.Copy
-        str = NKF.nkf('-wxm0', TkClipboard.get).chomp
+        str = TkClipboard.get.native_to_utf.chomp
         # prep for a line containing LF
         str.include?("\n") ? str.gsub(/(^"|"$)/i,'') : str
       rescue

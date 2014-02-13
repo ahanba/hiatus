@@ -1,7 +1,7 @@
 #coding: utf-8
 =begin
 Developed environment
-Ruby 1.9.2 or 1.9.3
+Ruby 1.9.2, 1.9.3 or 2.0.0
 Windows XP SP2, Windows 7
 Note: This script does not work on Ruby 1.8.7 or earlier
 =end
@@ -70,7 +70,7 @@ ignorelist_path   = (myconfig["option"]["ignorelist"] == nil ? nil : myconfig["o
 puts "Checking Directories..."
 [bilingual_path, output_path, glossary_path, monolingual_path].each { |myDir|
   unless myDir == nil or FileTest.directory?(myDir)
-    puts "'#{myDir}' does not exist. Should be existing directory, please fix and try again."
+    puts "'#{myDir}' does not exist, it must be existing directory. Please check the path."
     exit
   end
 }
@@ -128,9 +128,7 @@ class MyChecker
   include Checker
 end
 
-puts "Reading Files..."
 mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks, langs)
-puts "Running Checks..."
 mych.run_checks
 puts "Generating Report..."
 mych.send("report_#{report_format.upcase}", mych.errors, output_path, ignorelist_path)

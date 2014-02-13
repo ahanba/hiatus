@@ -141,6 +141,9 @@ In the &lt;strong&gt;Session Materials&lt;/strong&gt;&amp;nbsp;Content Area, you
 - Ignore listのXLSXの読み込みでOSのデフォルトエンコーディングがCP437だと、XLSX内の日本語が読み取れなかった。全部??になる。回避策として一度クリップボードにコピーして、そこから読み取るようにした。
   他の言語の組み合わせだと、別の問題が起きるかもしれない。
 
+2014/02/14
+- テキストファイルのエンコーディング判定を改善。chardet を使用し、GB2312 なども読み取れるようになった。
+  これに伴い chardet gem が必要になった。「gem install chardet2」を実行すること。
 
 TO DO:
 - 出力レポートでマッチした箇所に色をつける

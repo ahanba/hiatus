@@ -4,6 +4,7 @@ module Reader
   #equire 'kconv'
   require 'csv'
   require 'nkf'
+  require 'UniversalDetector'
   require 'nokogiri'
   require 'zip/zip'
   require 'shell'

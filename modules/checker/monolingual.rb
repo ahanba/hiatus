@@ -16,7 +16,8 @@ module Checker
               error[:found]   = found[0] if found.class == Array
               error[:found]   = found[0] if found.class == String
             end
-            error[:bilingual] = segment
+            error[:mololingual] = term
+            error[:bilingual]   = segment
             @errors << error
           }
         end
@@ -33,7 +34,8 @@ module Checker
               error[:found]   = found[0] if found.class == Array
               error[:found]   = found if found.class == String
             end
-            error[:bilingual] = segment
+            error[:mololingual] = term
+            error[:bilingual]   = segment
             @errors << error
           }
         end

@@ -16,7 +16,8 @@ module Checker
     def unsourced_template(segment, symbol1, symbol2)
       enu_terms = CGI.unescapeHTML(segment[symbol1].remove_ttx_innertext_and_xliff_tags).convEntity.scan(/([@a-zA-Z][@\.a-zA-Z\d ]*[@\.a-zA-Z\d]|[@a-zA-Z])/)
       enu_terms.map {|enu_term|
-        conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
+        #conv_enu = Regexp.compile(Regexp.escape(enu_term[0]), Regexp::IGNORECASE)
+        conv_enu = Regexp.compile(Regexp.escape(enu_term[0]))
         next if CGI.unescapeHTML(segment[symbol2].remove_ttx_innertext_and_xliff_tags).convEntity[conv_enu]
         error = {}
         error[:message]   = "Unsourced"

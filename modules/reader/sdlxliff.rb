@@ -8,7 +8,7 @@ module Reader
     
     #For sdlxliff (Trados Studio) file
     def readSDLXLIFF(file, option)
-      doc = Nokogiri::XML(File.open(file, "rb").read)
+      doc = Nokogiri::XML(open(file))
       tunits = doc.css('trans-unit')
       
       tunits.each {|tunit|
@@ -20,6 +20,8 @@ module Reader
         myDef    = tunit.xpath('sdl:seg-defs', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'})
         
         mySource.css('mrk[mtype="seg"]').zip(myTarget.css('mrk[mtype="seg"]'), myDef.xpath('sdl:seg', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'})).each {|seg|
+          #Skip if Target segment is blank
+          #next if seg[1].inner_html == ""
           if option[:filter] != nil
             #do something
           end

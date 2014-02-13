@@ -37,7 +37,7 @@ module Writer
       book = excel.Workbooks.Add()
       sheet = book.Sheets("sheet1")
       
-      header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "GlossFile", "Asset", "Fixed?"]
+      header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "DefFile", "Asset", "Fixed?"]
       sheet.fillColumns(header, 1)
       
       row = 1
@@ -62,7 +62,11 @@ module Writer
         xlsEscape(sheet.Cells(row, col + 7), error[:found])
         xlsEscape(sheet.Cells(row, col + 8), error[:glossary].src) if error[:glossary]
         xlsEscape(sheet.Cells(row, col + 9), error[:glossary].tgt) if error[:glossary]
-        sheet.Cells(row, col + 10).value = error[:glossary].file if error[:glossary]
+        if error[:glossary]
+          sheet.Cells(row, col + 10).value = error[:glossary].file
+        elsif error[:mololingual]
+          sheet.Cells(row, col + 10).value = error[:mololingual].file
+        end
         sheet.Cells(row, col + 11).value = error[:bilingual][:file] if error[:bilingual][:file]
       }
       

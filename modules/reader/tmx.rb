@@ -7,8 +7,7 @@ module Reader
     
     #For TMX
     def readTMX(file, option)
-      file_str = read_rawfile(file)
-      @doc = Nokogiri::XML(file_str)
+      @doc = Nokogiri::XML(open(file))
       tus = @doc.xpath("//tu")
       tus.each{ |tu|
         tuvs = tu.xpath('./tuv')
