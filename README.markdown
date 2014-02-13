@@ -55,7 +55,7 @@ Supported Bilingual File Formats
 Features
 --------
 + For English, hiatus can convert dictionary form into possible active forms (Optional).    
-  Example: With this option ON, hiatus converts **write** into RegExp **(?:write|writes|writing|wrote|written)**.
+  Example: Converts **write** into RegExp **(?:write|writes|writing|wrote|written)**.
 + Auto-detect encoding with [chardet2](https://github.com/janx/chardet2) library to prevent garbled character issues.
 + Simple output report (XLS). Easy to filter.
 + Can suppress known false errors by specifying Ignore List.
@@ -154,9 +154,11 @@ See below and the sample files in !Sample_files folder.
 
 **Glossary File Format** 
 TAB-delimited
-|Column 1|Column 2|Column 3|Column 4|
+
+| Column 1|Column 2|Column 3|Column 4|
 |--------|--------|---------|--------|
 |Source Term (Required)|Target Term (Required)|Option (Required)|Comment (Optional)|
+
 Note that Column 3 is always required even when *Blank* option is specified.
 
      Server	 サーバー	i
