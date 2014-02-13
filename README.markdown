@@ -135,16 +135,11 @@ For example:
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
   
 *Use semicolon to specify multiple lists.  
-Then, marked errors will be suppressed next time. 
+Then, marked errors will not reported next time. 
  
 
 *Note*:  
-You can specify XLSX (or CSV file) directly in ignoreList field, however, it does not work correctly in some cases.  
-Some characters (typically some double-byte characters) get garbled while reading XLSX file.  
-In that case, this function does not work as expected.  
-This issue depends on your OS default encoding and source/target texts (languages) in the provided ignore list.  
-Also reading XLSX file takes much longer than reading XML.  
-So XML file is recommended.   
+You can specify XLSX (or CSV file) in ignoreList field, however, it is not recommended as reading XLSX file is unstable. XML file is recommended.   
   
 How to create Glossary file?
 ------------
@@ -152,11 +147,11 @@ Supported format is Tab Separated Text file (TSV file).
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by chardet.   
 See below and the sample files in !Sample_files folder.  
 
-**Glossary File Format** 
-TAB-delimited
+**Glossary File Format**  
+TAB-delimited  
 
 | Column 1|Column 2|Column 3|Column 4|
-|--------|--------|---------|--------|
+|:-------|:-------|:--------|:-------|
 |Source Term (Required)|Target Term (Required)|Option (Required)|Comment (Optional)|
 
 Note that Column 3 is always required even when *Blank* option is specified.
@@ -167,8 +162,9 @@ Note that Column 3 is always required even when *Blank* option is specified.
      install	インストール	i 
 
 Available options are the combinations of followings
+
 |Option|Description|
-|------|-----------|
+|:-----|:----------|
 |i|ignore case + Auto Conversion|
 |m|multiline + Auto Conversion|
 |e|extended + Auto Conversion|
@@ -186,11 +182,13 @@ Supported format is Tab Separated Text file (TSV file).
 UTF-8 without BOM is recommended, however, you can use other char code as it is automatically detected by chardet library.   
 See below and the sample files in !Sample_files folder.   
 
-**Monolingual File Format** 
+**Monolingual File Format**  
 TAB-delimited
+
 |Column 1|Column 2|Column 3|Column 4|
-|--------|--------|---------|--------|
+|:-------|:-------|:--------|:-------|
 |s or t (Required)|Search Expression (Required)|Option (Required)|Comment (Optional)|
+
 Note that Column 3 is always required even when *Blank* option is specified.
 
 	t	；	#	全角セミコロン；を使用しない
@@ -200,8 +198,9 @@ Note that Column 3 is always required even when *Blank* option is specified.
 	t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
 
 Available options are the combinations of followings
+
 |Option|Description|
-|------|-----------|
+|:-----|:----------|
 |i|ignore case + Auto Conversion|
 |m|multiline + Auto Conversion|
 |e|extended + Auto Conversion|
