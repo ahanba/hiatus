@@ -172,8 +172,8 @@ import(?:ing)	インポート	#i
 Japan	日本		JapanはCase-sensitive
 ```
 
-You can test Ruby RegExp on [rubular](http://rubular.com/).  
-Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
+You can try Ruby RegExp on [rubular](http://rubular.com/).  
+RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0.   
 
 ### How to create Monolingual file?   
 See below and the sample files in !Sample_files folder.   
@@ -217,7 +217,7 @@ t	Shared Document	#i	Windows のファイル パスはローカライズする�
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
-Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
+RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0. 
 
 ## License
 Copyright &copy; 2014 Ayumu Hanba (ayumuhamba19&lt;at_mark&gt;gmail.com)  
