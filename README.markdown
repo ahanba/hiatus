@@ -145,8 +145,9 @@ TAB-delimited Text
 |:-------|:-------|:--------|:-------|
 |Source|Target|Option|Comment|   
 
-|Source|Glossary source term. Required|
+|Column|Description|
 |:---|:---|
+|Source|Glossary source term. Required|
 |Target|Glossary target term. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
@@ -181,15 +182,16 @@ UTF-8 without BOM is recommended, however, you can use other char code as it is 
 See below and the sample files in !Sample_files folder.   
 
 #### Monolingual File Format  
-**TAB-delimited Text**
+TAB-delimited Text
 #### Structure   
 
 |Column 1|Column 2|Column 3|Column 4|
 |:-------|:-------|:--------|:-------|
 |s or t|Expression|Option|Comment|
 
-|s or t|Segment to search. 's' is source, 't' is target segment. Required|
+|Column|Description|
 |:---|:---|
+|s or t|Segment to search. 's' is source, 't' is target segment. Required|
 |Expression|Search expression. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
