@@ -136,7 +136,7 @@ You can specify XLSX (or CSV file) in ignoreList field, however, it is not recom
 See below and the sample files in !Sample_files folder.  
 
 #### Glossary File Format  
-TAB-delimited Text 
+TAB-delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)    
 #### Structure   
 
@@ -179,7 +179,7 @@ Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguru
 See below and the sample files in !Sample_files folder.   
 
 #### Monolingual File Format  
-TAB-delimited Text
+TAB-delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 #### Structure   
 
