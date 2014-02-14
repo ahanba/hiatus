@@ -5,7 +5,6 @@ Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshar
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 
 ### Check Items
-=======
 + **Glossary**  
    When a glossary source term detected in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
   
@@ -40,7 +39,6 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
    Spell check using [GNU Aspell](http://aspell.net/) library.  
 
 ### Supported Bilingual File Formats
-=======
 + XLZ (Idiom)
 + TTX
 + TMX
@@ -52,7 +50,6 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 + SDLXLIFF
 
 ### Features
-=======
 + hiatus can automatically convert dictionary form into possible active forms for English (Optional).    
   Example: Converts **write** into RegExp **(?:write|writes|writing|wrote|written)**.
 + Auto-detect encoding with [chardet2](https://github.com/janx/chardet2) library to prevent garbled character issues.
@@ -61,20 +58,17 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 + Source code is published here. You can modify as you like if you want.
 
 ### Precautions
-=======
 + Do **NOT** copy anything while hiatus is running.  
   hiatus uses clipboard while reading XLSX/DOC files (including reading XLS Ignore list).  
   When you use these functions, leave clipboard during execution. Do not perform any copy operations.  
 + Ignore list does not work correctly in some cases (See "About Ignore List" for details)  
   
 ### Environment
-=======
 Ruby 1.9.2, 1.9.3 or 2.0.0  
 Windows XP, Windows 7   
 *hiatus works correctly in JA and EN environment. Other languages have not been tested. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
 
 ### Installation
-=======
 1. Install [Ruby](http://rubyinstaller.org/) 2.0.0. Check on **tk** option on installation  
 2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you need.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
@@ -87,7 +81,6 @@ Windows XP, Windows 7
      gem install **chardet2**
 
 ### How to use hiatus?
-=======
 Fill in necessary fields on **config.yaml**, and run **hiatus.rb**.  
 Then error report will be generated.
 
@@ -123,7 +116,6 @@ Then error report will be generated.
        ignorelist: Path to the ignore list (XLSX file)
   
 ### About Ignore List
-=======
 You can skip known false errors by specifying ignore list.  
 Open the hiatus report (XLSX file) and mark **ignore** in "Fixed?" column (column M), and save it as XML spreadsheet 2003 format.  
 (Optional) Open the CSV file and save it as UTF-8 encoding.  
@@ -141,7 +133,6 @@ Then, marked errors will not reported next time.
 You can specify XLSX (or CSV file) in ignoreList field, however, it is not recommended as reading XLSX file is unstable. XML file is recommended.   
   
 ### How to create Glossary file? 
-=======
 See below and the sample files in !Sample_files folder.  
 
 #### Glossary File Format  
@@ -184,8 +175,7 @@ Japan	日本		JapanはCase-sensitive
 You can test Ruby RegExp on [rubular](http://rubular.com/).  
 Also Ruby RegExp is based on [oniguruma](http://www.geocities.jp/kosako3/oniguruma/), see [here](http://www.geocities.jp/kosako3/oniguruma/doc/RE.txt) for RegExp API available in Ruby.   
 
-### How to create Monolingual file?
-=======   
+### How to create Monolingual file?   
 See below and the sample files in !Sample_files folder.   
 
 #### Monolingual File Format  
