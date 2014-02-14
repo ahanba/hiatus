@@ -145,12 +145,11 @@ TAB-delimited Text
 |:-------|:-------|:--------|:-------|
 |Source|Target|Option|Comment|   
 
-
 |Source|Glossary source term. Required|
+|:---|:---|
 |Target|Glossary target term. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
-
 
 #### About Options
 Available options are combination of followings
@@ -189,8 +188,8 @@ See below and the sample files in !Sample_files folder.
 |:-------|:-------|:--------|:-------|
 |s or t|Expression|Option|Comment|
 
-
 |s or t|Segment to search. 's' is source, 't' is target segment. Required|
+|:---|:---|
 |Expression|Search expression. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
