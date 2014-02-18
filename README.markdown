@@ -172,7 +172,7 @@ Server	 サーバー	z
 import(?:ing)	インポート	#i
 Japan	日本		JapanはCase-sensitive
 run	走る	i	
-(?<!start|end) point	#i	点
+(?<!start¥-|end¥-)point	点	#i	Feedback No.2
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
