@@ -136,7 +136,7 @@ You can specify XLSX (or CSV file) in ignoreList field, however, it is not recom
 See below and the sample files in !Sample_files folder.  
 
 #### Glossary File Format  
-TAB-delimited Text   
+Four-Column TAB delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)    
 #### Structure   
 
@@ -146,8 +146,8 @@ UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 
 |Column|Description|
 |:---|:---|
-|Source|Glossary source term. Required|
-|Target|Glossary target term. Required|
+|Source|Glossary source term. RegExp supported. Required|
+|Target|Glossary target term. RegExp supported. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
 
@@ -162,7 +162,8 @@ Available options are combination of followings
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
 |||
-|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|Prefix #||
+|#<*X*>|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 #### Sample   
 ```
@@ -170,6 +171,8 @@ Server	 サーバー	z
 (?:node|nodes)	ノード	#i	ノードの訳に注意
 import(?:ing)	インポート	#i
 Japan	日本		JapanはCase-sensitive
+run	走る	i	
+(?<!start¥-|end¥-)point	点	#i	Feedback No.2
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
@@ -179,7 +182,7 @@ RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.
 See below and the sample files in !Sample_files folder.   
 
 #### Monolingual File Format  
-TAB-delimited Text   
+Four-Column TAB delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 #### Structure   
 
@@ -190,7 +193,7 @@ UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 |Column|Description|
 |:---|:---|
 |s or t|Segment to search. 's' is source, 't' is target segment. Required|
-|Expression|Search expression. Required|
+|Expression|Search expression. RegExp supported. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
 
@@ -205,7 +208,8 @@ Available options are combination of followings
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
 |||
-|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|Prefix #||
+|#<*X*>|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 #### Sample    
 ```
@@ -214,6 +218,7 @@ t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
 t	[０１２３４５６７８９]+	#	全角数字を禁止
 s	not	z	否定文？
 t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
+t	[あいうえお]	#	Hiragana left
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
