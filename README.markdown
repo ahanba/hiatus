@@ -27,7 +27,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
    Reports errors if a target segment is blank.  
 
 + **Identical Translation**   
-   Reports id source and target segments are same   
+   Reports errors if source and target segments are same   
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
    Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
