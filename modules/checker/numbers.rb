@@ -100,7 +100,7 @@ module Checker
             @errors << error
           end
         elsif found[0] == "11"
-          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(11|eleven|November)/i
+          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(11|十一|eleven|November)/i
             error = {}
             error[:message]   = "Missing Number?"
             error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
@@ -108,7 +108,15 @@ module Checker
             @errors << error
           end
         elsif found[0] == "12"
-          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(12|twelve|December)/i
+          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(12|十二|twelve|December)/i
+            error = {}
+            error[:message]   = "Missing Number?"
+            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:bilingual] = segment
+            @errors << error
+          end
+        elsif found[0] == "16"
+          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(12|sixteen|hex|hexadecimal|十六)/i
             error = {}
             error[:message]   = "Missing Number?"
             error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"

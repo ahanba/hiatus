@@ -18,13 +18,16 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
    Detects numbers in source but NOT in target.  
   
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detects missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
+   Detects missing or added internal tags.       
   
 + **Length**  
    Length of source and target segments are different more/less than +/- 50%  
   
-+ **Skipped Translation, Blank**  
-   Reports errors if a target segment is blank, or source and target segments are same.  
++ **Skipped Translation**  
+   Reports errors if a target segment is blank.  
+
++ **Identical Translation**   
+   Reports id source and target segments are same   
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
    Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
@@ -66,7 +69,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 ### Environment
 Ruby 1.9.2, 1.9.3 or 2.0.0  
 Windows XP, Windows 7   
-*hiatus works correctly in JA and EN environment. Other languages have not been tested. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
+*hiatus is tested only in JA and EN environment. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
 
 ### Installation
 1. Install [Ruby](http://rubyinstaller.org/) 2.0.0. Check on **tk** option on installation  
@@ -101,6 +104,7 @@ Then error report will be generated.
        inconsistency_t2s: true  
        missingtag: true  
        skip: true  
+       identical: false   
        monolingual: true  
        numbers: true  
        unsourced: true  
@@ -118,14 +122,12 @@ Then error report will be generated.
 ### About Ignore List
 You can skip known false errors by specifying ignore list.  
 Open the hiatus report (XLSX file) and mark **ignore** in "Fixed?" column (column M), and save it as XML spreadsheet 2003 format.  
-(Optional) Open the CSV file and save it as UTF-8 encoding.  
-Then specify the full path of the XML file in the **ignoreList** field.  
+Then specify the full path of the XML file in the **ignoreList** field. Use semicolon to specify multiple files.   
 For example:  
   
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
-  
-*Use semicolon to specify multiple lists.  
+   
 Then, marked errors will not reported next time. 
  
 

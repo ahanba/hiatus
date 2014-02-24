@@ -5,7 +5,7 @@ module Reader
     require 'modules/reader/core'
     include Reader::Core
     
-    COL_SRC = 1
+    COL_SRC = 6
     COL_TGT = 2
     COL_NOT = 1
     

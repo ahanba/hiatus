@@ -20,7 +20,7 @@ module Reader
       str_xslted = %x(./modules/reader/xml tr ./modules/reader/xlf2tsv.xsl #{tf.path})
       tf.close!
       #str_xslted = Kconv.kconv(str_xslted, Kconv::UTF8, guess_encode(str_xslted))
-      str_xslted = NKF.nkf('-wx', str_xslted)
+      str_xslted = NKF.nkf('-wxm0', str_xslted)
       
       ops = {:col_sep => "\t", :quote_char => '"', :headers => true}
       myCSV = CSV.new(str_xslted, ops)

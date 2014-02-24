@@ -11,8 +11,8 @@ module Checker
       #Not Tag, Software Suffix ... : (?:\.\.\.)$
       #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}|$0xa$
 
-      src_tags = segment[:source].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+|\$0xa\$|\\n|\\r|\\t|\${[A-Z]+})/)
-      tgt_tags = segment[:target].remove_all_xliff_tags.scan(/(<ut .*?<\/ut>|<(?:x|bx|ex).*?\/(?:x|bx|ex)>|<\/?g.*?>|{TAG}|(?:\.\.\.)$|[%&][a-zA-Z\d]+|\$0xa\$|\\n|\\r|\\t|\${[A-Z]+})/)
+      src_tags = segment[:source].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
+      tgt_tags = segment[:target].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []
@@ -84,7 +84,7 @@ module Checker
 
     def remove_ut_ttx_tags!(catched)
       # delete &amp; etc. to hide false errors
-      str = catched[0].gsub!(/<\/*ut.*?>|&(?:amp|lt|gt|quot|ndash|apos)/,"")
+      str = catched[0].gsub!(/<\/*ut.*?>|&(?:amp|lt|gt|quot|ndash|apos);/,"")
       CGI.unescapeHTML(str) if str != nil
     end
   end

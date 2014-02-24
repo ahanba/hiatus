@@ -4,6 +4,7 @@ module Checker
   require 'cgi'
   
   require 'modules/checker/glossary'
+  require 'modules/checker/identical'
   require 'modules/checker/numbers'
   require 'modules/checker/missingtag'
   require 'modules/checker/skip'
@@ -15,6 +16,7 @@ module Checker
   require 'modules/checker/inconsistency'
 
   include Checker::CheckGloss
+  include Checker::CheckIdentical
   include Checker::CheckNumbers
   include Checker::CheckMissingTag
   include Checker::CheckSkip
@@ -48,16 +50,16 @@ module Checker
     @checks = checks
     @langs  = langs
     
+    puts "Reading Files..."
     Dir.glob(bilingual_path + "/**/{*.ttx,*.txt,*.csv,*.tmx,*xlz,*.xls,*.xlsx,*.doc,*.docx,*.rtf,*.tbx,*.sdlxliff}") {|file|
       filetype = check_extension(file)
-      puts "Reading #{file}"
       self.send("read#{filetype}", file, ops)
     }
     #@@bilungualArray is generated after readXXX processed.
     
     if @checks[:glossary]
       Dir.glob(glossary_path + "/**/{*.txt,*.tbx}") {|file|
-        puts "Reading #{file}"
+        puts "Reading #{File.basename(file)}"
         self.readGloss(file)
       }
       @glossary = Glossary.new(@@glossaryArray, langs) 
@@ -65,7 +67,7 @@ module Checker
     
     if @checks[:monolingual]
       Dir.glob(monolingual_path + "/**/*.txt") {|file|
-        puts "Reading #{file}"
+        puts "Reading #{File.basename(file)}"
         self.readMonolingual(file)
       }
       @monolingual = Monolingual.new(@@monolingualArray, langs)
@@ -81,6 +83,7 @@ module Checker
       check_glossary(segment)      if @checks[:glossary]
       check_missingtag(segment)    if @checks[:missingtag]
       check_skip(segment)          if @checks[:skip]
+      check_identical(segment)     if @checks[:identical]
       check_monolingual(segment)   if @checks[:monolingual]
       check_numbers(segment)       if @checks[:numbers]
       check_unsourced(segment)     if @checks[:unsourced]
