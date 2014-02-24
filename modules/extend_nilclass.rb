@@ -9,14 +9,14 @@ class NilClass
     self.to_s.encode("UTF-8", CODE)
   end
   
-  def remove_ttx_tags
-    #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
-    self.to_s.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")
-  end
-  
   def convDash
     #do nothing for nilclass
     self
+  end
+  
+  def remove_ttx_tags
+    #remove "<df...>", "</df>" and "<ut ...>", "</ut>" tags
+    self.to_s.gsub(/(<\/?df.*?>|<\/?ut.*?>)/i, "")
   end
   
   def remove_ttx_tags_and_innertext
@@ -25,13 +25,28 @@ class NilClass
     self.to_s.gsub(/<\/?df.*?>/i,"").gsub(/<ut.*?<\/ut>/i,"")
   end
   
+  #see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html for XLIFF specifications
+  #delete mrk
+  #placeholder inline tags are <x/>, <g>, <bx/>, <ex/>. 
+  #<g> for separate open and close tags. Bold, Italic, etc
+  #<x> for concatenated open and cloase tags.
+  #<x id="xx"></x> for line feed
+  #<x id="xx" /> for image
+  #native inline tags are <bpt> = begin, <ept> = end, <it>, <Ph>
+  
+  #
+  #Obsolete
+  #
+  #def remove_all_xliff_tags
+  #  self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{TAG}').gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, '{TAG}').gsub(/<\/?g.*?>/i, '{TAG}')
+  #end
+  
   def remove_all_xliff_tags
-    #see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html for XLIFF specifications
-    #delete mrk
-    #placeholder inline tags are <x/>, <g>,<bx/>, <ex/>. <g> for Bold, Italic, etc., <x> for line feed
-    #native inline tags are <bpt>, <ept>, <it>, <Ph>
-    #self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{IMG}').gsub(/<(?:x|bx|ex) id="pm.*?\/(?:x|bx|ex)>/i, "{TAG}").gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, "\n").gsub(/<(?:x|bx|ex).*?\/(?:x|bx|ex)>/i, "").gsub(/<\/?g.*?>/i, '')
-    self.to_s.gsub(/(<g[^>]+?><(?:x|bx|ex).+?\/(?:x|bx|ex)><\/g>|<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?<x[^>]+?><\/x> ?)/i, '{TAG}').gsub(/<(?:x|bx|ex) id="[a-z\d]+".*?\/(?:x|bx|ex)>/i, '{TAG}').gsub(/<\/?g.*?>/i, '{TAG}')
+    self.to_s.gsub(/<\/?[eb]?[xg].*?>/, "")
+  end
+  
+  def convert_img_and_remove_all_xliff_tags
+    self.to_s.gsub(/<img[^>]*?>/, "{IMG}").gsub(/<[^>].*?>/, "")
   end
   
   def remove_mrk_xliff_tags
@@ -39,7 +54,7 @@ class NilClass
   end
   
   def remove_ttx_and_xliff_tags
-    self.to_s.remove_ttx_tags.remove_all_xliff_tags
+    self.to_s.remove_ttx_tags.convert_img_and_remove_all_xliff_tags
   end
   
   def remove_ttx_innertext_and_xliff_tags

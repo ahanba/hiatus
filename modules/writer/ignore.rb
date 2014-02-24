@@ -71,8 +71,7 @@ module Writer
     
     #XML spreadsheet 2003 format. Recommended. Accurate
     def read_XML_report(file)
-      file_str = read_rawfile(file)
-      @doc = Nokogiri::XML(file_str)
+      @doc = Nokogiri::XML(open(file))
       rows = @doc.css('Row')
       rows.map {|row|
         cells = row.css('Cell')

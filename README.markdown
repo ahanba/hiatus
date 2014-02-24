@@ -18,13 +18,16 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
    Detects numbers in source but NOT in target.  
   
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detects missing or added tags. Note that hiatus cannot detect inline SDLXLIFF tags accurately.    
+   Detects missing or added internal tags.       
   
 + **Length**  
    Length of source and target segments are different more/less than +/- 50%  
   
-+ **Skipped Translation, Blank**  
-   Reports errors if a target segment is blank, or source and target segments are same.  
++ **Skipped Translation**  
+   Reports errors if a target segment is blank.  
+
++ **Identical Translation**   
+   Reports errors if source and target segments are same   
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
    Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
@@ -66,7 +69,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 ### Environment
 Ruby 1.9.2, 1.9.3 or 2.0.0  
 Windows XP, Windows 7   
-*hiatus works correctly in JA and EN environment. Other languages have not been tested. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
+*hiatus is tested only in JA and EN environment. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
 
 ### Installation
 1. Install [Ruby](http://rubyinstaller.org/) 2.0.0. Check on **tk** option on installation  
@@ -101,6 +104,7 @@ Then error report will be generated.
        inconsistency_t2s: true  
        missingtag: true  
        skip: true  
+       identical: false   
        monolingual: true  
        numbers: true  
        unsourced: true  
@@ -118,14 +122,12 @@ Then error report will be generated.
 ### About Ignore List
 You can skip known false errors by specifying ignore list.  
 Open the hiatus report (XLSX file) and mark **ignore** in "Fixed?" column (column M), and save it as XML spreadsheet 2003 format.  
-(Optional) Open the CSV file and save it as UTF-8 encoding.  
-Then specify the full path of the XML file in the **ignoreList** field.  
+Then specify the full path of the XML file in the **ignoreList** field. Use semicolon to specify multiple files.   
 For example:  
   
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
-  
-*Use semicolon to specify multiple lists.  
+   
 Then, marked errors will not reported next time. 
  
 
@@ -136,7 +138,7 @@ You can specify XLSX (or CSV file) in ignoreList field, however, it is not recom
 See below and the sample files in !Sample_files folder.  
 
 #### Glossary File Format  
-TAB-delimited Text   
+Four-Column TAB delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)    
 #### Structure   
 
@@ -146,8 +148,8 @@ UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 
 |Column|Description|
 |:---|:---|
-|Source|Glossary source term. Required|
-|Target|Glossary target term. Required|
+|Source|Glossary source term. RegExp supported. Required|
+|Target|Glossary target term. RegExp supported. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
 
@@ -162,7 +164,8 @@ Available options are combination of followings
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
 |||
-|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|Prefix #||
+|#<*X*>|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 #### Sample   
 ```
@@ -170,6 +173,8 @@ Server	 サーバー	z
 (?:node|nodes)	ノード	#i	ノードの訳に注意
 import(?:ing)	インポート	#i
 Japan	日本		JapanはCase-sensitive
+run	走る	i	
+(?<!start¥-|end¥-)point	点	#i	Feedback No.2
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  
@@ -179,7 +184,7 @@ RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.
 See below and the sample files in !Sample_files folder.   
 
 #### Monolingual File Format  
-TAB-delimited Text   
+Four-Column TAB delimited Text   
 UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 #### Structure   
 
@@ -190,7 +195,7 @@ UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)
 |Column|Description|
 |:---|:---|
 |s or t|Segment to search. 's' is source, 't' is target segment. Required|
-|Expression|Search expression. Required|
+|Expression|Search expression. RegExp supported. Required|
 |Option|Conversion option. Required|
 |Comment|Comment. Optional|
 
@@ -205,7 +210,8 @@ Available options are combination of followings
 |z|No Conversion + No RegExp + Case-Insensitive|
 |*Blank*|No Conversion + No RegExp + Case-Sensitive (= As is)|
 |||
-|Prefix #|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
+|Prefix #||
+|#<*X*>|Auto Conversion OFF. When you use your own RegExp, add # at the beginning of the option field|
 
 #### Sample    
 ```
@@ -214,6 +220,7 @@ t	[\p{Katakana}ー]・	#	カタカナ間の中黒を使用しない
 t	[０１２３４５６７８９]+	#	全角数字を禁止
 s	not	z	否定文？
 t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
+t	[あいうえお]	#	Hiragana left
 ```
 
 You can try Ruby RegExp on [rubular](http://rubular.com/).  

@@ -6,7 +6,7 @@ module Reader
     include Reader::Core
     
     def readTBX(file, option)
-      @doc = Nokogiri::XML(File.open(file))
+      @doc = Nokogiri::XML(open(file))
       @doc.xpath("////termEntry").each {|termEntry|
         i = 0
         entry = {}

@@ -83,7 +83,7 @@ module Reader
         when "TIS-620"
           str = str.encode("UTF-8", Encoding::TIS620)
         else
-          str = str
+          str = str.encode("UTF-8")
         end
         return str
       rescue
