@@ -6,7 +6,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 
 ### Check Items
 + **Glossary**  
-   When a glossary source term detected in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
+   When a glossary source term found in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
   
 + **Search Source or Target Text** (Defined as **monolingual**)  
    Loads expressions from the list, and report errors if the expressions found in a segment. You can choose which segment to search (source or target). RegExp supported.
