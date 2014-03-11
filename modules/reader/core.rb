@@ -102,7 +102,7 @@ module Reader
       elsif NKF.guess(str) == NKF::JIS
         encode = "JIS"
       else
-        encode = UniversalDetector::chardet(str)["encoding"].upcase
+        encode = UniversalDetector::chardet(str)["encoding"].to_s.upcase
       end
     end
     

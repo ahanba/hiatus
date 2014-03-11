@@ -21,7 +21,8 @@ module Reader
         word.Selection.Font.Reset
         word.Selection.Copy
         
-        cont = NKF.nkf('-wxm0', TkClipboard.get)
+        #cont = NKF.nkf('-wxm0', TkClipboard.get)
+        cont = TkClipboard.get.native_to_utf
         segments= cont.scan(/(?<={0>)(.*?)<}(\d+){>(.*?)(?=<0})/i)
         segments.map {|segment|
         if option[:ignore100] == true && segment[1] != nil

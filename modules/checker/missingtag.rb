@@ -11,8 +11,8 @@ module Checker
       #Not Tag, Software Suffix ... : (?:\.\.\.)$
       #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}|$0xa$
 
-      src_tags = segment[:source].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
-      tgt_tags = segment[:target].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
+      src_tags = segment[:source].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>|\$0xa\$|\\+n|\\+r|\\+t|\\+d)/i)
+      tgt_tags = segment[:target].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>|\$0xa\$|\\+n|\\+r|\\+t|\\+d)/i)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []

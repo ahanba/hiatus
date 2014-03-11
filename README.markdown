@@ -6,7 +6,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 
 ### Check Items
 + **Glossary**  
-   When a glossary source term detected in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
+   When a glossary source term found in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
   
 + **Search Source or Target Text** (Defined as **monolingual**)  
    Loads expressions from the list, and report errors if the expressions found in a segment. You can choose which segment to search (source or target). RegExp supported.
@@ -55,9 +55,9 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 ### Features
 + hiatus can automatically convert dictionary form into possible active forms for English (Optional).    
   Example: Converts **write** into RegExp **(?:write|writes|writing|wrote|written)**.
-+ Auto-detect encoding with [chardet2](https://github.com/janx/chardet2) library to prevent garbled character issues.
++ Support multiple encodings. Auto-detect encodings using [chardet2](https://github.com/janx/chardet2) library.  
 + Simple output report (XLS). Easy to filter.
-+ Can suppress known false errors by specifying Ignore List.
++ Suppress false errors by specifying Ignore List.
 + Source code is published here. You can modify as you like if you want.
 
 ### Precautions
@@ -84,7 +84,7 @@ Windows XP, Windows 7
      gem install **chardet2**
 
 ### How to use hiatus?
-Fill in necessary fields on **config.yaml**, and run **hiatus.rb**.  
+Fill out necessary fields on **config.yaml**, and run **hiatus.rb**.  
 Then error report will be generated.
 
 ####About config.yaml
@@ -128,7 +128,7 @@ For example:
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
    
-Then, marked errors will not reported next time. 
+Then, marked errors will not reported next time you run hiatus. 
  
 
 *Note*:  
@@ -177,8 +177,7 @@ run	走る	i
 (?<!start¥-|end¥-)point	点	#i	Feedback No.2
 ```
 
-You can try Ruby RegExp on [rubular](http://rubular.com/).  
-RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0.   
+You can try Ruby RegExp on [rubular](http://rubular.com/). See [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0.   
 
 ### How to create Monolingual file?   
 See below and the sample files in !Sample_files folder.   
@@ -223,8 +222,7 @@ t	Shared Document	#i	Windows のファイル パスはローカライズする�
 t	[あいうえお]	#	Hiragana left
 ```
 
-You can try Ruby RegExp on [rubular](http://rubular.com/).  
-RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0. 
+You can try Ruby RegExp on [rubular](http://rubular.com/). See [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0. 
 
 ## License
 Copyright &copy; 2014 Ayumu Hanba (ayumuhamba19&lt;at_mark&gt;gmail.com)  

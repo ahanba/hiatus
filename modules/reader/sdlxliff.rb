@@ -19,11 +19,11 @@ module Reader
           tag_ref[tag.attribute('id').value] = tag.xpath('sdl:ph|sdl:st', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'}).inner_text
         #
         #When <bpt> and <ept>: This is for <g> tag in SDLXLIFF
-        #Storinng opening and closing tags separately
+        #Keeping opening and closing tags separately
         #["id" => ["opening_tag", "closing_tag"]]
         #Removing <sub ...xid ...> by using inner_text method to process cases like following:
         #<a href="../../p15646299.html" title="
-        #<sub xid="acce6450-4359-4745-b4b9-8e7a55b22e8e">第4章　プリンター機種別設定</sub>
+        #<sub xid="acce6450-4359-4745-b4b9-8e7a55b22e8e">Chapter4 Hello World</sub>
         #">
         else
           tag_ref[tag.attribute('id').value] = [tag.xpath('sdl:bpt', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'}).inner_text, tag.xpath('sdl:ept', {'sdl' => 'http://sdl.com/FileTypes/SdlXliff/1.0'}).inner_text]
