@@ -15,7 +15,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(1|一|one|single|January)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -23,7 +23,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(2|二|two|double|February)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end	
@@ -31,7 +31,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(3|三|three|March)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -39,7 +39,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(4|四|four|April)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -55,7 +55,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(6|六|six|June)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -63,7 +63,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(7|七|seven|July)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -71,7 +71,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(8|八|eight|August)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -79,7 +79,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(9|九|nine|September)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -87,7 +87,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(0|ゼロ|零|zero)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -95,7 +95,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(10|十|ten|October)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -103,7 +103,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(11|十一|eleven|November)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -111,15 +111,15 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(12|十二|twelve|December)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
         elsif found[0] == "16"
-          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(12|sixteen|hex|hexadecimal|十六)/i
+          unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(16|sixteen|hex|hexadecimal|十六)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -127,7 +127,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(100|百|hundred)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -135,7 +135,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(1,000|1 000|1000|千|thousand)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -143,7 +143,7 @@ module Checker
           unless segment[symbol2].remove_ttx_innertext_and_xliff_tags =~ /(10,000|10 000|10000|万)/i
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end
@@ -157,7 +157,7 @@ module Checker
           unless (segment[symbol2].remove_ttx_innertext_and_xliff_tags.scan(/(#{num_forms.uniq.join("|")})/) != [])
             error = {}
             error[:message]   = "Missing Number?"
-            error[:found]     = "#{found[0]} is not found in the #{symbol2.to_s}"
+            error[:found]     = "#{found[0]} is not found in #{symbol2.to_s}"
             error[:bilingual] = segment
             @errors << error
           end

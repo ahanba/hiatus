@@ -9,8 +9,8 @@ module Checker
       
       word_list = Hash::new
       segments.each_with_index {|segment, i|
-        words = CGI.unescapeHTML(segment[:target].remove_ttx_innertext_and_xliff_tags).convEntity.scan(/[a-zA-Z_&][a-z_&]+/)
-        words.map {|word|
+        words = CGI.unescapeHTML(segment[:target].remove_ttx_innertext_and_xliff_tags).convEntity.scan(/[a-zA-Z_&]+?[a-z_&]+/)
+        words.each {|word|
           case word_list.has_key?(word)
           when true
             word_list[word] << i
@@ -22,7 +22,7 @@ module Checker
       }
       puts "Number of Unique Words: #{word_list.length}"
       
-      word_list.map {|word, segment_indices|
+      word_list.each {|word, segment_indices|
         word = word.gsub(/[&_]/,'') # remove hotkey indicator
         next if word == word.upcase # ignore if all characters are capitalized (= constant)
         unless speller.correct?(word)

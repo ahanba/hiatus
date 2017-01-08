@@ -8,7 +8,7 @@ module Checker
           CGI.unescapeHTML(segment[:source].remove_ttx_innertext_and_xliff_tags).convEntity.scan(term.regTerm) {|found|
             next if found == []
             error = {}
-            error[:message]   = "Found in the Source"
+            error[:message]   = "Found in Source"
             if term.message
               error[:found]   = found[0] + " => " + term.message if found.class == Array
               error[:found]   = found + " => " + term.message if found.class == String
@@ -25,7 +25,7 @@ module Checker
           CGI.unescapeHTML(segment[:target].remove_ttx_innertext_and_xliff_tags).convEntity.scan(term.regTerm) {|found|
             next if found == []
             error = {}
-            error[:message]   = "Found in the Target"
+            error[:message]   = "Found in Target"
             #Use (?: ) fo regExp
             if term.message
               error[:found]   = found[0] + " => " + term.message if found.class == Array

@@ -5,7 +5,7 @@ module Reader
     require 'modules/reader/core'
     include Reader::Core
     
-    #For simple tab separated values. Like copy & pasted from Excel sheet
+    #For simple tab separated values. For example, copy & pasted from Excel sheet
     def readTXT(file, option)
       file_str = read_rawfile(file)
       file_str.lines.each_with_index {|line, i|

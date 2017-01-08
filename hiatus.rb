@@ -1,7 +1,7 @@
 #coding: utf-8
 =begin
-Developed environment
-Ruby 1.9.2, 1.9.3 or 2.0.0
+Environment:
+Ruby 1.9.2 or higher
 Windows XP SP2, Windows 7
 Note: This script does not work on Ruby 1.8.7 or earlier
 =end
@@ -70,7 +70,7 @@ ignorelist_path   = (myconfig["option"]["ignorelist"] == nil ? nil : myconfig["o
 puts "Checking Directories..."
 [bilingual_path, output_path, glossary_path, monolingual_path].each { |myDir|
   unless myDir == nil or FileTest.directory?(myDir)
-    puts "'#{myDir}' does not exist, it must be existing directory. Please check the path."
+    puts "'#{myDir}' does not exist. Please check the path and try again."
     exit
   end
 }
@@ -78,7 +78,7 @@ puts "Checking Directories..."
 if ignorelist_path
   ignorelist_path.split(';').each {|mypath|
     unless FileTest.file?(mypath) || File.extname(mypath) == '.xlsx' || File.extname(mypath) == '.csv'
-      puts "Invalid Ignore List: \"#{mypath}\" does not exist or is not a valid file. Supported file formats are XLSX and CSV." 
+      puts "Invalid Ignore List: \"#{mypath}\" does not exist or is not a valid file. Supported file formats are XML, XLSX or CSV." 
       exit
     end
   }
@@ -119,18 +119,20 @@ checks[:length]            = myconfig["check"]["length"]
 checks[:software]          = myconfig["check"]["software"]
 checks[:spell]             = myconfig["check"]["spell"]
 
-option = {
+options = {
   :filter     => myconfig["option"]["filter_by"],
   :ignore100  => myconfig["option"]["ignore100"],
   :ignoreICE  => myconfig["option"]["ignoreICE"],
-  :ignorelist => ignorelist_path
+  :ignorelist => ignorelist_path,
+  :ignoreCase => myconfig["option"]["ignoreCase"],
+  :ignoreTrailingSpace => myconfig["option"]["ignoreTrailingSpace"]
 }
 
 class MyChecker
   include Checker
 end
 
-mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, option, checks, langs)
+mych = MyChecker.new(bilingual_path, glossary_path, monolingual_path, options, checks, langs)
 mych.run_checks
 puts "Generating Report..."
 mych.send("report_#{report_format.upcase}", mych.errors, output_path, ignorelist_path)

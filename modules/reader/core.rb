@@ -99,10 +99,12 @@ module Reader
     def guess_encode(str)
       if NKF.guess(str).dummy?
         encode = "UTF-16"
+      elsif NKF.guess(str) == NKF::UTF8
+        encode = "UTF-8"
       elsif NKF.guess(str) == NKF::JIS
         encode = "JIS"
       else
-        encode = UniversalDetector::chardet(str)["encoding"].upcase
+        encode = UniversalDetector::chardet(str)["encoding"].to_s.upcase
       end
     end
     

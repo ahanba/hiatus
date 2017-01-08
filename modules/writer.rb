@@ -37,7 +37,7 @@ module Writer
       book = excel.Workbooks.Add()
       sheet = book.Sheets("sheet1")
       
-      header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "DefFile", "Asset", "Fixed?"]
+      header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "CheckList", "Asset", "Fixed?"]
       sheet.fillColumns(header, 1)
       
       row = 1

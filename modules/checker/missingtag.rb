@@ -11,8 +11,8 @@ module Checker
       #Not Tag, Software Suffix ... : (?:\.\.\.)$
       #Not Tag, Software UI variables: \{[%&]?[a-zA-Z\d]+\}|$0xa$
 
-      src_tags = segment[:source].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
-      tgt_tags = segment[:target].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>)/i)
+      src_tags = segment[:source].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>|\\+n|\\+r|\\+d|\\+t|{\d+})/i)
+      tgt_tags = segment[:target].to_s.downcase.scan(/(<ut .*?<\/ut>|<[^>]*?>|\\+n|\\+r|\\+d|\\+t|{\d+})/i)
       deleted_tags, added_tags  = comp_tags(src_tags, tgt_tags)
 
       if deleted_tags != []
@@ -52,17 +52,15 @@ module Checker
       }
       src_tags = src_tags.compact
       tgt_tags = tgt_tags.compact
-
-      #p src_tags
-      #p tgt_tags
-
+      
       #以下、こういう例に対する対応
       #["&amp;lt;strong&amp;gt;","&amp;lt;/strong&amp;gt;&amp;amp;nbsp;","&amp;amp;nbsp;"]
       #["&amp;lt;strong&amp;gt;","&amp;lt;/strong&amp;gt;"]
       #不細工なのでリファクタリングする
-
+      
       tgt_tags.each_with_index {|tgt_tag, i|
         src_tags.each_with_index {|src_tag, j|
+          next if tgt_tag == nil || src_tag == nil
           next if tgt_tag[0] == nil || src_tag[0] == nil
           if src_tag[0].include?(tgt_tag[0])
             src_tags[j][0].sub!(tgt_tag[0], "")

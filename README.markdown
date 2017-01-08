@@ -30,10 +30,10 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
    Reports errors if source and target segments are same   
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
-   Valid only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
+   Effective only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
   
 + **Alphanumeric Strings in Source but NOT in Target** (Defined as **unsourced_rev**)  
-   Valid only when **source** is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
+   Effective only when **source** is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
   
 + **Software**  
    Checks if 1) Hotkeys (i.e. &A, _A), 2) Missing/Added variables (i.e. %s, %d), and 3) '...' at the end (i.e. Save As...) are consistent between source and target segments.
@@ -135,7 +135,7 @@ Then, marked errors will not reported next time.
 You can specify XLSX (or CSV file) in ignoreList field, however, it is not recommended as reading XLSX file is unstable. XML file is recommended.   
   
 ### How to create Glossary file? 
-See below and the sample files in !Sample_files folder.  
+See the following instructions and the sample files in !Sample_files folder.  
 
 #### Glossary File Format  
 Four-Column TAB delimited Text   

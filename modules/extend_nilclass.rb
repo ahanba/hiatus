@@ -50,7 +50,8 @@ class NilClass
   end
   
   def remove_mrk_xliff_tags
-    self.to_s.gsub(/<mrk.*?<\/mrk>/i,"")
+    self.to_s.gsub(/<mrk mtype="x-sdl-comment".+?>(.*)<\/mrk>/){ $1 }.gsub(/<mrk.*?<\/mrk>/i,"")
+    #self.to_s.gsub(/<mrk.*?<\/mrk>/i,"")
   end
   
   def remove_ttx_and_xliff_tags

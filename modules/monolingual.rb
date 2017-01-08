@@ -42,14 +42,21 @@ class Monolingual
     end
   
   private
-    
     OPS = { "i"   => Regexp::IGNORECASE,
             "m"   => Regexp::MULTILINE,
             "e"   => Regexp::EXTENDED,
             "im"  => Regexp::IGNORECASE | Regexp::MULTILINE,
+            "mi"  => Regexp::IGNORECASE | Regexp::MULTILINE,
             "em"  => Regexp::EXTENDED | Regexp::MULTILINE,
+            "me"  => Regexp::EXTENDED | Regexp::MULTILINE,
             "ie"  => Regexp::IGNORECASE | Regexp::EXTENDED,
-            "ime" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED 
+            "ei"  => Regexp::IGNORECASE | Regexp::EXTENDED,
+            "ime" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "iem" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "eim" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "emi" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "mie" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED,
+            "mei" => Regexp::IGNORECASE | Regexp::MULTILINE | Regexp::EXTENDED
     }
     
     def makeRegexp(term, option, langs)

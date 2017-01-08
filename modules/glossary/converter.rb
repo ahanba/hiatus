@@ -10,7 +10,7 @@ module Converter
                 :TYPE4 => ['\b','(?:e|es|ed|ing)?\b'], #verb ends with "e". Like "delete", "remove"
   }
   
-  FUKISOKU = {
+  IRREGULAR = {
               :axis       => '\b(?:axis|axes)\b',
               :analysis   => '\b(?:analysis|analyses)\b',
               :be         => '\b(?:be|is|are|am|being|was|were)\b',
@@ -93,26 +93,24 @@ module Converter
   
   def convertEN(str)
     each_term = str.split(/[ \-]/)
-    converted_terms = []
-    each_term.map {|term|
+    converted_terms = each_term.map {|term|
       if (term =~ /^[\[\(\.\\^]/) != nil
         term = term
       elsif (term =~ /.*[\]\)]$/) != nil
         term = term
       elsif (term =~ /^[ -~｡-ﾟ]*$/) == nil #if the term contains double-byte char, do not change
         term = term
-      elsif FUKISOKU.has_key?(term.downcase.to_sym)
-        term = FUKISOKU[term.downcase.to_sym]
+      elsif IRREGULAR.has_key?(term.downcase.to_sym)
+        term = IRREGULAR[term.downcase.to_sym]
       elsif term.match(/y\b/)
         term = CHANGEFORM[:TYPE2][0] + term.chop + CHANGEFORM[:TYPE2][1]
       elsif term.match(/e\b/)
         term = CHANGEFORM[:TYPE4][0] + term.chop + CHANGEFORM[:TYPE4][1]
-      elsif term.match(/[aiueo](.)\b/)
+      elsif term.match(/[bcdfghjklmnpqrstvwxyz][aiueo]([bcdfghjklmnpqrstvwxyz])\b/)
         term = convetTYPE3(term, $1)
       else
         term = CHANGEFORM[:TYPE1][0] + term + CHANGEFORM[:TYPE1][1]
       end
-      converted_terms << term
     }
     converted_terms.join(" ")
   end

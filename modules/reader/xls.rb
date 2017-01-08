@@ -5,37 +5,47 @@ module Reader
     require 'modules/reader/core'
     include Reader::Core
     
-    COL_SRC = 6
-    COL_TGT = 2
-    COL_NOT = 1
+    COL_SRC = 3
+    COL_TGT = 3
+    COL_NOT = 2
     
     #For Excel sheet. Only avaliable on Windows platform
-    #target is default active sheet, col A as Source, col B as Target, col C as ID
+    #Target = Active sheet, col A as Source, col B as Target, and col C as ID
     def readXLS(file, option)
       excel = WIN32OLE.new('Excel.Application')
-      file_path = getAbsolutePath(file)
-      book = excel.Workbooks.Open(file_path)
-      sheet = book.ActiveSheet
-      
       begin
-        rowNum = sheet.Range("A65536").End(:Direction  =>  -4162).Row
-        
+        #open XLS file
+        xls_path = getAbsolutePath(file)
+        book = excel.Workbooks.Open(xls_path)
+
+        #save as XML file
+        xml_path = file.sub(/xlsx$/i,'xml')
+        book.SaveAs(getAbsolutePath(xml_path), 46)
+
+        #read XML file
+        doc = Nokogiri::XML(open(xml_path))
+        rows = doc.xpath('//xmlns:Row', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"})
+        start_index = rows[0]['ss:Index'].to_i
+
         i = 0
-        rowNum.times do
-          i += 1
+        rows.map {|row|
+          cells = row.xpath('xmlns:Cell', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"})
+
           entry = {}
           entry[:filename] = file.to_s
-          sheet.Cells(i, COL_SRC).value != nil ? entry[:source] = sheet.Cells(i, COL_SRC).value.native_to_utf : entry[:source] = ""
-          sheet.Cells(i, COL_TGT).value != nil ? entry[:target] = sheet.Cells(i, COL_TGT).value.native_to_utf : entry[:target] = ""
-          sheet.Cells(i, COL_NOT).value != nil ? entry[:note] = sheet.Cells(i, COL_NOT).value.native_to_utf : entry[:note] = ""
-          entry[:id]       = "Row #{i}"
+          cells[COL_SRC-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}) != nil ? entry[:source] = cells[COL_SRC-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}).inner_text : entry[:source] = ""
+          cells[COL_TGT-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}) != nil ? entry[:target] = cells[COL_TGT-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}).inner_text : entry[:target] = ""
+          cells[COL_NOT-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}) != nil ? entry[:note]   = cells[COL_NOT-1].xpath('xmlns:Data', {'xmlns' => "urn:schemas-microsoft-com:office:spreadsheet"}).inner_text : entry[:note]   = ""
+          entry[:id] = "Row #{start_index + i}"
           @@bilingualArray.push(entry)
-        end
+          i += 1
+        }
+      rescue
+        p $!
       ensure
         excel.Workbooks.Close
         excel.Quit
       end
-      
     end
   end
 end

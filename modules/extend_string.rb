@@ -63,7 +63,8 @@ class String
   end
   
   def remove_mrk_xliff_tags
-    self.gsub(/<mrk.*?<\/mrk>/i,"")
+    self.gsub(/<mrk mtype="x-sdl-comment".+?>(.*)<\/mrk>/){ $1 }.gsub(/<mrk.*?<\/mrk>/i,"")
+    #self.gsub(/<mrk.*?<\/mrk>/i,"")
   end
   
   def remove_ttx_and_xliff_tags

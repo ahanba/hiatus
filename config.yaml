@@ -12,7 +12,7 @@ check:
   inconsistency_s2t: true
   inconsistency_t2s: true
   missingtag: true
-  skip: false
+  skip: true
   identical: false
   monolingual: true
   numbers: true
@@ -26,4 +26,7 @@ option:
   filter_by: 
   ignore100: false
   ignoreICE: false
-  ignorelist: Y:\Developer\Ruby\!Sample_files\130412_report.csv;Y:\Developer\Ruby\!Sample_files\130501_report.csv
+  ignorelist: 
+  ignoreCase: true
+  ignoreTrailingSpace: true
+  
