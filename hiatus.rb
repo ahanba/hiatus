@@ -1,8 +1,8 @@
 #coding: utf-8
 =begin
 Environment:
-Ruby 1.9.2 or higher
-Windows XP SP2, Windows 7
+Ruby 1.9.2 and higher
+Windows XP SP2, Windows 7, Windows 11
 Note: This script does not work on Ruby 1.8.7 or earlier
 =end
 
@@ -24,7 +24,7 @@ include Reader::Core
 #For Windows XLS read/write, require win32ole
 if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
   require 'win32ole'
-  
+
   class WIN32OLE
     def fillColumns(array, row)
       array.each_with_index {|v, i|
@@ -32,7 +32,7 @@ if(RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/)
       }
      end
   end
-  
+
   def getAbsolutePath(filename)
     fso = WIN32OLE.new('Scripting.FileSystemObject')
     return fso.GetAbsolutePathName(filename)
@@ -78,7 +78,7 @@ puts "Checking Directories..."
 if ignorelist_path
   ignorelist_path.split(';').each {|mypath|
     unless FileTest.file?(mypath) || File.extname(mypath) == '.xlsx' || File.extname(mypath) == '.csv'
-      puts "Invalid Ignore List: \"#{mypath}\" does not exist or is not a valid file. Supported file formats are XML, XLSX or CSV." 
+      puts "Invalid Ignore List: \"#{mypath}\" does not exist or is not a valid file. Supported file formats are XML, XLSX or CSV."
       exit
     end
   }
@@ -103,7 +103,7 @@ checks = {
   :length            => false,
   :software          => false,
   :spell             => false
-} 
+}
 
 checks[:glossary]          = myconfig["check"]["glossary"]
 checks[:inconsistency_s2t] = myconfig["check"]["inconsistency_s2t"]

@@ -1,93 +1,90 @@
 # hiatus
-**hiatus** is a localization QA tool. Reads various bilingual file formats, runs checks and reports errors detected.  
-For more details, please see  
+**hiatus** is a localization QA tool that supports various bilingual file formats, performs automated checks, and reports detected errors.  
+For more details, see  
 Slide: [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  
 Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)  
 
-### Check Items
+## Detectable errors
 + **Glossary**  
-   When a glossary source term found in a source segment, checks if corresponding glossary target term exists in a target segment. RegExp supported.  
+   When a glossary source term is found in a source segment, the tool checks if the corresponding glossary target term exists in the target segment. Supports RegExp for flexible matching.
   
-+ **Search Source or Target Text** (Defined as **monolingual**)  
-   Loads expressions from the list, and report errors if the expressions found in a segment. You can choose which segment to search (source or target). RegExp supported.
++ **Search Source or Target Segment** (Defined as **monolingual**)  
+   Searches source or target segments exclusively and reports errors if specified text is found. Supports RegExp for advanced matching.
   
 + **Inconsistency**  
-   Checks inconsistencies in two ways - Source to Target & Target to Source  
+   Checks for inconsistencies bidirectionally: Source-to-Target and Target-to-Source. 
   
 + **Numbers**  
-   Detects numbers in source but NOT in target.  
+   Detects numbers present in the source but missing in the target. 
   
 + **TTX, XLZ, SDLXLIFF Tag Check**  
-   Detects missing or added internal tags.       
+   Detects missing or extra internal tags.     
   
 + **Length**  
-   Length of source and target segments are different more/less than +/- 50%  
+   Flags source and target segments when their lengths differ by more than ±50%.
   
 + **Skipped Translation**  
-   Reports errors if a target segment is blank.  
+   Reports errors for blank target segments.
 
 + **Identical Translation**   
-   Reports errors if source and target segments are same   
+   Reports errors when the source and target segments are identical.  
   
 + **Alphanumeric Strings in Target but NOT in Source** (Defined as **unsourced**)  
-   Effective only when **target** is non-Alphabet language (i.e. Japanese, Chinese, Korean...).   
+   Effective only when the **target** language is non-alphabetic (e.g., Japanese, Chinese, Korean).
   
 + **Alphanumeric Strings in Source but NOT in Target** (Defined as **unsourced_rev**)  
-   Effective only when **source** is non-Alphabet language (i.e. Japanese, Chinese, Korean...). 
+   Effective only when the **source** language is non-alphabetic (e.g., Japanese, Chinese, Korean).
   
 + **Software**  
-   Checks if 1) Hotkeys (i.e. &A, _A), 2) Missing/Added variables (i.e. %s, %d), and 3) '...' at the end (i.e. Save As...) are consistent between source and target segments.
+   Checks for consistency between source and target segments for: 1) Hotkeys (e.g., &A, _A), 2) Missing/Added variables (e.g., %s, %d), and 3) '...' at the end (e.g., Save As...).
   
 + **Spell**  
-   Spell check using [GNU Aspell](http://aspell.net/) library.  
+   Spell check using [GNU Aspell](http://aspell.net/) library. 
+   **Note**: Spell check is no longer available.
 
-### Supported Bilingual File Formats
+## Supported Bilingual File Formats
 + XLZ (Idiom)
 + TTX
 + TMX
++ CSV (You can specify the columns to check)
 + TXT (tab-separated file)
-+ CSV (LocStudio dump by CSVDump add-in)
 + XLS/XLSX (By default, read as column A = Source, column B = Target, column C = Comment)
 + RTF/DOC/DOCX (Trados format bilingual)
 + TBX
 + SDLXLIFF
 
-### Features
-+ hiatus can automatically convert dictionary form into possible active forms for English (Optional).    
+## Features
++ hiatus can automatically convert dictionary forms into possible active forms for English (optional).  
   Example: Converts **write** into RegExp **(?:write|writes|writing|wrote|written)**.
-+ Auto-detect encoding with [chardet2](https://github.com/janx/chardet2) library to prevent garbled character issues.
-+ Simple output report (XLS). Easy to filter.
-+ Can suppress known false errors by specifying Ignore List.
-+ Source code is published here. You can modify as you like if you want.
++ Automatically detects encoding using the [chardet2](https://github.com/janx/chardet2) library to prevent garbled character issues.
++ Simple output report (XLS) that is easy to filter.
 
-### Precautions
-+ Do **NOT** copy anything while hiatus is running.  
-  hiatus uses clipboard while reading XLSX/DOC files (including reading XLS Ignore list).  
-  When you use these functions, leave clipboard during execution. Do not perform any copy operations.  
-+ Ignore list does not work correctly in some cases (See "About Ignore List" for details)  
+## Precautions
++ Do **NOT** copy anything while hiatus is running.
+  hiatus uses the clipboard when reading XLSX/DOC files (including reading the XLS Ignore list).
+  During execution, avoid any copy operations."  
++ The Ignore List may not work correctly in some cases. (See 'About Ignore List' for details.)
   
-### Environment
-Ruby 1.9.2, 1.9.3 or 2.0.0  
-Windows XP, Windows 7   
-*hiatus is tested only in JA and EN environment. However, it might work correctly on other languages as chardet2 library is implemented to support various encodings.   
+## Environment
+Ruby 1.9.2 and higher
+Windows only (Mac not supported)  
 
-### Installation
-1. Install [Ruby](http://rubyinstaller.org/) 2.0.0. Check on **tk** option on installation  
-2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you need.  
+## Installation
+1. Install [Ruby](http://rubyinstaller.org/). Check on **tk** option in the installation.
+2. Install GNU Aspell ([Mac](http://aspell.net/), [Win](http://aspell.net/win32/)) and dictionaries you use.  
 3. Add 'C:\Program Files (x86)\Aspell\bin' to your environmental variable PATH.  
 4. On 'C:\Program Files (x86)\Aspell\bin', copy **aspell-15.dll** and save it as **aspell.dll**. Also save **pspell-15.dll** as **pspell.dll**.
-5. Start command prompt and run following commands  
+5. Open the command prompt and run the following commands:
      gem install **nokogiri**  
      gem install **zip**  
      gem install **ffi**  
      gem install **ffi-aspell**  
      gem install **chardet2**
 
-### How to use hiatus?
-Fill in necessary fields on **config.yaml**, and run **hiatus.rb**.  
-Then error report will be generated.
+## How to use hiatus?
+Fill out the necessary fields in config.yaml, then run hiatus.rb. An error report will be generated.
 
-####About config.yaml
+#### About config.yaml
 
      required:  
        bilingual: Folder path of the target bilingual files (including subfolders)  
@@ -114,32 +111,32 @@ Then error report will be generated.
        spell: true 
   
      option:  
-       filter_by: For XLZ - Only when the "Note" value is same as this value, the entry will be checked. Other entries will be skipped.   
-       ignore100: true/false. For TTX/XLZ/SDLXLIFF, when true, 100% match will be skipped.  
-       ignoreICE: true/false. For XLZ/SDLXLIFF, when true, ICE match will be skipped.  
-       ignorelist: Path to the ignore list (XLSX file)
+       filter_by: For XLZ, only entries where the 'Note' value matches this value will be checked; other entries will be skipped.  
+       ignore100: true/false. For TTX/XLZ/SDLXLIFF, when set to true, 100% matches will be skipped."
+       ignoreICE: true/false. For XLZ/SDLXLIFF, when set to true, ICE match will be skipped.  
+       ignorelist: Path of the ignore list (XLSX file)
   
 ### About Ignore List
-You can skip known false errors by specifying ignore list.  
-Open the hiatus report (XLSX file) and mark **ignore** in "Fixed?" column (column M), and save it as XML spreadsheet 2003 format.  
-Then specify the full path of the XML file in the **ignoreList** field. Use semicolon to specify multiple files.   
+You can skip known false errors by specifying an ignore list.
+Open the hiatus report (XLSX file), mark **ignore** in the 'Fixed?' column (Column M), and save it as an XML Spreadsheet 2003 format.
+Then, specify the full path of the XML file in the **ignoreList** field. Use semicolons to separate multiple files.
+
 For example:  
   
        ignorelist: Y:\Sample_files\130412_report.xml  
        ignorelist: Y:\Sample_files\130412_report.xml;Y:\Sample_files\130522_report.xml  
    
-Then, marked errors will not reported next time. 
- 
+By specifying the ignoreList, marked errors will not be reported the next time.
 
-*Note*:  
-You can specify XLSX (or CSV file) in ignoreList field, however, it is not recommended as reading XLSX file is unstable. XML file is recommended.   
+Note: While you can specify an XLSX (or CSV) file in the ignoreList field, it is not recommended due to instability in reading XLSX files. XML files are recommended instead.
   
 ### How to create Glossary file? 
-See the following instructions and the sample files in !Sample_files folder.  
+Refer to the following instructions and sample files in the !Sample_files folder. 
 
 #### Glossary File Format  
 Four-Column TAB delimited Text   
-UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)    
+UTF-8 without BOM is recommended (Encoding is automatically detected by chardet)  
+
 #### Structure   
 
 | Column 1|Column 2|Column 3|Column 4|
@@ -176,9 +173,6 @@ Japan	日本		JapanはCase-sensitive
 run	走る	i	
 (?<!start¥-|end¥-)point	点	#i	Feedback No.2
 ```
-
-You can try Ruby RegExp on [rubular](http://rubular.com/).  
-RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0.   
 
 ### How to create Monolingual file?   
 See below and the sample files in !Sample_files folder.   
