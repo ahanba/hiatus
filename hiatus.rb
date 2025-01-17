@@ -2,8 +2,7 @@
 =begin
 Environment:
 Ruby 1.9.2 and higher
-Windows XP SP2, Windows 7, Windows 11
-Note: This script does not work on Ruby 1.8.7 or earlier
+Windows only
 =end
 
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))

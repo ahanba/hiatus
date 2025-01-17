@@ -2,11 +2,11 @@
 
 module Checker
   require 'ffi/aspell'
-  
+
   module CheckSpell
     def check_spell(segments, langs)
       speller = FFI::Aspell::Speller.new("#{langs[:target]}")
-      
+
       word_list = Hash::new
       segments.each_with_index {|segment, i|
         words = CGI.unescapeHTML(segment[:target].remove_ttx_innertext_and_xliff_tags).convEntity.scan(/[a-zA-Z_&]+?[a-z_&]+/)
@@ -21,7 +21,7 @@ module Checker
         }
       }
       puts "Number of Unique Words: #{word_list.length}"
-      
+
       word_list.each {|word, segment_indices|
         word = word.gsub(/[&_]/,'') # remove hotkey indicator
         next if word == word.upcase # ignore if all characters are capitalized (= constant)

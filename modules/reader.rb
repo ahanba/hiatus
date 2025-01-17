@@ -1,7 +1,7 @@
 #coding: utf-8
 
 module Reader
-  #equire 'kconv'
+  #require 'kconv'
   require 'csv'
   require 'nkf'
   require 'UniversalDetector'
@@ -9,7 +9,7 @@ module Reader
   require 'zip/zip'
   require 'shell'
   require 'tempfile'
-  
+
   require 'modules/reader/gloss'
   require 'modules/reader/xlz'
   require 'modules/reader/txt'
@@ -20,7 +20,7 @@ module Reader
   require 'modules/reader/doc'
   require 'modules/reader/tbx'
   require 'modules/reader/sdlxliff'
-  
+
   include Reader::ReadGloss
   include Reader::ReadCSV
   include Reader::ReadTMX

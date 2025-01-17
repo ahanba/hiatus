@@ -12,7 +12,7 @@ module Checker
   require 'modules/checker/unsourced'
   require 'modules/checker/length'
   require 'modules/checker/software'
-  require 'modules/checker/spell'
+  #require 'modules/checker/spell'
   require 'modules/checker/inconsistency'
 
   include Checker::CheckGloss
@@ -24,7 +24,7 @@ module Checker
   include Checker::CheckUnsourced
   include Checker::CheckLength
   include Checker::CheckSoftware
-  include Checker::CheckSpell
+  #include Checker::CheckSpell
   include Checker::CheckInconsistency
 
   include Reader
@@ -98,7 +98,7 @@ module Checker
     }
     check_inconsistency_src2tgt(@@bilingualArray, @options)  if @checks[:inconsistency_s2t]
     check_inconsistency_tgt2src(@@bilingualArray, @options)  if @checks[:inconsistency_t2s]
-    check_spell(@@bilingualArray, @langs)                    if @checks[:spell]
+    #check_spell(@@bilingualArray, @langs)                    if @checks[:spell]
   end
 
 private

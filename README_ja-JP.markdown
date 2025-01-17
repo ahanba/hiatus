@@ -1,7 +1,6 @@
 *Changed git branch
 
 # hiatus
-===========================
 **hiatus**はローカライズのQAツールです。  
 詳細については、以下をご覧ください。  
 スライド (英語):   [http://www.slideshare.net/ahanba/how-to-use-hiatus](http://www.slideshare.net/ahanba/how-to-use-hiatus)  

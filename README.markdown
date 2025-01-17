@@ -6,7 +6,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 
 ## Detectable errors
 + **Glossary**  
-   When a glossary source term is found in a source segment, the tool checks if the corresponding glossary target term exists in the target segment. Supports RegExp for flexible matching.
+   When a glossary source term is found in a source segment, the tool checks if the corresponding glossary target term exists in the target segment. Supports RegExp for advanced matching.
   
 + **Search Source or Target Segment** (Defined as **monolingual**)  
    Searches source or target segments exclusively and reports errors if specified text is found. Supports RegExp for advanced matching.
@@ -66,7 +66,7 @@ Demo: [http://youtu.be/6yaiI0OS-3c](http://youtu.be/6yaiI0OS-3c)
 + The Ignore List may not work correctly in some cases. (See 'About Ignore List' for details.)
   
 ## Environment
-Ruby 1.9.2 and higher
+Ruby 1.9.2 and higher  
 Windows only (Mac not supported)  
 
 ## Installation
@@ -117,9 +117,9 @@ Fill out the necessary fields in config.yaml, then run hiatus.rb. An error repor
        ignorelist: Path of the ignore list (XLSX file)
   
 ### About Ignore List
-You can skip known false errors by specifying an ignore list.
-Open the hiatus report (XLSX file), mark **ignore** in the 'Fixed?' column (Column M), and save it as an XML Spreadsheet 2003 format.
-Then, specify the full path of the XML file in the **ignoreList** field. Use semicolons to separate multiple files.
+You can skip known false errors by specifying an ignore list.  
+Open the hiatus report (XLSX file), mark **ignore** in the 'Fixed?' column (Column M), and save it as an XML Spreadsheet 2003 format.  
+Then, specify the full path of the XML file in the **ignoreList** field. Use semicolons to separate multiple files.  
 
 For example:  
   
