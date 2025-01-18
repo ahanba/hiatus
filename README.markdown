@@ -216,10 +216,11 @@ s	not	z	否定文？
 t	Shared Document	#i	Windows のファイル パスはローカライズする（共有ドキュメント）。
 t	[あいうえお]	#	Hiragana left
 ```
-
-You can try Ruby RegExp on [rubular](http://rubular.com/).  
-RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0. 
-
+  
+> [!TIP]
+> You can try Ruby RegExp on [rubular](http://rubular.com/).  
+> RegExp is based on [onigumo](https://github.com/k-takata/Onigmo), see [Ruby 2.0.0 reference](http://www.ruby-doc.org/core-2.0.0/Regexp.html) for details of RegExp available in Ruby 2.0.0. 
+  
 ## License
 Copyright &copy; 2014 Ayumu Hanba (ayumuhamba19&lt;at_mark&gt;gmail.com)  
 Distributed under the [GPL License][GPL].

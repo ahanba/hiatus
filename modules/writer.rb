@@ -1,24 +1,31 @@
 #coding: utf-8
-  
+
 module Writer
   #require 'haml'
   #require 'sass'
   #require 'kconv'
   require 'cgi'
-  
+
   require 'modules/writer/ignore'
   include Writer::Ignore
-  
+
+  #report is generated in the following method in hiatus.rb
+  #report_#{report_format.upcase}
+
   def report_HTML(errors, output_path, ignorelist_path)
-    
+
   end
-  
+
+  def report_CSV(errors, output_path, ignorelist_path)
+
+  end
+
   #For XLS report, only available on Windows with Excel installed
   def report_XLS(errors, output_path, ignorelist_path)
     excel = WIN32OLE.new('Excel.Application')
     t = Time.now.strftime("%y%m%d")
     myreport = output_path + "/#{t}_report.xlsx"
-    
+
     if ignorelist_path == nil
       @@ignore_items = nil
     else
@@ -32,14 +39,14 @@ module Writer
         end
       }
     end
-    
+
     begin
       book = excel.Workbooks.Add()
       sheet = book.Sheets("sheet1")
-      
+
       header = ["File","Path","ErrorType","Source","Target", "Match","id","Message/FoundTerm", "GlossarySrc", "GlossaryTgt", "CheckList", "Asset", "Fixed?"]
       sheet.fillColumns(header, 1)
-      
+
       row = 1
       errors.map {|error|
         next if (@@ignore_items != nil) && ignore?(error, @@ignore_items)
@@ -69,46 +76,46 @@ module Writer
         end
         sheet.Cells(row, col + 11).value = error[:bilingual][:file] if error[:bilingual][:file]
       }
-      
+
     #Font/Color/Filter etc.
     sheet.Cells.Font.Name = "Tahoma"
     sheet.Cells.Font.Size = 9
-    
+
     sheet.Rows("1:1").Select
     excel.Selection.Font.Bold = "True"
     excel.Selection.AutoFilter
-    
+
     sheet.Rows("2:2").Select
     excel.ActiveWindow.FreezePanes = "True"
-    
+
     col = "A"
     ((header.length) - 1).times do; col.succ!; end
-    
+
     sheet.Columns("A:#{col}").Select
     excel.Selection.Columns.AutoFit
-    
+
     sheet.Columns("A:C").Select
     excel.Selection.ColumnWidth = "10"
-    
+
     sheet.Columns("D:E").Select
     excel.Selection.ColumnWidth = "50"
     excel.Selection.WrapText = "True"
-    
+
     sheet.Columns("F:G").Select
     excel.Selection.ColumnWidth = "7"
-    
+
     sheet.Columns("K:L").Select
     excel.Selection.ColumnWidth = "10"
-    
+
     sheet.Columns("H").Select
     excel.Selection.ColumnWidth = "25"
-    
+
     #Border
     [1, 2, 3, 4].map {|i|
       sheet.Range("A1:#{col}#{row}").Select
       excel.Selection.Borders(i).Linestyle = 1
     }
-    
+
     myreport = myreport.utf_to_native
     book.SaveAs(getAbsolutePath(myreport))
     ensure
@@ -116,7 +123,7 @@ module Writer
       excel.Quit
     end
   end
-  
+
 private
   def xlsEscape(cell, str)
     if str =~ /^[\d\-+*\/\\$=]/
